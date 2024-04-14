@@ -5,6 +5,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
+    "seed": "node ./tasks/seed.js",
     "test": "node test.js",
     "start": "node app.js"
   },
@@ -14,6 +15,7 @@
     "axios": "^1.6.8",
     "express": "^4.19.2",
     "express-handlebars": "^7.1.2",
-    "moment": "^2.30.1"
+    "moment": "^2.30.1",
+    "mongodb": "^6.5.0"
   }
 }
