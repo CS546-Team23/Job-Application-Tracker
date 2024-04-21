@@ -1,0 +1,829 @@
+[{
+  "_id": {
+    "$oid": "661b1f0f00d5d86b38607305"
+  },
+  "firstName": "John",
+  "lastName": "Doe",
+  "city": "Hoboken",
+  "state": "NJ",
+  "desiredPosition": "Web Developer",
+  "dreamJob": "Google",
+  "email": "johndoe16@gmail.com",
+  "password": "1234-45-9876",
+  "applications": [
+    {
+      "_id": {
+        "$oid": "661b1f0f00d5d86b386072ff"
+      },
+      "companyName": "Stevens",
+      "jobPosition": "Web Developer",
+      "appCity": "Hoboken",
+      "appState": "NJ",
+      "date": "03/01/24",
+      "followUpDate": "03/22/24",
+      "appResume": "resume1.docx",
+      "status": "Saved",
+      "Notes": [
+        {
+          "_id": {
+            "$oid": "661b1f0f00d5d86b38607300"
+          },
+          "date": "03/14/24",
+          "time": "4:00pm",
+          "text": "Asked for an interview on 3/19/24"
+        }
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "661b1f0f00d5d86b38607301"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Screening",
+      "Notes": [
+        {
+          "_id": {
+            "$oid": "661b1f0f00d5d86b38607302"
+          },
+          "date": "03/18/24",
+          "time": "10:00am",
+          "text": "Received confirmation email for application"
+        }
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "661b1f0f00d5d86b38607303"
+      },
+      "companyName": "CodeMaster",
+      "jobPosition": "Frontend Developer",
+      "appCity": "San Francisco",
+      "appState": "CA",
+      "date": "04/01/24",
+      "followUpDate": "04/15/24",
+      "appResume": "resume10.docx",
+      "status": "Hired",
+      "Notes": [
+        {
+          "_id": {
+            "$oid": "661b1f0f00d5d86b38607304"
+          },
+          "date": "04/10/24",
+          "time": "2:30pm",
+          "text": "Scheduled phone interview for next week"
+        }
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "661b2fc86e4224fe0e298447"
+      },
+      "companyName": "CodeMaster",
+      "jobPosition": "Backend Developer",
+      "appCity": "Los Angeles",
+      "appState": "CA",
+      "date": "03/15/24",
+      "followUpDate": "03/31/24",
+      "appResume": "resume4.docx",
+      "status": "Rejected",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b301947fc00384f75e0f8"
+      },
+      "companyName": "DataTech",
+      "jobPosition": "Data Analyst",
+      "appCity": "Chicago",
+      "appState": "IL",
+      "date": "03/20/24",
+      "followUpDate": "04/05/24",
+      "appResume": "resume5.docx",
+      "status": "Saved",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b30391bf05600f19e7730"
+      },
+      "companyName": "CreativeSolutions",
+      "jobPosition": "UX Designer",
+      "appCity": "Seattle",
+      "appState": "WA",
+      "date": "03/25/24",
+      "followUpDate": "04/10/24",
+      "appResume": "resume6.docx",
+      "status": "Hired",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b3077dd3ce693ff9c9ea2"
+      },
+      "companyName": "FutureVision",
+      "jobPosition": "Machine Learning Engineer",
+      "appCity": "Boston",
+      "appState": "MA",
+      "date": "04/05/24",
+      "followUpDate": "04/20/24",
+      "appResume": "resume8.docx",
+      "status": "Rejected",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b3093efd4ae5ceb1b731c"
+      },
+      "companyName": "DesignWorks",
+      "jobPosition": "Graphic Designer",
+      "appCity": "Portland",
+      "appState": "OR",
+      "date": "04/10/24",
+      "followUpDate": "04/25/24",
+      "appResume": "resume9.docx",
+      "status": "Screening",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b30a8c67cd16393fb1589"
+      },
+      "companyName": "InnovativeSolutions",
+      "jobPosition": "Product Manager",
+      "appCity": "Denver",
+      "appState": "CO",
+      "date": "04/15/24",
+      "followUpDate": "04/30/24",
+      "appResume": "resume10.docx",
+      "status": "Applied",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b30cb987122f42945d943"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Saved",
+      "Notes": []
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "66244c7ee0a93ceb444de4a3"
+  },
+  "firstName": "Gautam",
+  "lastName": "Ahuja",
+  "city": "Hoboken",
+  "state": "NJ",
+  "desiredPosition": "Web Developer",
+  "dreamJob": "Microsoft",
+  "email": "gahuja@gmail.com",
+  "password": "someHashedPassowrd",
+  "applications": [
+    {
+      "_id": {
+        "$oid": "661b1f0f00d5d86b386072ff"
+      },
+      "companyName": "Stevens",
+      "jobPosition": "Web Developer",
+      "appCity": "Hoboken",
+      "appState": "NJ",
+      "date": "03/01/24",
+      "followUpDate": "03/22/24",
+      "appResume": "resume1.docx",
+      "status": "Saved",
+      "Notes": [
+        {
+          "_id": {
+            "$oid": "661b1f0f00d5d86b38607300"
+          },
+          "date": "03/14/24",
+          "time": "4:00pm",
+          "text": "Asked for an interview on 3/19/24"
+        }
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "661b1f0f00d5d86b38607301"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Screening",
+      "Notes": [
+        {
+          "_id": {
+            "$oid": "661b1f0f00d5d86b38607302"
+          },
+          "date": "03/18/24",
+          "time": "10:00am",
+          "text": "Received confirmation email for application"
+        }
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "661b1f0f00d5d86b38607303"
+      },
+      "companyName": "CodeMaster",
+      "jobPosition": "Frontend Developer",
+      "appCity": "San Francisco",
+      "appState": "CA",
+      "date": "04/01/24",
+      "followUpDate": "04/15/24",
+      "appResume": "resume10.docx",
+      "status": "Hired",
+      "Notes": [
+        {
+          "_id": {
+            "$oid": "661b1f0f00d5d86b38607304"
+          },
+          "date": "04/10/24",
+          "time": "2:30pm",
+          "text": "Scheduled phone interview for next week"
+        }
+      ]
+    },
+    {
+      "_id": {
+        "$oid": "661b2fc86e4224fe0e298447"
+      },
+      "companyName": "CodeMaster",
+      "jobPosition": "Backend Developer",
+      "appCity": "Los Angeles",
+      "appState": "CA",
+      "date": "03/15/24",
+      "followUpDate": "03/31/24",
+      "appResume": "resume4.docx",
+      "status": "Rejected",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b301947fc00384f75e0f8"
+      },
+      "companyName": "DataTech",
+      "jobPosition": "Data Analyst",
+      "appCity": "Chicago",
+      "appState": "IL",
+      "date": "03/20/24",
+      "followUpDate": "04/05/24",
+      "appResume": "resume5.docx",
+      "status": "Saved",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b30391bf05600f19e7730"
+      },
+      "companyName": "CreativeSolutions",
+      "jobPosition": "UX Designer",
+      "appCity": "Seattle",
+      "appState": "WA",
+      "date": "03/25/24",
+      "followUpDate": "04/10/24",
+      "appResume": "resume6.docx",
+      "status": "Hired",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b3077dd3ce693ff9c9ea2"
+      },
+      "companyName": "FutureVision",
+      "jobPosition": "Machine Learning Engineer",
+      "appCity": "Boston",
+      "appState": "MA",
+      "date": "04/05/24",
+      "followUpDate": "04/20/24",
+      "appResume": "resume8.docx",
+      "status": "Rejected",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b3093efd4ae5ceb1b731c"
+      },
+      "companyName": "DesignWorks",
+      "jobPosition": "Graphic Designer",
+      "appCity": "Portland",
+      "appState": "OR",
+      "date": "04/10/24",
+      "followUpDate": "04/25/24",
+      "appResume": "resume9.docx",
+      "status": "Screening",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b30a8c67cd16393fb1589"
+      },
+      "companyName": "InnovativeSolutions",
+      "jobPosition": "Product Manager",
+      "appCity": "Denver",
+      "appState": "CO",
+      "date": "04/15/24",
+      "followUpDate": "04/30/24",
+      "appResume": "resume10.docx",
+      "status": "Applied",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "661b30cb987122f42945d943"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Saved",
+      "Notes": []
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "66244ee7baee8fa78570f823"
+  },
+  "firstName": "Ajinkya",
+  "lastName": "Bhamre",
+  "city": "Hoboken",
+  "state": "NJ",
+  "desiredPosition": "AI Engineer",
+  "dreamJob": "Black Rock",
+  "email": "abhamre@gmail.com",
+  "password": "Hashed Password",
+  "applications": [
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f819"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Saved",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f81a"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Applied",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f81b"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Screening",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f81c"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Interviewing",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f81d"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Rejected",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f81e"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Hired",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f81f"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Saved",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f820"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Applied",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f821"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Screening",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244ee7baee8fa78570f822"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Interviewing",
+      "Notes": []
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "66244f2bf8439327dc9fcd2a"
+  },
+  "firstName": "Dhruv",
+  "lastName": "Rathi",
+  "city": "Jersey City",
+  "state": "NJ",
+  "desiredPosition": "Web Developer",
+  "dreamJob": "Microosoft",
+  "email": "dhruv@gmail.com",
+  "password": "Hashed Password",
+  "applications": [
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd20"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Saved",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd21"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Applied",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd22"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Screening",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd23"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Interviewing",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd24"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Rejected",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd25"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Hired",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd26"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Saved",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd27"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Applied",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd28"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Screening",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f2bf8439327dc9fcd29"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Interviewing",
+      "Notes": []
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "66244f5be7840fc13e5d3be6"
+  },
+  "firstName": "Kabir",
+  "lastName": "Ramchandani",
+  "city": "Union City",
+  "state": "NJ",
+  "desiredPosition": "Frontend Developer",
+  "dreamJob": "Google",
+  "email": "kramchandani@gmail.com",
+  "password": "Hashed Password",
+  "applications": [
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3bdc"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Saved",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3bdd"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Applied",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3bde"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Screening",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3bdf"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Interviewing",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3be0"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Rejected",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3be1"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Hired",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3be2"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Saved",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3be3"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Applied",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3be4"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Screening",
+      "Notes": []
+    },
+    {
+      "_id": {
+        "$oid": "66244f5be7840fc13e5d3be5"
+      },
+      "companyName": "TechCorp",
+      "jobPosition": "Software Engineer",
+      "appCity": "New York",
+      "appState": "NY",
+      "date": "03/05/24",
+      "followUpDate": "03/25/24",
+      "appResume": "resume2.docx",
+      "status": "Interviewing",
+      "Notes": []
+    }
+  ]
+}]

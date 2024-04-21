@@ -1,0 +1,30 @@
+table {
+    width: 98vw;
+    margin: 1vw;
+    border-radius: 3px;
+}
+table {
+    border: 1px solid;
+    border-color: #232a35;
+    border-collapse: collapse;
+    table-layout: fixed; 
+}
+
+th {
+    background-color: #05a870;
+}
+th,a {
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color:#def5ec;
+}
+
+td, th {
+    padding : 5px;
+}
+
+a {
+    display: inline;
+}
