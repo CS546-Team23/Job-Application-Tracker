@@ -1,7 +1,6 @@
 import { users } from "../config/mongoCollections.js";
 import { ObjectId, ReturnDocument } from "mongodb";
-import {checkIsProperString, getCurrentTime,isDateValid, validateId, currDate, isFollowupDateValid} from '../helpers.js';
-import applicationsData from "./applications.js";
+import {checkIsProperString, getCurrentTime, validateId, currDate, } from '../helpers.js';
 
 const exportedMethods = {
 async createNote(jobappId, notes){
