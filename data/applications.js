@@ -141,3 +141,38 @@ async removeJobapp(jobappId) {
 
 
 export default exportedMethods;
+
+
+
+/*
+app.js - (check the validity of data functions in app.js (applications.js & notes.js))
+import dataFun from "./data/applications.js";
+import noteFunc from "./data/notes.js";
+
+//console.log(await dataFun.createApplication("66244f5be7840fc13e5d3be6", "dummyCompany", "dummyjobposition","dummyappCity", "dummyappState","09/25/2024","appResume","status"));
+
+ //console.log(await dataFun.getJobappByid("6624b5cb33ec2e52c08d14f6"));
+
+// let obj = {
+//   companyName : "dummy2",
+//   jobPosition : "dummy2 Engineer",
+//   appCity : "duumy2 York",
+//   appState : "2dummyNY2",
+//   followUpDate : "03/25/2025",
+//   appResume : "2dummy.docx",
+//   status : "2dummy",
+// }
+// console.log(await dataFun.updateJobapp("661b1f0f00d5d86b38607301", obj));
+
+ //console.log(await dataFun.removeJobapp("66244f5be7840fc13e5d3be4"));
+
+//console.log(await noteFunc.createNote("6624a1a7acc268ab5adf1135", "wow im so gr8"));
+
+//console.log(await noteFunc.getNoteById("6624b729db2c3cb4dd2550e6"));
+
+
+//console.log(await noteFunc.removeNoteById("6624b366239e644f44ae1e76"))
+
+//console.log(await noteFunc.updateNoteById("6624b729db2c3cb4dd2550e6", "I'm not gr8, I'm Awesome !!!"))
+
+*/

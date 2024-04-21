@@ -52,6 +52,17 @@ export const isInputProvided = (variable, variableName) => {
     return dateStr;
   };
 
+  export const getCurrentTime = () => {
+    const now = new Date();
+    let hours = now.getHours();
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    const meridiem = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12 || 12; // Convert hours to 12-hour format
+    const formattedHours = hours.toString().padStart(2, '0');
+    return `${formattedHours}:${minutes} ${meridiem}`;
+};
+
+
   export const isFollowupDateValid = (dateStr, varName) => {
     isInputProvided(dateStr, varName);
   
