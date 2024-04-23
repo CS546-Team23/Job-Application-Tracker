@@ -12,9 +12,13 @@ table {
 
 th {
     background-color: #05a870;
-}
-th,a {
     color: white;
+}
+th a {
+    color: white;
+}
+td a {
+    color: #05a870;
 }
 
 tr:nth-child(even) {
