@@ -1,13 +1,16 @@
 
-
+<div>
 <canvas id="myChart" width="400px" height="400px"></canvas>
-<canvas id="pieChart"></canvas>
+</div>
+<div>
+<canvas id="pieChart" width="400px" height="400px"></canvas>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
 {{!-- <script src="/js/script.js"></script> --}}
 
 <script>
+    const statsData = {{{data}}};
     document.addEventListener("DOMContentLoaded", function () {
-        const statsData = {{{data}}};
 
         if(!statsData) console.log("data nhi mila");
         else console.log(statsData);
@@ -26,7 +29,7 @@
                 datasets: [
                     {
                         label: "Date Wise Applications",
-                        backgroundColor: "rgba(54, 162, 235, 0.2)",
+                        backgroundColor: "rgba(54, 162, 235, 1)",
                         borderColor: "rgba(54, 162, 235, 1)",
                         borderWidth: 1,
                         data: dataToShow,
@@ -68,6 +71,76 @@
 
             let myChart = new Chart(document.getElementById("myChart"), config);
         });
+
+        const pieCanvas = document.getElementById("pieChart");
+        const pieLabels = Object.keys(statsData.pieChartStatusData);
+        const pieDataToShow = Object.values(statsData.pieChartStatusData);
+
+            const pieChartData = {
+                labels: pieLabels,
+                datasets: [
+                    {
+                        label: "Pie Chart Data",
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 0, 0, 1)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 0, 0, 1)'
+                        ],
+                        borderWidth: 1,
+                        data: pieDataToShow,
+                    },
+                ],
+            };
+
+            const pieConfig = {
+                type: "doughnut",
+                data: pieChartData,
+                options: {
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: "top",
+                        },
+                        datalabels: {
+                            formatter: (value, ctx) => {
+                                let sum = 0;
+                                let dataArr = ctx.chart.data.datasets[0].data;
+                                dataArr.map(data => {
+                                    sum += data;
+                                });
+                                let percentage = ((value * 100) / sum).toFixed(2) + "%";
+                                return percentage;
+                            },
+                            color: "#fff", // color of the text
+                        },
+                    },
+                    layout: {
+                        padding: {
+                            left: 50,
+                            right: 50,
+                            top: 50,
+                            bottom: 50,
+                        },
+                    },
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    width: 400,
+                    height: 400,
+                },
+            };
+
+            let pieChart = new Chart(pieCanvas, pieConfig);
 </script>
 
 

@@ -13,6 +13,7 @@ const getStatsForUser = async (userId) => {
   const res = {};
 
   res.barDateData = {};
+  res.pieChartStatusData = {};
 
   for(let application of userData.applications){
     if(application.date in res.barDateData){
@@ -20,6 +21,13 @@ const getStatsForUser = async (userId) => {
     }
     else{
       res.barDateData[application.date] = 1;
+    }
+
+    if(application.status in res.pieChartStatusData){
+      res.pieChartStatusData[application.status]++;
+    }
+    else{
+      res.pieChartStatusData[application.status] = 1;
     }
   }
 
