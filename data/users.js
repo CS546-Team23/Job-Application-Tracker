@@ -61,7 +61,24 @@ const registerUser = async (
   return { signupCompleted: true };
 };
 
-const loginUser = async (email, password) => {};
+const loginUser = async (email, password) => {
+  email = validateEmail(email);
+  password = checkIsProperPassword(password);
+
+  const usersCollection = await users();
+
+  const getUser = await usersCollection.findOne({
+    email: email.toLowerCase(),
+  });
+  if (!getUser) throw new Error("Either email or password invalid");
+
+  let passwordCheck = await bcrypt.compare(password, getUser.password);
+  if (!passwordCheck) throw new Error("Either email or password invalid");
+
+  const { password: hashedPassword, applications, ...restDetails } = getUser;
+
+  return restDetails;
+};
 
 const updateUser = async (email, updateObject) => {};
 

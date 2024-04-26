@@ -1,5 +1,7 @@
 import { ObjectId } from "mongodb";
 import moment from "moment";
+
+import validator from "validator";
 export const isInputProvided = (variable, variableName) => {
   if (variable === undefined || variable === null)
     throw new Error(`Error: ${variableName || "variable"} not provided`);
@@ -79,10 +81,8 @@ export const isFollowupDateValid = (dateStr, varName) => {
 
 export const validateEmail = (email) => {
   checkIsProperString(email, "email");
-  var validRegex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  if (!email.match(validRegex)) throw new Error("email is invald");
 
+  if (!validator.isEmail(email)) throw new Error("Email address is invalid");
   return email;
 };
 
