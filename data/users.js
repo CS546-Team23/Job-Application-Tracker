@@ -80,6 +80,58 @@ const loginUser = async (email, password) => {
   return restDetails;
 };
 
-const updateUser = async (email, updateObject) => {};
+const updateUser = async (email, updateObject) => {
+  email = validateEmail(email);
+  if (updateObject.firstName)
+    updateObject.firstName = checkIsProperFirstOrLastName(
+      updateObject.firstName,
+      "First name"
+    );
+  if (updateObject.lastName)
+    updateObject.lastName = checkIsProperFirstOrLastName(
+      updateObject.firstName,
+      "First name"
+    );
+  if (updateObject.city)
+    updateObject.city = checkIsProperString(updateObject.city, "city");
+  if (updateObject.state) state = checkIsValidState(state);
+  if (updateObject.desiredPosition)
+    updateObject.desiredPosition = checkIsProperString(
+      updateObject.desiredPosition,
+      "Desired position"
+    );
+
+  if (updateObject.dreamJob)
+    updateObject.dreamJob = checkIsProperString(
+      updateObject.dreamJob,
+      "Dream Job"
+    );
+
+  if (updateObject.password) {
+    updateObject.password = checkIsProperPassword(updateObject.password);
+    updateObject.password = await bcrypt.hash(
+      updateObject.password,
+      saltRounds
+    );
+  }
+
+  const usersCollection = await users();
+
+  let updatedUser = await usersCollection.findOneAndUpdate(
+    { email: email.toLowerCase() },
+    { $set: updateObject },
+    { returnDocument: "after" }
+  );
+
+  if (!updatedUser) throw new Error("No user with email has been registered");
+
+  const {
+    password: hashedPassword,
+    applications,
+    ...otherDetails
+  } = updatedUser;
+
+  return otherDetails;
+};
 
 export default { registerUser, loginUser, updateUser };
