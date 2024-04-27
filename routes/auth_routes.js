@@ -168,4 +168,34 @@ router
         }
 
         //Login in user
+        try{
+            const loginUser = await userData.loginUser(
+                userInput.email,
+                userInput.password
+            );
+            if(loginUser){
+                req.session.user = {
+                    firstName: loginUser.firstName,
+                    lastName: loginUser.lastName,
+                    city: loginUser.city,
+                    state: loginUser.state,
+                    desiredPosition:loginUser.desiredPosition,
+                    dreamJob: loginUser.dreamJob,
+                    email: loginUser.email
+                };
+                res
+                    .cookie('AuthenticationState', 'Authenticated')
+                    .redirect('/dashboard');
+            } else {
+                res.status(400).render('login', {
+                    layout: 'main',
+                    message: 'Incorrect username and/or password. Please try again.'
+                });
+            }
+        }catch(e){
+            res.status(400).render('error', {
+                layout: 'main',
+                message: e
+            });
+        };
     });
