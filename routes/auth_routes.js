@@ -1,7 +1,6 @@
 import {Router} from 'express';
 const router = Router();
 import * as userData from '../data/users.js';
-import bcrypt from 'bcryptjs';
 import * as helper from '../helpers.js';
 
 router
@@ -159,7 +158,7 @@ router
             errors.password = e;
         };
 
-        //Check for errors; if yes, respond with status 400
+        //Check for errors; if errors, respond with status 400
         if(Object.keys(errors).length !== 0){
             res.status(400).render('login',{
                 layout: 'main',

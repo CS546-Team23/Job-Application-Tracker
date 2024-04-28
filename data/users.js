@@ -94,7 +94,7 @@ const updateUser = async (email, updateObject) => {
   if (updateObject.lastName)
     updateObject.lastName = checkIsProperFirstOrLastName(
       updateObject.firstName,
-      "First name"
+      "Last name"
     );
   if (updateObject.city)
     updateObject.city = checkIsProperString(updateObject.city, "city");
