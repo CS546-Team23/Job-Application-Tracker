@@ -7,10 +7,14 @@ router
     .route('/login')
     .get(async (req, res) => {
         try{
-            res.render('login', {layout: 'main'});
+            res.render('login', {
+                layout: 'main',
+                nav: 'publicNav'
+            });
         }catch(e){
             return res.status(404).render('errors', {
                 layout: 'main',
+                nav: 'publicNav',
                 message: e
             });
         };
@@ -37,6 +41,7 @@ router
         if(Object.keys(errors).length !== 0){
             res.status(400).render('login',{
                 layout: 'main',
+                nav: 'publicNav',
                 errors: errors
             });
         }
@@ -63,12 +68,14 @@ router
             } else {
                 res.status(400).render('login', {
                     layout: 'main',
+                    nav: 'publicNav',
                     message: 'Incorrect username and/or password. Please try again.'
                 });
             }
         }catch(e){
             res.status(400).render('error', {
                 layout: 'main',
+                nav: 'publicNav',
                 message: e
             });
         };

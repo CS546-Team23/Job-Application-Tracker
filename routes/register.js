@@ -7,10 +7,14 @@ router
     .route('/register')
     .get(async (req, res) => {
         try{
-            res.render('register', {layout: 'main'});
+            res.render('register', {
+                layout: 'main',
+                nav: 'publicNav'
+            });
         } catch(e){
             return res.status(404).render('errors', {
                 layout: 'main',
+                nav: 'publicNav',
                 message: e
             });
         };
@@ -113,16 +117,21 @@ router
                 userInput.password
             );
             if(registerUser.signupCompleted){
-                res.render('login', {layout:'main'});
+                res.render('login', {
+                    layout:'main',
+                    nav: 'publicNav'
+                });
             } else{
                 res.status(500).render('error', {
                     layout: 'main',
+                    nav: 'publicNav',
                     message: 'Internal Server Error'
                 });
             }
         }catch(e){
             res.status(400).render('error', {
                 layout: 'main',
+                nav: 'publicNav',
                 message: e
             });
         };
