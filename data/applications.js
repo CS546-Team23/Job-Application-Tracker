@@ -42,7 +42,7 @@ user.applications.push(newJobApp);
 
 const {_id, ...userDetails} = user;
 const updatedUser = await userCollection.findOneAndUpdate({ _id: _id }, { $set: userDetails }, { returnDocument: "after" })
-return updatedUser
+return { updatedUser:updatedUser, app_id:newJobApp._id.toString() };
 
 },
 

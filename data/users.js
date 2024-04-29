@@ -60,7 +60,7 @@ const registerUser = async (
   if (!insertUser.acknowledged || !insertUser.insertedId)
     throw new Error("Could not add a user");
 
-  return { signupCompleted: true };
+  return { signupCompleted: true, user_id: insertUser.insertedId };
 };
 
 const loginUser = async (email, password) => {
