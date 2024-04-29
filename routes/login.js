@@ -3,6 +3,7 @@ const router = Router();
 import * as userData from "../data/users.js";
 import { usersData } from "../data/index.js";
 import * as helper from "../helpers.js";
+import xss from "xss";
 
 router
   .route("/")
@@ -22,6 +23,9 @@ router
   })
   .post(async (req, res) => {
     const userInput = req.body;
+    for (let key in userInput) {
+      userInput[key] = xss(userInput[key]);
+    }
     let errors = {};
 
     //Validate email
@@ -74,7 +78,7 @@ router
         });
       }
     } catch (e) {
-      res.status(400).render("error", {
+      res.status(400).render("errors", {
         layout: "main",
         nav: "publicNav",
         message: e.message,
