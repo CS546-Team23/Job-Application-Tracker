@@ -1,3 +1,4 @@
+{{#with application}}
 <article>
     <h2>{{jobPosition}}</h2>
     <section>
@@ -15,3 +16,17 @@
         </dl>
     </section>
 </article>
+<h2>Notes</h2>
+    {{#if Notes}}
+        <ul>
+        {{#each Notes}}
+            <li class="note" data-id={{_id}}>
+                <cite>{{date}} {{time}}</cite>
+                <p>{{text}}</p>
+                <button class="editButton">Edit</button>
+                <button class="deleteButton">Delete</button>
+            </li>
+        {{/each}}
+        </ul>
+    {{/if}}
+{{/with}}

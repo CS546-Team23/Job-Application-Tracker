@@ -26,12 +26,22 @@ const data = [
           date: "05/01/24",
           followUpDate: "05/22/24",
           appResume: "resume1.docx",
-          status: "Saved",
+          status: "Accepted",
           Notes: [
             {
-              date: "03/14/24",
-              time: "4:00pm",
-              text: "Asked for an interview on 3/19/24"
+                date: "03/14/24",
+                time: "4:00pm",
+                text: "Asked for an interview"
+            },
+            {
+                date: "03/14/24",
+                time: "4:00pm",
+                text: "Got an interview"
+            },
+            {
+                date: "03/14/24",
+                time: "4:00pm",
+                text: "Got an offer"
             }
           ]
         },
@@ -680,7 +690,7 @@ for (const i_user of data) {
             i_app.appResume,
             i_app.status
         );
-        
+
         for (const i_note of i_app.Notes) {
             await notes.createNote(
                 app_id.toString(),

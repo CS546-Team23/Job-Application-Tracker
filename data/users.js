@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 const saltRounds = 16;
 
 import { users } from "../config/mongoCollections.js";
+import { ObjectId } from "mongodb";
+
 
 import {
   checkIsProperString,
@@ -10,6 +12,7 @@ import {
   checkIsValidState,
   checkIsProperNumber,
   validateEmail,
+  validateId
 } from "../helpers.js";
 
 const registerUser = async (
@@ -136,4 +139,24 @@ const updateUser = async (email, updateObject) => {
   return otherDetails;
 };
 
-export default { registerUser, loginUser, updateUser };
+const getUserById = async function(userId) {
+  userId = validateId(userId);
+
+  const userCollection = await users();
+  const foundUser =  await userCollection.findOne(
+    { "_id": new ObjectId(userId) },
+  );
+  if (!foundUser) throw new Error(`User Not found with id ${userId}`);
+
+  // remove all object ids
+  foundUser._id = foundUser._id.toString();
+  foundUser.applications.map((app) => {
+    app.Notes = app.Notes.map((note) => { note._id = note._id.toString(); return note; });
+    app._id = app._id.toString();
+    return app;
+  });
+
+  return foundUser;
+}
+
+export default { registerUser, loginUser, updateUser, getUserById };
