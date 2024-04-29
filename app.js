@@ -3,6 +3,16 @@ const app = express();
 import configRoutes from "./routes/index.js";
 import exphbs from "express-handlebars";
 
+import session from "express-session";
+
+app.use(
+  session({
+    name: "AuthenticationSession",
+    secret: "This is a secret.. shhh don't tell anyone",
+    saveUninitialized: false,
+    resave: false,
+  })
+);
 
 const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   // If the user posts to the server with a property called _method, rewrite the request's method
@@ -17,12 +27,31 @@ const rewriteUnsupportedBrowserMethods = (req, res, next) => {
   next();
 };
 
+app.use("/", (req, res, next) => {
+  if (req.originalUrl === "/") {
+    if (req.session.user) {
+      return res.redirect("/dashboard");
+    }
+  }
+  next();
+});
+
+app.use("/dashboard", (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  next();
+});
+
 app.use("/public", express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(rewriteUnsupportedBrowserMethods);
 
-app.engine("handlebars", exphbs.engine({ defaultLayout: "main", partialsDir: ['views/partials/'] }));
+app.engine(
+  "handlebars",
+  exphbs.engine({ defaultLayout: "main", partialsDir: ["views/partials/"] })
+);
 app.set("view engine", "handlebars");
 
 // TODO: Routes to be defined in index.js

@@ -1,6 +1,5 @@
 import { Router } from "express";
 const router = Router();
-import * as userData from "../data/users.js";
 import { usersData } from "../data/index.js";
 import * as helper from "../helpers.js";
 import xss from "xss";
@@ -17,7 +16,7 @@ router
       return res.status(404).render("errors", {
         layout: "main",
         nav: "publicNav",
-        message: e,
+        message: e.message,
       });
     }
   })
@@ -69,7 +68,8 @@ router
         };
         res
           .cookie("AuthenticationState", "Authenticated")
-          .redirect("/dashboard");
+          .redirect("/statistics");
+        // .redirect("/dashboard");
       } else {
         res.status(400).render("login", {
           layout: "main",

@@ -1,7 +1,13 @@
 //import express, express router as shown in lecture code
 import { Router } from "express";
+import { static as staticDir } from "express";
+import path from "path";
 // import data from '../public/data/jobTrackerApplication.users.json' with { type: "json" };
 const router = Router();
+
+router.route("/").get(async (req, res) => {
+  return res.sendFile(path.resolve("static/landing.html"));
+});
 
 router.route("/dashboard").get(async (_req, res) => {
   const applications = data.find(
