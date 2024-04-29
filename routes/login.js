@@ -68,8 +68,8 @@ router
         };
         res
           .cookie("AuthenticationState", "Authenticated")
-          .redirect("/statistics");
-        // .redirect("/dashboard");
+          // .redirect("/statistics");
+        .redirect("/dashboard");
       } else {
         res.status(400).render("login", {
           layout: "main",
