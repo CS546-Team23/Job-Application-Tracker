@@ -1,5 +1,4 @@
-$("signup-form").submit((event) => {
-  console.log("I am here");
+$("#signup-form").submit((event) => {
   //Get all error message placeholders
   let firstNameError = $("#firstName + span.form-error");
   let lastNameError = $("#lastName + span.form-error");
@@ -220,6 +219,7 @@ $("signup-form").submit((event) => {
     errors.password = "Error: Password must be at least 8 characters long.";
   }
 
+
   //Validate confirm password
   let conpassword = $("#confirmPassword").val().trim();
   if (!conpassword) {
@@ -268,6 +268,10 @@ $("#signin-form").submit((event) => {
   //Reset error messages
   emailError.html("");
   passwordError.html("");
+
+
+  //Errors Object
+  let errors = {};
 
   //Validate Email
   let email = $("#email").val().trim();
