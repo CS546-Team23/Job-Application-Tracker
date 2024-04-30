@@ -219,6 +219,7 @@ $("#signup-form").submit((event) => {
     errors.password = "Error: Password must be at least 8 characters long.";
   }
 
+
   //Validate confirm password
   let conpassword = $("#confirmPassword").val().trim();
   if (!conpassword) {
@@ -267,6 +268,7 @@ $("#signin-form").submit((event) => {
   //Reset error messages
   emailError.html("");
   passwordError.html("");
+
 
   //Errors Object
   let errors = {};

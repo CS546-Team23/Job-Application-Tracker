@@ -29,6 +29,7 @@ const registerUser = async (
   password = checkIsProperPassword(password);
   if (!checkIsValidState(state)) throw new Error("Error: Invalid state passed");
 
+
   if (desiredPosition)
     desiredPosition = checkIsProperString(desiredPosition, "Desiered position");
   if (dreamJob) dreamJob = checkIsProperString(dreamJob, "Dream job");

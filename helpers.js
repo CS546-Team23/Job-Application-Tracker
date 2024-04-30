@@ -88,7 +88,9 @@ export const isFollowupDateValid = (dateStr, varName) => {
 export const validateEmail = (email) => {
   checkIsProperString(email, "email");
 
+
   if (!validator.isEmail(email)) throw new Error("Error: Email address is invalid");
+
   isInputProvided(email, 'Email');
   email = checkIsProperString(email, "Email");
   var validRegex =
