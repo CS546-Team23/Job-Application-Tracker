@@ -2,7 +2,7 @@
 import { Router } from "express";
 import { static as staticDir } from "express";
 import path from "path";
-import data from '../public/data/jobTrackerApplication.users.json' with { type: "json" };
+// import data from '../public/data/jobTrackerApplication.users.json' with { type: "json" };
 const router = Router();
 
 router.route("/").get(async (req, res) => {
