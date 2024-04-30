@@ -1,6 +1,7 @@
 import { ObjectId } from "mongodb";
 import moment from "moment";
 
+import validator from "validator";
 
 export const checkForHtml = (str) => {
   let regexHtml = (/<[^>]+>/i);
@@ -85,6 +86,9 @@ export const isFollowupDateValid = (dateStr, varName) => {
 };
 
 export const validateEmail = (email) => {
+  checkIsProperString(email, "email");
+
+  if (!validator.isEmail(email)) throw new Error("Error: Email address is invalid");
   isInputProvided(email, 'Email');
   email = checkIsProperString(email, "Email");
   var validRegex =
@@ -124,16 +128,16 @@ export const checkPassword = (password) => {
   };
   if (!(/[A-Z]/).test(password))
     throw new Error(
-      `Error: Password must contain at least one uppercase character !`
+      `Error: Password must contain at least one uppercase character!`
     );
   if (!(/\d/).test(password)){
     throw new Error(
-      `Error: Password must contain at least one number !`
+      `Error: Password must contain at least one number!`
     );
   };
   if (!(/[^a-zA-Z0-9]/).test(password)){
     throw new Error(
-      `Error: Password must contain at least one special character !`
+      `Error: Password must contain at least one special character!`
     );
   };
   return password;
@@ -155,7 +159,7 @@ export const checkCity = (city) => {
   city = checkIsProperString(city, 'City');
   checkForHtml(city);
   if(/[0-9]/.test(city)){
-    throw new Error("Error: City cannot contain any numbers");
+    throw new Error("Error: City cannot contain any numbers.");
   } else if(city.length < 3 || city.length > 30){
     throw new Error("Error: City cannot be less than 3 characters or longer than 30 characters.")
   }
