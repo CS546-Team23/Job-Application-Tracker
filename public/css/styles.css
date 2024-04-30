@@ -366,13 +366,15 @@ form#signin-form button + a{
 #error-page h1{
     font-weight:900;
     text-align:center;
-    margin-bottom:3em;
+    margin-bottom:2em;
 }
 #error-page p{
     color:#BF0603;
     font-weight:bold;
     font-size:1.2em;
     line-height:1.5;
+    text-align:center;
+    margin-bottom:3em;
 }
 
 /*************************************
