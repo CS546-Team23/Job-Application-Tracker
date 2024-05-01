@@ -392,3 +392,35 @@ footer{
 footer p{
     margin-bottom:0;
 }
+
+/*************************************
+    KPI Styles
+**************************************/
+
+.kpi-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.kpi {
+    text-align: center;
+}
+
+.kpi-value {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.kpi-label {
+    font-size: 14px;
+    color: #666;
+}

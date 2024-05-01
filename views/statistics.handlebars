@@ -1,8 +1,25 @@
-<div>
+<div class="kpi-container">
+    <div class="kpi">
+        <div class="kpi-value" id="totalApplications">250</div>
+        <div class="kpi-label">Total Applications</div>
+    </div>
+    <div class="kpi">
+        <div class="kpi-value" id="totalCompanies">20</div>
+        <div class="kpi-label">Number of Companies Applied</div>
+    </div>
+</div>
+
+<div id="chartContainer">
     <canvas id="myChart" width="400px" height="400px"></canvas>
 </div>
 <div>
     <canvas id="pieChart" width="400px" height="400px"></canvas>
+</div>
+
+<div>
+    <h4 id="ghostedApplications"></h4>
+    <table id="applicationTable">
+    </table>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>

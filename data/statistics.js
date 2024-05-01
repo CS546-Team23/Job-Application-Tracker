@@ -14,10 +14,14 @@ const getStatsForUser = async (email) => {
 
   const res = {};
 
+  let allCompanies = [];
+
+  res.totalApplications = userData.applications.length;
   res.barDateData = {};
   res.pieChartStatusData = {};
 
   for (let application of userData.applications) {
+    allCompanies.push(application.companyName);
     if (application.date in res.barDateData) {
       res.barDateData[application.date]++;
     } else {
@@ -30,6 +34,8 @@ const getStatsForUser = async (email) => {
       res.pieChartStatusData[application.status] = 1;
     }
   }
+
+  res.noOfCompaniesApplied = [...new Set(allCompanies)].length;
 
   return res;
 };

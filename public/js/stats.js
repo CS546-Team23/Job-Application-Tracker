@@ -1,16 +1,19 @@
 let chart = document.getElementById("myChart");
+let totalApplications = document.getElementById("totalApplications");
+let totalCompanies = document.getElementById("totalCompanies");
+let table = document.getElementById("applicationTable");
+let ghostedApplicationText = document.getElementById("ghostedApplications");
 
 let statisticsData = undefined;
 
 const createBarChart = (barData) => {
   const canvas = document.getElementById("myChart");
-  canvas.width = 400;
-  canvas.height = 600;
-
+  canvas.width = 200;
+  canvas.height = 500;
   const lab = Object.keys(barData);
   const dataToShow = Object.values(barData);
-  console.log(lab);
-  console.log(dataToShow);
+  // console.log(lab);
+  // console.log(dataToShow);
 
   const barChartData = {
     labels: lab,
@@ -52,8 +55,8 @@ const createBarChart = (barData) => {
       },
       responsive: true,
       maintainAspectRatio: false,
-      width: 800,
-      height: 600,
+      width: 1000,
+      height: 1000,
     },
   };
 
@@ -151,6 +154,9 @@ const loadContent = async () => {
     createPieChart(statsData.pieChartStatusData);
 
     //#endregion
+    console.log(data.data);
+    totalApplications.innerHTML = data.data.totalApplications;
+    totalCompanies.innerHTML = data.data.noOfCompaniesApplied;
   } catch (error) {
     console.log(error.mesaage);
   }

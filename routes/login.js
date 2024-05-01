@@ -5,7 +5,7 @@ import * as helper from "../helpers.js";
 import xss from "xss";
 
 router
-  .route("/")
+  .route("/login")
   .get(async (req, res) => {
     try {
       res.render("login", {
@@ -69,8 +69,7 @@ router
         };
         res
           .cookie("AuthenticationState", "Authenticated")
-          .redirect("/statistics");
-        // .redirect("/dashboard");
+          .redirect("/dashboard");
       } else {
         res.status(400).render("login", {
           layout: "main",
@@ -86,5 +85,10 @@ router
       });
     }
   });
+
+router.route("/logout").get(async (req, res) => {
+  if (req.session.user) req.session.destroy();
+  return res.redirect("/login");
+});
 
 export default router;
