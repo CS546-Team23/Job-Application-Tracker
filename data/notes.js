@@ -34,7 +34,7 @@ async createNote(jobappId, notes){
         { returnDocument: "after" }
     );
 
-    return updatedUser;
+    return { user:updatedUser, note:newNote };
 }, 
 
 async getNoteById(noteId){

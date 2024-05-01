@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="../public/css/applicationPage.css">
-<h1>Dashboard</h1>
+<h1>Welcome {{user.firstName}} {{user.lastName}}!</h1>
 <h2>Applications</h2>
 
 <table id="applicationTable">
@@ -13,7 +13,7 @@
     </tr>
     {{#each applications}}
     <tr>
-        <td><a href="/applications/{{_id.$oid}}">{{jobPosition}}</a></td>
+        <td><a href="/applications/{{_id}}">{{jobPosition}}</a></td>
         <td>{{companyName}}</td>
         <td>{{appCity}}</td>
         <td>{{appState}}</td>

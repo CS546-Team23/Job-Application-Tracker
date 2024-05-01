@@ -1,3 +1,4 @@
+{{#with application}}
 <article>
     <h2>{{jobPosition}}</h2>
     <section>
@@ -15,3 +16,22 @@
         </dl>
     </section>
 </article>
+<h2>Notes</h2>
+    <form id="note-form">
+        <label id="form-label" for="note-input">New Note</label>
+        <textarea id="note-input"></textarea>
+        <input type="submit" value="Submit" id="note-submit">
+    </form>
+    <p id="note-error"></p>
+    <button id="form-reset">Reset</button>
+    <ol id="note-list">
+        {{#each Notes}}
+            <li class="note" data-id={{_id}}>
+                <cite>{{date}} {{time}}</cite>
+                <p class="note-content">{{text}}</p>
+                <button onclick="javascript:void(0)" class="editButton">Edit</button>
+                <button onclick="javascript:void(0)" class="deleteButton">Delete</button>
+            </li>
+        {{/each}}
+    </ul>
+{{/with}}
