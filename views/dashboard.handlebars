@@ -1,6 +1,9 @@
 <link rel="stylesheet" href="../public/css/applicationPage.css">
 <h1>Welcome {{user.firstName}} {{user.lastName}}!</h1>
-<h2>Applications</h2>
+<div id="applicationHeader">
+    <h2>Applications</h2>
+    <button id="newAppButton">New Application</button>
+</div>
 
 <table id="applicationTable">
     <tr>
@@ -22,3 +25,14 @@
     </tr>
     {{/each}}
 </table>
+
+<!-- Modal -->
+<div id="newAppModal">
+    <!-- Modal Content -->
+    <div id="newAppContent">
+        <button id="closeNewApp">X</button>
+        <form id="newAppForm">
+            <p>Hello!</p>
+        </form>
+    </div>
+</div>
