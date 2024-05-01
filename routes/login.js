@@ -58,6 +58,7 @@ router
       );
       if (loginUser) {
         req.session.user = {
+          userId: loginUser._id.toString(),
           firstName: loginUser.firstName,
           lastName: loginUser.lastName,
           city: loginUser.city,

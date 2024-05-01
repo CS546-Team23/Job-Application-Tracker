@@ -2,6 +2,8 @@ import bcrypt from "bcrypt";
 const saltRounds = 16;
 
 import { users } from "../config/mongoCollections.js";
+import { ObjectId } from "mongodb";
+
 
 import {
   checkIsProperString,
@@ -10,6 +12,7 @@ import {
   checkIsValidState,
   checkIsProperNumber,
   validateEmail,
+  validateId
 } from "../helpers.js";
 
 const registerUser = async (
@@ -27,7 +30,8 @@ const registerUser = async (
   city = checkIsProperString(city, "City");
   email = validateEmail(email);
   password = checkIsProperPassword(password);
-  if (!checkIsValidState(state)) throw new Error("Invalid state passed");
+  if (!checkIsValidState(state)) throw new Error("Error: Invalid state passed");
+
 
   if (desiredPosition)
     desiredPosition = checkIsProperString(desiredPosition, "Desiered position");
@@ -39,7 +43,7 @@ const registerUser = async (
     email: email.toLowerCase(),
   });
 
-  if (ifUserExist) throw new Error("User with email already exists");
+  if (ifUserExist) throw new Error("Error: User with email already exists");
 
   let hashedPassword = await bcrypt.hash(password, saltRounds);
 
@@ -58,9 +62,9 @@ const registerUser = async (
   const insertUser = await usersCollection.insertOne(newUser);
 
   if (!insertUser.acknowledged || !insertUser.insertedId)
-    throw new Error("Could not add a user");
+    throw new Error("Error: Could not add a user");
 
-  return { signupCompleted: true };
+  return { signupCompleted: true, user_id: insertUser.insertedId };
 };
 
 const loginUser = async (email, password) => {
@@ -72,10 +76,10 @@ const loginUser = async (email, password) => {
   const getUser = await usersCollection.findOne({
     email: email.toLowerCase(),
   });
-  if (!getUser) throw new Error("Either email or password invalid");
+  if (!getUser) throw new Error("Error: Either email or password invalid");
 
   let passwordCheck = await bcrypt.compare(password, getUser.password);
-  if (!passwordCheck) throw new Error("Either email or password invalid");
+  if (!passwordCheck) throw new Error("Error: Either email or password invalid");
 
   const { password: hashedPassword, applications, ...restDetails } = getUser;
 
@@ -95,7 +99,7 @@ const updateUser = async (email, updateObject) => {
       "First name"
     );
   if (updateObject.city)
-    updateObject.city = checkIsProperString(updateObject.city, "city");
+    updateObject.city = checkIsProperString(updateObject.city, "City");
   if (updateObject.state) state = checkIsValidState(state);
   if (updateObject.desiredPosition)
     updateObject.desiredPosition = checkIsProperString(
@@ -125,7 +129,7 @@ const updateUser = async (email, updateObject) => {
     { returnDocument: "after" }
   );
 
-  if (!updatedUser) throw new Error("No user with email has been registered");
+  if (!updatedUser) throw new Error("Error: No user with email has been registered");
 
   const {
     password: hashedPassword,
@@ -136,4 +140,24 @@ const updateUser = async (email, updateObject) => {
   return otherDetails;
 };
 
-export default { registerUser, loginUser, updateUser };
+const getUserById = async function(userId) {
+  userId = validateId(userId);
+
+  const userCollection = await users();
+  const foundUser =  await userCollection.findOne(
+    { "_id": new ObjectId(userId) },
+  );
+  if (!foundUser) throw new Error(`User Not found with id ${userId}`);
+
+  // remove all object ids
+  foundUser._id = foundUser._id.toString();
+  foundUser.applications.map((app) => {
+    app.Notes = app.Notes.map((note) => { note._id = note._id.toString(); return note; });
+    app._id = app._id.toString();
+    return app;
+  });
+
+  return foundUser;
+}
+
+export default { registerUser, loginUser, updateUser, getUserById };
