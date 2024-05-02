@@ -11,7 +11,7 @@ router.route("/notes/:noteid").delete(async(req, res) => {
     try {
         valId = validateId(req.params.noteid);
     } catch(e) {
-        return res.json({success:false, error:e});
+        return res.json({success:false, error:e.message});
     }
 
     // try deleting
@@ -61,7 +61,7 @@ router.route("/applications/notes/:appid").post(async (req, res) => {
     try {
         valId = validateId(req.params.appid);
     } catch(e) {
-        return res.json({success:false, error:e});
+        return res.json({success:false, error:e.message});
     }
     
     // check text body

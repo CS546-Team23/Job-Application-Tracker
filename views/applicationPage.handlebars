@@ -9,8 +9,8 @@
                 <dd>{{appCity}}, {{appState}}</dd>
             <dt>Date Applied:</dt>
                 <dd>{{date}}</dd>
-            <dt>Follow-Up Date:</dt>
-                <dd>{{followUpDate}}</dd>
+            {{#if followUpDate}}<dt>Follow-Up Date:</dt>
+                <dd>{{followUpDate}}</dd>{{/if}}
             <dt>Status:</dt>
                 <dd>{{status}}</dd>
         </dl>

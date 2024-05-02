@@ -12,8 +12,8 @@ async createApplication(userId, companyName, jobPosition, appCity, appState,foll
     appCity = checkIsProperString(appCity, "job-city");
     appState = checkIsProperString(appState, "job-state");
     const date = currDate();
-    followUpDate = isFollowupDateValid(followUpDate, followUpDate);
-    appResume = checkIsProperString(appResume, 'filePath');
+    if (followUpDate) followUpDate = isFollowupDateValid(followUpDate, followUpDate);
+    if (appResume) appResume = checkIsProperString(appResume, 'filePath');
     status = checkIsProperString(status, 'status');
 
     const userCollection = await users();
@@ -32,11 +32,11 @@ let newJobApp = {
     appCity : appCity,
     appState : appState,
     date : date,
-    followUpDate : followUpDate,
-    appResume : appResume,
     status : status,
     Notes : [],
 }
+if (followUpDate) newJobApp.followUpDate = followUpDate;
+if (appResume) newJobApp.appResume = appResume;
 
 user.applications.push(newJobApp);
 
@@ -46,17 +46,24 @@ return { updatedUser:updatedUser, app_id:newJobApp._id.toString()};
 
 },
 
-async getJobappByid(jobappId){
-    jobappId = validateId(jobappId, jobappId.toString());
-    const userCollection = await users();
-    const foundJobapp =  await userCollection.findOne(
-        { "applications._id": new ObjectId(jobappId) },
-        { projection: { _id: 0, "applications.$": 1 } }
-    );
-    if (!foundJobapp) throw new Error(`User Not found with ${jobappId}`);
+async getJobappByid(jobappId, userId){
+  jobappId = validateId(jobappId, jobappId.toString());
+  const search = {
+    "applications._id": new ObjectId(jobappId)
+  };
+  if (userId !== undefined) {
+    userId = validateId(userId, userId.toString());
+    search._id = new ObjectId(userId);
+  }
+  
+  const userCollection = await users();
+  const foundJobapp =  await userCollection.findOne(
+    search,
+    { projection: { _id: 0, "applications.$": 1 } }
+  );
+  if (!foundJobapp) throw new Error(`User Not found with ${jobappId}`);
 
-    return foundJobapp.applications[0];
-
+  return foundJobapp.applications[0];
 },
 
 async updateJobapp(jobappId, updatedObj){
