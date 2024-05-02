@@ -1,0 +1,16 @@
+{{#each companies}}
+<div class="company-card">
+    <a class="company-link" href="javascript:void(0)" data-id="{{_id}}">{{company}}</a>
+  {{!-- <img src="{{logoUrl}}" alt="Company Logo"> --}}
+  <div class="company-details">
+    <h3>{{company}}</h3>
+    <p>{{sector}}</p>
+  </div>
+</div>
+{{/each}}
+
+<div id="company-modal" class="modal">
+  <div class="modal-content">
+    </div>
+  <button id="close-modal" class="close-button">&times;</button>
+</div>
