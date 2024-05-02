@@ -1,16 +1,22 @@
 let chart = document.getElementById("myChart");
+let totalApplications = document.getElementById("totalApplications");
+let totalCompanies = document.getElementById("totalCompanies");
+// let table = document.getElementById("applicationTable");
+let ghostedApplicationText = document.getElementById("ghostedApplications");
 
 let statisticsData = undefined;
+let myChart = undefined;
+let filteredData = {};
+let selectedBarType = "bar";
 
-const createBarChart = (barData) => {
+const createBarChart = (barData, graphType) => {
   const canvas = document.getElementById("myChart");
-  canvas.width = 400;
-  canvas.height = 600;
-
+  canvas.width = 200;
+  canvas.height = 500;
   const lab = Object.keys(barData);
   const dataToShow = Object.values(barData);
-  console.log(lab);
-  console.log(dataToShow);
+  // console.log(lab);
+  // console.log(dataToShow);
 
   const barChartData = {
     labels: lab,
@@ -25,7 +31,7 @@ const createBarChart = (barData) => {
     ],
   };
   const config = {
-    type: "bar",
+    type: graphType,
     data: barChartData,
     options: {
       scales: {
@@ -52,12 +58,12 @@ const createBarChart = (barData) => {
       },
       responsive: true,
       maintainAspectRatio: false,
-      width: 800,
-      height: 600,
+      width: 1000,
+      height: 1000,
     },
   };
 
-  let myChart = new Chart(document.getElementById("myChart"), config);
+  myChart = new Chart(document.getElementById("myChart"), config);
 };
 
 const createPieChart = (pieData) => {
@@ -143,7 +149,7 @@ const loadContent = async () => {
     statisticsData = data.data;
 
     //#region bar chart
-    createBarChart(statsData.barDateData);
+    createBarChart(statsData.barDateData, "bar");
     //#endregion
 
     //#region pie chart data
@@ -151,9 +157,81 @@ const loadContent = async () => {
     createPieChart(statsData.pieChartStatusData);
 
     //#endregion
+    console.log(data.data);
+    totalApplications.innerHTML = data.data.totalApplications;
+    totalCompanies.innerHTML = data.data.noOfCompaniesApplied;
+    ghostedApplicationText.innerHTML = data.data.ghostedApplications;
   } catch (error) {
     console.log(error.mesaage);
   }
 };
 
 document.addEventListener("DOMContentLoaded", loadContent);
+
+const changeGraphType = () => {
+  let selectedGraph = document.getElementById("graphSelect").value;
+
+  // Example logic to handle the selected graph type
+  if (selectedGraph === "bar") {
+    // Code to display bar graph
+    console.log("Bar graph selected");
+    if (myChart) {
+      myChart.destroy();
+    }
+    // createBarChart(statisticsData.barDateData, "bar");
+    selectedBarType = "bar";
+  } else if (selectedGraph === "line") {
+    if (myChart) {
+      myChart.destroy();
+    }
+    // Code to display line graph
+    console.log("Line graph selected");
+    // createBarChart(statisticsData.barDateData, "line");
+    selectedBarType = "line";
+  }
+
+  createBarChart(filteredData, selectedBarType);
+};
+
+const changeTimeRange = () => {
+  filteredData = {};
+  let selectedRange = document.getElementById("timeRangeSelect").value;
+
+  if (myChart) {
+    myChart.destroy();
+  }
+
+  if (selectedRange === "lastWeek") {
+    for (let key in statisticsData.barDateData) {
+      if (getDateDifference(key) <= 7) {
+        filteredData[key] = statisticsData.barDateData[key];
+      }
+    }
+  } else if (selectedRange === "lastMonth") {
+    for (let key in statisticsData.barDateData) {
+      if (getDateDifference(key) <= 30) {
+        filteredData[key] = statisticsData.barDateData[key];
+      }
+    }
+  } else {
+    filteredData = statisticsData.barDateData;
+  }
+
+  createBarChart(filteredData, selectedBarType);
+};
+
+//#region helper
+const getDateDifference = (date2) => {
+  // Convert the dates to JavaScript Date objects
+  var d1 = new Date();
+  var d2 = new Date(date2);
+
+  // Find the difference in milliseconds
+  var differenceMs = Math.abs(d1 - d2);
+
+  // Convert milliseconds to days
+  var differenceDays = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
+
+  return differenceDays;
+};
+//#endregion
