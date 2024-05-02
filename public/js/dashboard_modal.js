@@ -71,9 +71,9 @@ function stateCheck(input, item_name, name, error_obj) {
     }
 }
 
-function inputCheck(input, item_name, name, min_length, max_length, error_obj) {
-    //Validate input
-    if (input === undefined || input === "" || input === null) {
+function inputCheck(input, item_name, name, min_length, max_length, error_obj, required=true) {
+    // Validate input
+    if ( input === undefined || input === null || (input === "" && required) ) {
         error_obj[item_name] = `Error: ${name} must be provided.`;
     } else if (typeof input !== "string") {
         error_obj[item_name] = `Error: Invalid input for ${name}.`;
@@ -87,8 +87,6 @@ function inputCheck(input, item_name, name, min_length, max_length, error_obj) {
         error_obj[item_name] = `Error: ${name} must be at most ${max_length} characters long.`;
     }
 }
-
-$("#newAppModal").hide();
 
 $('#closeNewApp').on("click", (event) => {
     event.preventDefault();
@@ -140,9 +138,10 @@ $("#newAppForm").submit((event) => {
     let appState = $("#appState").val().trim();
     stateCheck(appState, "appState", "Application State", errors);
 
-    // Validate App City
+    // Validate Status
     let status = $("#status").val().trim();
-    inputCheck(status, "status", "Status", 3, 30, errors);
+    const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired"];
+    if (!statuses.includes(status)) { errors.status = `Status must be one of the following: ${statuses.join(", ")}`; }
   
     if (Object.keys(errors).length !== 0) {
         event.preventDefault();
