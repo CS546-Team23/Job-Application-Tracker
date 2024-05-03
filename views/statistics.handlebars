@@ -1,45 +1,51 @@
-<div class="kpi-container">
-    <div class="kpi">
-        <div class="kpi-value" id="totalApplications">250</div>
-        <div class="kpi-label">Total Applications</div>
-    </div>
-    <div class="kpi">
-        <div class="kpi-value" id="totalCompanies">20</div>
-        <div class="kpi-label">Number of Companies Applied</div>
-    </div>
+<h1 class="stats-header">Application Statistics</h1>
+<div class="chart-container">
+    <div class="kpi-chart">
         <div class="kpi">
-            <div class="kpi-value" id="ghostedApplications">20</div>
-            <div class="kpi-label">Number of Ghosted Applications</div>
+            <p class="kpi-value" id="totalApplications">250</p>
+            <p class="kpi-label">Total Applications</p>
         </div>
+        <div class="kpi">
+            <p class="kpi-value" id="totalCompanies">20</p>
+            <p class="kpi-label">Number of Companies Applied</p>
+        </div>
+        <div class="kpi">
+            <p class="kpi-value" id="ghostedApplications">20</p>
+            <p class="kpi-label">Number of Ghosted Applications</p>
+        </div>
+    </div>
+    <div class="pie-chart">
+        <h2>Status</h2>
+        <div>
+            <canvas id="pieChart" width="400px" height="400px"></canvas>
+        </div>
+    </div>
 </div>
-
-<div>
-    {{!-- <h3>Bar Graph Data</h3> --}}
-    <div class="options">
-        <div class="timeRangeDropDown">
-            <label for="timeRangeSelect">Select Time Range:</label>
-            <select id="timeRangeSelect" onchange="changeTimeRange()">
-                <option value="lastWeek">Last Week</option>
-                <option value="lastMonth">Last Month</option>
-                <option value="all">All</option>
-            </select>
+<div class="bar-chart">
+    <h2>Date-wise Applications</h2>
+    <div>
+        <div class="options">
+            <div class="timeRangeDropDown">
+                <label for="timeRangeSelect">Select Time Range:</label>
+                <select id="timeRangeSelect" onchange="changeTimeRange()">
+                    <option value="lastWeek">Last Week</option>
+                    <option value="lastMonth">Last Month</option>
+                    <option value="all">All</option>
+                </select>
+                </div>
+            <div class="barDropDown">
+                <label for="graphSelect">Select Graph Type:</label>
+                <select id="graphSelect" onchange="changeGraphType()">
+                    <option value="bar" selected>Bar Graph</option>
+                    <option value="line">Line Graph</option>
+                </select>
             </div>
-        <div class="barDropDown">
-            <label for="graphSelect">Select Graph Type:</label>
-            <select id="graphSelect" onchange="changeGraphType()">
-                <option value="bar" selected>Bar Graph</option>
-                <option value="line">Line Graph</option>
-            </select>
+        </div>
+        <div id="chartContainer">
+            <canvas id="myChart" width="400px" height="400px"></canvas>
         </div>
     </div>
-    <div id="chartContainer">
-        <canvas id="myChart" width="400px" height="400px"></canvas>
-    </div>
 </div>
-<div>
-    <canvas id="pieChart" width="400px" height="400px"></canvas>
-</div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>

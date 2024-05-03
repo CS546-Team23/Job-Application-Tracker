@@ -35,10 +35,33 @@ app.use("/", (req, res, next) => {
   }
   next();
 });
-
+app.use('/register', (req, res, next) => {
+  if(req.session.user){
+    return res.redirect('/dashboard');
+  }
+  next();
+});
+app.use('/login', (req,res, next) => {
+  if(req.method === 'GET' && req.session.user){
+    return res.redirect('/dashboard');
+  }
+  next();
+});
 app.use("/dashboard", (req, res, next) => {
   if (!req.session.user) {
     return res.redirect("/login");
+  }
+  next();
+});
+app.use('/statistics', (req, res, next) => {
+  if(!req.session.user){
+    return res.redirect('/login');
+  }
+  next();
+});
+app.use('/company', (req, res, next) => {
+  if(!req.session.user){
+    return res.redirect('/login');
   }
   next();
 });

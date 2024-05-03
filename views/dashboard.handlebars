@@ -2,7 +2,7 @@
 <h1>Welcome {{user.firstName}} {{user.lastName}}!</h1>
 <div id="applicationHeader">
     <h2>Applications</h2>
-    <button id="newAppButton">New Application</button>
+    <button id="newAppButton" class="btn orange-btn dark">New Application</button>
 </div>
 
 <table id="applicationTable">
@@ -21,7 +21,7 @@
         <td>{{appCity}}</td>
         <td>{{appState}}</td>
         <td>{{date}}</td>
-        <td>{{status}}</td>
+        <td><span>{{status}}</span></td>
     </tr>
     {{/each}}
 </table>

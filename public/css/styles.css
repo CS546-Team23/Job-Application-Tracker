@@ -15,6 +15,14 @@ main{
 h1, h2, h3, h4, h5, h6{
     font-weight:900;
 }
+@media(min-width:768px){
+    nav#private + main{
+        min-height:calc(100vh - 126px);
+    }
+    nav#public + main{
+        min-height:calc(100vh - 150px);
+    }
+}
 
 /* Buttons */
 /**************************************
@@ -53,6 +61,12 @@ White (against dark backgrounds only): class="btn white-btn"
     background-color:transparent;
     color:#f1ab0a;
     text-decoration:none;
+}
+.orange-btn.dark:hover,
+.orange-btn.dark:focus,
+.orange-btn.dark.btn:active{
+    border-color:#171d27;
+    color:#171d27
 }
 /* Green Button */
 .green-btn{
@@ -255,6 +269,12 @@ nav .nav-links .nav-links:active{
     border-bottom-color:transparent;
 }
 @media(min-width:768px){
+    nav#private{
+        height:56px;
+    }
+    nav#public{
+        height:80px;
+    }
     nav .container{
         flex-direction:row;
         justify-content:space-between;
@@ -388,60 +408,140 @@ footer{
     font-style:italic;
     text-align:center;
     padding:1.5em 0;
+    height:70px;
 }
 footer p{
     margin-bottom:0;
 }
 
 /*************************************
-    KPI Styles
+    Chart Styles
 **************************************/
-
-.kpi-container {
+h1.stats-header{
+    text-align:center;
+}
+.chart-container h2,
+.bar-chart h2{
+    font-size:1.5em;
+    text-align:center;
+    margin-bottom:1em;
+}
+.chart-container{
+    padding:2em 0;
+}
+.chart-container .kpi-chart,
+.chart-container .pie-chart,
+.bar-chart{
+    border:1px solid #ccc;
+    border-radius:10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding:1em;
+    max-width:100%;
+}
+.chart-container .kpi-chart{
+    margin-bottom:1.2em;
+}
+.chart-container .kpi-chart {
     display: flex;
     justify-content: space-around;
-    align-items: center;
-    width: 90%;
-    margin: 0 auto;
-    margin-top: 50px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: flex-start;
+    width:100%;
 }
-
-.kpi {
+.kpi-chart .kpi {
     text-align: center;
 }
-
-.kpi-value {
+.kpi-chart .kpi-value {
     font-size: 24px;
-    font-weight: bold;
+    font-weight: 800;
     margin-bottom: 5px;
 }
-
-.kpi-label {
+.kpi-chart .kpi-label {
     font-size: 14px;
     color: #666;
 }
-
-/*************************************
-    KPI Styles
-**************************************/
-
+.chart-container .pie-chart{
+    padding:0;
+}
+.bar-chart{
+    margin-bottom:3em;
+    padding:0;
+}
+.bar-chart h2,
+.pie-chart h2{
+    padding:1em 1em 0;
+}
 .options{
-    display: flex;
+    display:flex;
+    justify-content:space-between;
+    padding:0 1em;
+}
+.timeRangeDropDown{
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
 }
 .barDropDown {
-    align-items: center;
-    justify-content: flex-end;
-    margin: 20px;
-    margin-right: 100px;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
 }
-
-.timeRangeDropDown{
-    align-items: center;
-    justify-content: flex-start;
-    margin: 20px;
-    margin-left: 100px;
+.timeRangeDropDown label,
+.barDropDown label{
+    display:block;
+    text-align:right;
+    font-size:.9em;
+    color:#666;
+    font-weight:bold;
+    margin-bottom:4px;
+}
+.timeRangeDropDown select,
+.barDropDown select{
+    width:100%;
+    border:1px solid #ccc;
+    border-radius:5px;
+    color:#666;
+}
+.timeRangeDropDown select:focus
+.timeRangeDropDown select:focus-visible,
+.barDropDown select:focus,
+.barDropDown select:focus-visible{
+    outline-color:#ccc;
+    border-left:2px solid #ccc;
+}
+@media(min-width:768px){
+    .chart-container{
+        display:flex;
+        justify-content:space-between;
+    }
+    .chart-container .pie-chart{
+        width:52%;
+        margin-bottom:0;
+    }
+    .chart-container .kpi-chart{
+        flex-direction:column;
+        align-items:center;
+        justify-content:space-evenly;
+        width:45%;
+        margin-bottom:0;
+    }
+    .timeRangeDropDown,
+    .barDropDown{
+        flex-direction:row;
+        align-items:center;
+    }
+    .timeRangeDropDown label,
+    .barDropDown label{
+        white-space:nowrap;
+        margin-bottom:0;
+        margin-right:4px;
+        text-align:left;
+    }
+}
+@media(min-width:992px){
+    .chart-container .kpi-chart{
+        width:30%;
+    }
+    .chart-container .pie-chart{
+        width:68%;
+    }
 }
