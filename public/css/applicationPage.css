@@ -1,3 +1,4 @@
+/* Table Styles */
 table {
     width: 100%;
     margin: 1vw;
@@ -9,7 +10,6 @@ table {
     border-collapse: collapse;
     table-layout: fixed; 
 }
-
 th {
     background-color: #05a870;
     color: white;
@@ -20,19 +20,20 @@ th a {
 td a {
     color: #05a870;
 }
-
 tr:nth-child(even) {
     background-color:#def5ec;
 }
-
 td, th {
     padding : 5px;
+    word-wrap: break-word;
 }
 
+/* Link Style */
 a {
     display: inline;
 }
 
+/* Modal */
 #newAppModal {
     position: fixed; /* Stay in place */
     left: 50%;
@@ -68,4 +69,12 @@ a {
 }
 #applicationHeader #newAppButton{
     max-width:200px;
+}
+
+/*****************************
+    Dark Table Styles
+*****************************/
+#applicationTable{
+    background-color:#232a35;
+    border-color:#ccc;
 }

@@ -1,22 +1,29 @@
 <h1 class="stats-header">Application Statistics</h1>
-<div class="kpi-container">
-    <div class="kpi">
-        <div class="kpi-value" id="totalApplications">250</div>
-        <div class="kpi-label">Total Applications</div>
-    </div>
-    <div class="kpi">
-        <div class="kpi-value" id="totalCompanies">20</div>
-        <div class="kpi-label">Number of Companies Applied</div>
-    </div>
-        <div class="kpi">
-            <div class="kpi-value" id="ghostedApplications">20</div>
-            <div class="kpi-label">Number of Ghosted Applications</div>
-        </div>
-</div>
-
 <div class="chart-container">
-    <div class="bar-chart">
-        {{!-- <h3>Bar Graph Data</h3> --}}
+    <div class="kpi-chart">
+        <div class="kpi">
+            <p class="kpi-value" id="totalApplications">250</p>
+            <p class="kpi-label">Total Applications</p>
+        </div>
+        <div class="kpi">
+            <p class="kpi-value" id="totalCompanies">20</p>
+            <p class="kpi-label">Number of Companies Applied</p>
+        </div>
+        <div class="kpi">
+            <p class="kpi-value" id="ghostedApplications">20</p>
+            <p class="kpi-label">Number of Ghosted Applications</p>
+        </div>
+    </div>
+    <div class="pie-chart">
+        <h2>Status</h2>
+        <div>
+            <canvas id="pieChart" width="400px" height="400px"></canvas>
+        </div>
+    </div>
+</div>
+<div class="bar-chart">
+    <h2>Date-wise Applications</h2>
+    <div>
         <div class="options">
             <div class="timeRangeDropDown">
                 <label for="timeRangeSelect">Select Time Range:</label>
@@ -37,9 +44,6 @@
         <div id="chartContainer">
             <canvas id="myChart" width="400px" height="400px"></canvas>
         </div>
-    </div>
-    <div class="pie-chart">
-        <canvas id="pieChart" width="400px" height="400px"></canvas>
     </div>
 </div>
 
