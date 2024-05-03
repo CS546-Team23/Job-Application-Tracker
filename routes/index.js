@@ -8,7 +8,7 @@ import statsRoutes from "./statistics.js";
 
 const constructorMethod = (app) => {
   app.use("/register", registerRoute);
-  app.use("/login", loginRoute);
+  app.use("/", loginRoute);
   app.use("/", userRoutes);
   app.use("/statistics", statsRoutes);
   app.use("/api", apiRoute);

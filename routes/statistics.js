@@ -16,7 +16,7 @@ router.route("/getStats").get(async (req, res) => {
 router.route("/").get(async (req, res) => {
   return res
     .status(200)
-    .render("statistics", { layout: "main", nav: "publicNav" });
+    .render("statistics", { layout: "main", nav: "privateNav" });
 });
 
 export default router;

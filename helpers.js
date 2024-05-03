@@ -4,11 +4,11 @@ import moment from "moment";
 import validator from "validator";
 
 export const checkForHtml = (str) => {
-  let regexHtml = (/<[^>]+>/i);
-  if(regexHtml.test(str)){
-    throw new Error('Error: HTML elements are not allowed.');
+  let regexHtml = /<[^>]+>/i;
+  if (regexHtml.test(str)) {
+    throw new Error("Error: HTML elements are not allowed.");
   }
-}
+};
 
 export const isInputProvided = (variable, variableName) => {
   if (variable === undefined || variable === null)
@@ -88,10 +88,10 @@ export const isFollowupDateValid = (dateStr, varName) => {
 export const validateEmail = (email) => {
   checkIsProperString(email, "email");
 
+  if (!validator.isEmail(email))
+    throw new Error("Error: Email address is invalid");
 
-  if (!validator.isEmail(email)) throw new Error("Error: Email address is invalid");
-
-  isInputProvided(email, 'Email');
+  isInputProvided(email, "Email");
   email = checkIsProperString(email, "Email");
   var validRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -113,42 +113,37 @@ export const checkIsProperNumber = (val, variableName) => {
 };
 
 export const checkPassword = (password) => {
-  isInputProvided(password, 'Password');
-  if(typeof password !== 'string'){
-      throw new Error('Error: Password is not a valid string.');
-  };
-  if (password.length < 8){
-    throw new Error(
-      `Error: Password must be at least 8 characters long!`
-    );
-  };
+  isInputProvided(password, "Password");
+  if (typeof password !== "string") {
+    throw new Error("Error: Password is not a valid string.");
+  }
+  if (password.length < 8) {
+    throw new Error(`Error: Password must be at least 8 characters long!`);
+  }
   password = password.trim();
-  if(!password){
-    throw new Error(
-      'Error: Password cannot be empty string.'
-    );
-  };
-  if (!(/[A-Z]/).test(password))
+  if (!password) {
+    throw new Error("Error: Password cannot be empty string.");
+  }
+  if (!/[A-Z]/.test(password))
     throw new Error(
       `Error: Password must contain at least one uppercase character!`
     );
-  if (!(/\d/).test(password)){
-    throw new Error(
-      `Error: Password must contain at least one number!`
-    );
-  };
-  if (!(/[^a-zA-Z0-9]/).test(password)){
+  if (!/\d/.test(password)) {
+    throw new Error(`Error: Password must contain at least one number!`);
+  }
+  if (!/[^a-zA-Z0-9]/.test(password)) {
     throw new Error(
       `Error: Password must contain at least one special character!`
     );
-  };
+  }
   return password;
 };
 
 export const checkIsProperFirstOrLastName = (name, nameVar) => {
   isInputProvided(name, nameVar);
   name = checkIsProperString(name, nameVar);
-  if (/[0-9]/.test(name)) throw new Error(`Error: ${nameVar} contains a number.`); 
+  if (/[0-9]/.test(name))
+    throw new Error(`Error: ${nameVar} contains a number.`);
   if (name.length < 2)
     throw new Error(`Error: ${nameVar} should have at least 2 charaters.`);
   if (name.length > 25)
@@ -157,13 +152,15 @@ export const checkIsProperFirstOrLastName = (name, nameVar) => {
 };
 
 export const checkCity = (city) => {
-  isInputProvided(city, 'City');
-  city = checkIsProperString(city, 'City');
+  isInputProvided(city, "City");
+  city = checkIsProperString(city, "City");
   checkForHtml(city);
-  if(/[0-9]/.test(city)){
+  if (/[0-9]/.test(city)) {
     throw new Error("Error: City cannot contain any numbers.");
-  } else if(city.length < 3 || city.length > 30){
-    throw new Error("Error: City cannot be less than 3 characters or longer than 30 characters.")
+  } else if (city.length < 3 || city.length > 30) {
+    throw new Error(
+      "Error: City cannot be less than 3 characters or longer than 30 characters."
+    );
   }
   return city;
 };
@@ -174,12 +171,16 @@ export const checkIsProperPassword = (password) => {
   if (password.includes(" ") || password.length < 8)
     throw new Error(`Error: Password must be at least 8 characters long.`);
   if (password === password.toLowerCase())
-    throw new Error(`Error: Password should have at least one uppercase letter.`);
+    throw new Error(
+      `Error: Password should have at least one uppercase letter.`
+    );
   if (!/\d/.test(password))
     throw new Error(`Error: Password should have at least one number.`);
   // got regex from google
   if (!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password))
-    throw new Error(`Error: Password should have at least one special character.`);
+    throw new Error(
+      `Error: Password should have at least one special character.`
+    );
 
   return password;
 };
@@ -256,6 +257,7 @@ export const checkIsValidState = (state) => {
   return false;
 };
 
+
 export const checkIsProperStatus = (status, statusName) => {
   const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired"];
   isInputProvided(status, "status");
@@ -264,3 +266,18 @@ export const checkIsProperStatus = (status, statusName) => {
   if (!statuses.includes(status)) { throw new Error(`Error: ${statusName} must be one of the following: [${statuses}]`); }
   return status;
 }
+
+export const getDateDifference = (date2) => {
+  // Convert the dates to JavaScript Date objects
+  var d1 = new Date();
+  var d2 = new Date(date2);
+
+  // Find the difference in milliseconds
+  var differenceMs = Math.abs(d1 - d2);
+
+  // Convert milliseconds to days
+  var differenceDays = Math.floor(differenceMs / (1000 * 60 * 60 * 24));
+
+  return differenceDays;
+};
+
