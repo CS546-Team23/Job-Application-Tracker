@@ -15,6 +15,14 @@ main{
 h1, h2, h3, h4, h5, h6{
     font-weight:900;
 }
+@media(min-width:768px){
+    nav#private + main{
+        min-height:calc(100vh - 126px);
+    }
+    nav#public + main{
+        min-height:calc(100vh - 150px);
+    }
+}
 
 /* Buttons */
 /**************************************
@@ -53,6 +61,12 @@ White (against dark backgrounds only): class="btn white-btn"
     background-color:transparent;
     color:#f1ab0a;
     text-decoration:none;
+}
+.orange-btn.dark:hover,
+.orange-btn.dark:focus,
+.orange-btn.dark.btn:active{
+    border-color:#171d27;
+    color:#171d27
 }
 /* Green Button */
 .green-btn{
@@ -255,6 +269,12 @@ nav .nav-links .nav-links:active{
     border-bottom-color:transparent;
 }
 @media(min-width:768px){
+    nav#private{
+        height:56px;
+    }
+    nav#public{
+        height:80px;
+    }
     nav .container{
         flex-direction:row;
         justify-content:space-between;
@@ -388,60 +408,80 @@ footer{
     font-style:italic;
     text-align:center;
     padding:1.5em 0;
+    height:70px;
 }
 footer p{
     margin-bottom:0;
 }
 
 /*************************************
-    KPI Styles
+    Chart Styles
 **************************************/
-
+h1.stats-header{
+    text-align:center;
+}
+/* KPI Styles */
 .kpi-container {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    width: 90%;
-    margin: 0 auto;
     margin-top: 50px;
+    width:100%;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 .kpi {
     text-align: center;
 }
-
 .kpi-value {
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 5px;
 }
-
 .kpi-label {
     font-size: 14px;
     color: #666;
 }
-
-/*************************************
-    KPI Styles
-**************************************/
-
+@media(min-width:768px){
+    .kpi-container{
+        width: 90%;
+        margin: 0 auto;
+    }
+}
+/* Bar and Pie Chart Styles */
+.chart-container{
+    padding:2em 0;
+}
+.chart-container .bar-chart,
+.chart-container .pie-chart{
+    border:1px solid #ccc;
+    border-radius:10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding:1em;
+    max-width:100%;
+}
+.chart-container .bar-chart{
+    margin-bottom:1.5em;
+}
 .options{
-    display: flex;
+    
 }
 .barDropDown {
-    align-items: center;
-    justify-content: flex-end;
-    margin: 20px;
-    margin-right: 100px;
+    
 }
-
 .timeRangeDropDown{
-    align-items: center;
-    justify-content: flex-start;
-    margin: 20px;
-    margin-left: 100px;
+    
+}
+@media(min-width:768px){
+    .chart-container{
+        display:flex;
+        justify-content:space-between;
+    }
+    .chart-container .bar-chart,
+    .chart-container .pie-chart{
+        width:48%;
+        margin-bottom:0;
+    }
 }
