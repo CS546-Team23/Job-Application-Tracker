@@ -257,6 +257,16 @@ export const checkIsValidState = (state) => {
   return false;
 };
 
+
+export const checkIsProperStatus = (status, statusName) => {
+  const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired"];
+  isInputProvided(status, "status");
+  status = checkIsProperString(status, "status");
+  status = status.charAt(0).toUpperCase() + status.substring(1).toLowerCase();
+  if (!statuses.includes(status)) { throw new Error(`Error: ${statusName} must be one of the following: [${statuses}]`); }
+  return status;
+}
+
 export const getDateDifference = (date2) => {
   // Convert the dates to JavaScript Date objects
   var d1 = new Date();
@@ -270,3 +280,4 @@ export const getDateDifference = (date2) => {
 
   return differenceDays;
 };
+
