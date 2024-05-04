@@ -2,6 +2,7 @@ import { Router } from "express";
 import xss from 'xss';
 import note from '../data/notes.js';
 import { validateId, checkIsProperString } from "../helpers.js";
+import application from '../data/applications.js';
 
 const router = Router();
 
@@ -55,7 +56,6 @@ router.route("/notes/:noteid").delete(async(req, res) => {
 });
 
 router.route("/applications/notes/:appid").post(async (req, res) => {
-    console.log("hello");
     // check id
     let valId;
     try {
@@ -84,6 +84,24 @@ router.route("/applications/notes/:appid").post(async (req, res) => {
 
     // return successful note
     return res.json({success:true, note:newNote});
+});
+
+router.route("/applications/:appid").delete(async(req, res) => {
+    // check id
+    let appid;
+    try {
+        appid = validateId(req.params.appid);
+    } catch(e) {
+        return res.json({success:false, error:e.message});
+    }
+
+    // try to delete 
+    try {
+        await application.removeJobapp(appid);
+        return res.json({success:true});
+    } catch(e) {
+        return res.json({success:false, error:e.message});
+    }
 });
 
 export default router;

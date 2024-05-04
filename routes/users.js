@@ -193,6 +193,27 @@ router.route("/applications/:id").get(async (req, res) => {
       message: `Internal Server Error`,
     });
   }
+}).delete(async (req, res) => {
+  // validate id
+  let jobId;
+  try {
+    jobId = helper.validateId(req.params.id);
+  }
+  catch(e) {
+    return res.json({error:e.messsage});
+  }
+
+  // try to delete 
+  try {
+    await application.removeJobapp(jobId);
+    return res.redirect("/dashboard");
+  } catch(e) {
+    return res.status(500).render("errors", {
+      layout: "main",
+      nav: "publicNav",
+      message: `Internal Server Error`,
+    });
+  }
 });
 
 export default router;
