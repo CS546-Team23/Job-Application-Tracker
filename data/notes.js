@@ -63,12 +63,18 @@ async getNoteById(noteId){
     return foundNote;
 },
 
-async removeNoteById(noteId){
+async removeNoteById(noteId, userId){
     noteId = validateId(noteId);
+    const search = {
+        "applications.Notes._id": ObjectId.createFromHexString(noteId)
+    };
+    if (userId !== undefined) {
+        userId = validateId(userId, userId.toString());
+        search._id = ObjectId.createFromHexString(userId)
+    }
+
     const usersCollection = await users();
-    const userWithNote = await usersCollection.findOne({
-        "applications.Notes._id": ObjectId.createFromHexString(noteId),
-    });
+    const userWithNote = await usersCollection.findOne(search);
     if (!userWithNote) {
         throw new Error(`Error: User not found with note id: ${noteId}`);
     }
@@ -96,13 +102,20 @@ async removeNoteById(noteId){
 
 },
 
-async updateNoteById(noteId, updateNote){
+async updateNoteById(noteId, updateNote, userId){
     noteId = validateId(noteId);
+    const search = {
+        "applications.Notes._id": ObjectId.createFromHexString(noteId)
+    };
+    if (userId !== undefined) {
+        userId = validateId(userId, userId.toString());
+        search._id = ObjectId.createFromHexString(userId)
+    }
+
+
     updateNote = checkIsProperString(updateNote, 'updated-note');
     const userCollection = await users();
-    const userWithNote = await userCollection.findOne({
-        "applications.Notes._id": ObjectId.createFromHexString(noteId)
-    });
+    const userWithNote = await userCollection.findOne(search);
 
     if (!userWithNote) {
         throw new Error(`Error: User not found with note id: ${noteId}`);

@@ -17,7 +17,7 @@ router.route("/notes/:noteid").delete(async(req, res) => {
 
     // try deleting
     try {
-        await note.removeNoteById(valId);
+        await note.removeNoteById(valId, req.session.user.userId);
     } catch(e) {
         return res.json({success:false, error:e.message});
     }
@@ -45,7 +45,7 @@ router.route("/notes/:noteid").delete(async(req, res) => {
     // try updating
     let newNote;
     try {
-        await note.updateNoteById(valId, cleanText);
+        await note.updateNoteById(valId, cleanText, req.session.user.userId);
         newNote = await note.getNoteById(valId);
     } catch(e) {
         return res.json({success:false, error:e.message});
