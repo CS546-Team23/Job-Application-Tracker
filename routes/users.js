@@ -171,7 +171,6 @@ router.route("/applications/:id").get(async (req, res) => {
   }
 
   const updateObject = {
-    userId : req.session.user.userId,
     companyName : userInput.companyName,
     jobPosition : userInput.jobPosition,
     appCity : userInput.appCity,
@@ -183,7 +182,8 @@ router.route("/applications/:id").get(async (req, res) => {
   try {
     await application.updateJobapp(
       jobId,
-      updateObject
+      updateObject,
+      req.session.user.userId
     );
     return res.redirect("back");
   } catch(e) {
@@ -203,17 +203,7 @@ router.route("/applications/:id").get(async (req, res) => {
     return res.json({error:e.messsage});
   }
 
-  // try to delete 
-  try {
-    await application.removeJobapp(jobId);
-    return res.redirect("/dashboard");
-  } catch(e) {
-    return res.status(500).render("errors", {
-      layout: "main",
-      nav: "publicNav",
-      message: `Internal Server Error`,
-    });
-  }
+  
 });
 
 export default router;

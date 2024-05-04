@@ -68,8 +68,8 @@ async getJobappByid(jobappId, userId){
   return foundApp;
 },
 
-async updateJobapp(jobappId, updatedObj){
-
+async updateJobapp(jobappId, updatedObj, userId){
+    
     jobappId = validateId(jobappId, jobappId.toString());
     updatedObj.companyName = checkIsProperString(updatedObj.companyName, "company-name");
     updatedObj.jobPosition = checkIsProperString(updatedObj.jobPosition, "job-position");
@@ -79,11 +79,16 @@ async updateJobapp(jobappId, updatedObj){
     if (updatedObj.appResume) { updatedObj.appResume = checkIsProperString(updatedObj.appResume, 'filePath'); }
     updatedObj.status = checkIsProperString(updatedObj.status, 'status');
 
+    const search = {
+      "applications._id": new ObjectId(jobappId)
+    };
+    if (userId !== undefined) {
+      userId = validateId(userId, userId.toString());
+      search._id = new ObjectId(userId);
+    }
 
     const usersCollection = await users();
-    const user = await usersCollection.findOne({
-        "applications._id": ObjectId.createFromHexString(jobappId),
-      });
+    const user = await usersCollection.findOne(search);
       if (user == null) {
         throw new Error(`Error: User not found with job-application-id: ${jobappId}`);
       }
@@ -121,13 +126,18 @@ async updateJobapp(jobappId, updatedObj){
 
 },
 
-async removeJobapp(jobappId) {
+async removeJobapp(jobappId, userId) {
     jobappId = validateId(jobappId);
+    const search = {
+      "applications._id": ObjectId.createFromHexString(jobappId)
+    };
+    if (userId !== undefined) {
+      userId = validateId(userId, userId.toString());
+      search._id = ObjectId.createFromHexString(userId);
+    }
 
     const userCollection = await users();
-    const userWithApplication = await userCollection.findOne({
-        "applications._id": ObjectId.createFromHexString(jobappId),
-    });
+    const userWithApplication = await userCollection.findOne(search);
 
     if (!userWithApplication) {
         throw new Error(`Error: User not found with application id: ${jobappId}`);

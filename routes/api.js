@@ -95,9 +95,10 @@ router.route("/applications/:appid").delete(async(req, res) => {
         return res.json({success:false, error:e.message});
     }
 
+    console.log(req.session.user.userId);
     // try to delete 
     try {
-        await application.removeJobapp(appid);
+        await application.removeJobapp(appid, req.session.user.userId);
         return res.json({success:true});
     } catch(e) {
         return res.json({success:false, error:e.message});
