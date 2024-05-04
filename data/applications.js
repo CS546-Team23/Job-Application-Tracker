@@ -61,9 +61,11 @@ async getJobappByid(jobappId, userId){
     search,
     { projection: { _id: 0, "applications.$": 1 } }
   );
-  if (!foundJobapp) throw new Error(`User Not found with ${jobappId}`);
+  if (!foundJobapp) throw new Error(`No application found with id ${jobappId}`);
 
-  return foundJobapp.applications[0];
+  const foundApp = foundJobapp.applications[0];
+  foundApp._id = foundApp._id.toString();
+  return foundApp;
 },
 
 async updateJobapp(jobappId, updatedObj){
@@ -73,9 +75,8 @@ async updateJobapp(jobappId, updatedObj){
     updatedObj.jobPosition = checkIsProperString(updatedObj.jobPosition, "job-position");
     updatedObj.appCity = checkIsProperString(updatedObj.appCity, "job-city");
     updatedObj.appState = checkIsProperString(updatedObj.appState, "job-state");
-    updatedObj.date = currDate();
-    updatedObj.followUpDate = isFollowupDateValid(updatedObj.followUpDate, updatedObj.followUpDate);
-    updatedObj.appResume = checkIsProperString(updatedObj.appResume, 'filePath');
+    if (updatedObj.followUpDate) { updatedObj.followUpDate = isFollowupDateValid(updatedObj.followUpDate, updatedObj.followUpDate); }
+    if (updatedObj.appResume) { updatedObj.appResume = checkIsProperString(updatedObj.appResume, 'filePath'); }
     updatedObj.status = checkIsProperString(updatedObj.status, 'status');
 
 

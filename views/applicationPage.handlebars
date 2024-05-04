@@ -1,4 +1,6 @@
+<link rel="stylesheet" href="../public/css/applicationPage.css">
 {{#with application}}
+<button id="newAppButton" class="btn orange-btn dark">Edit Application</button>
 <article>
     <h2>{{jobPosition}}</h2>
     <section>
@@ -23,7 +25,7 @@
         <input type="submit" value="Submit" id="note-submit">
     </form>
     <p id="note-error"></p>
-    <button id="form-reset">Reset</button>
+    <button id="form-reset">Reset Form</button>
     <ol id="note-list">
         {{#each Notes}}
             <li class="note" data-id={{_id}}>
@@ -35,3 +37,4 @@
         {{/each}}
     </ul>
 {{/with}}
+{{> appModal method="POST" route=(concat "/applications/" application._id)}}

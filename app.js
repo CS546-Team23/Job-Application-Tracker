@@ -2,7 +2,7 @@ import express from "express";
 const app = express();
 import configRoutes from "./routes/index.js";
 import exphbs from "express-handlebars";
-
+import $ from "jquery";
 import session from "express-session";
 
 app.use(
@@ -53,6 +53,12 @@ app.use("/dashboard", (req, res, next) => {
   }
   next();
 });
+app.use("/applications", (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  next();
+});
 app.use('/statistics', (req, res, next) => {
   if(!req.session.user){
     return res.redirect('/login');
@@ -76,6 +82,33 @@ app.engine(
   exphbs.engine({ defaultLayout: "main", partialsDir: ["views/partials/"] })
 );
 app.set("view engine", "handlebars");
+
+// concat helper function
+let hbs = exphbs.create({});
+hbs.handlebars.registerHelper('concat', function() {
+  var outStr = '';
+  for(var arg in arguments){
+    if(typeof arguments[arg]!='object'){
+      outStr += arguments[arg];
+    }
+  }
+  return outStr;
+});
+// select option with attribute
+hbs.handlebars.registerHelper('select', function( value, options ) {
+  // content of page
+  let content = options.fn(this);
+  // find where value is equal to target
+  const search_term = `value="${value}"`;
+  let opt_index = content.search(search_term);
+  // if not found, return as is
+  if (opt_index === -1) { return content; }
+  // else find end of search term in string
+  opt_index += search_term.length;
+  // insert selected parameter
+  content = content.slice(0, opt_index) + " selected" + content.slice(opt_index);
+  return content;
+});
 
 // TODO: Routes to be defined in index.js
 configRoutes(app);

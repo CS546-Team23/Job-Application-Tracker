@@ -12,17 +12,7 @@ router.route("/").get(async (_req, res) => {
   return res.sendFile(path.resolve("static/landing.html"));
 });
 
-// TODO: Error Checking
-router.route("/dashboard").get(async (req, res) => {
-  const user_info = await user.getUserById(req.session.user.userId);
-  return res.render("dashboard", {
-    applications: user_info.applications,
-    nav: "privateNav",
-    user: req.session.user
-  });
-}).post(async (req, res) => {
-  // apply xss to user inputs
-  const userInput = req.body;
+function validateApplicationData(userInput) {
   for (let key in userInput) {
     userInput[key] = xss(userInput[key]);
   }
@@ -80,6 +70,22 @@ router.route("/dashboard").get(async (req, res) => {
     errors.status = e.message;
   }
 
+  return errors;
+}
+
+// TODO: Error Checking
+router.route("/dashboard").get(async (req, res) => {
+  const user_info = await user.getUserById(req.session.user.userId);
+  return res.render("dashboard", {
+    applications: user_info.applications,
+    nav: "privateNav",
+    user: req.session.user
+  });
+}).post(async (req, res) => {
+  // apply xss to user inputs
+  const userInput = req.body;
+  let errors = validateApplicationData(userInput);
+
   //Check for Errors; if errors, respond with status 400
   if (Object.keys(errors).length !== 0) {
     const user_info = await user.getUserById(req.session.user.userId);
@@ -114,15 +120,72 @@ router.route("/dashboard").get(async (req, res) => {
   }
 });
 
-router.route("/applications/:id").get(async (req, res) => {
+router.route("/applications/:id").get(async (req, res) => {  
+  // validate id
+  let jobId;
+  try {
+    jobId = helper.validateId(req.params.id);
+  }
+  catch(e) {
+    return res.status(400).render("errors", {
+      layout: "main",
+      nav: "publicNav",
+      message: e.message,
+    });
+  }
+
+  // get application
   let app;
   try {
-    app = await application.getJobappByid(req.params.id, req.session.user.userId);
+    app = await application.getJobappByid(jobId, req.session.user.userId);
+  }
+  catch(e) {
+    return res.status(404).render("errors", {
+      layout: "main",
+      nav: "publicNav",
+      message: `${e.message}`,
+    });
+  }
+  return res.render("applicationPage", { nav: "privateNav", application:app });
+}).post(async (req, res) => {
+  // validate id
+  let jobId;
+  try {
+    jobId = helper.validateId(req.params.id);
   }
   catch(e) {
     return res.json({error:e.messsage});
   }
-  return res.render("applicationPage", { nav: "privateNav", application:app });
+  
+  // apply xss to user inputs
+  const userInput = req.body;
+  let errors = validateApplicationData(userInput);
+  
+  //Check for Errors; if errors, respond with status 400
+  if (Object.keys(errors).length !== 0) {
+    return res.status(400).json(errors);
+  }
+
+  try {
+    await application.updateJobapp(
+      jobId,
+      {
+        userId : req.session.user.userId,
+        companyName : userInput.companyName,
+        jobPosition : userInput.jobPosition,
+        appCity : userInput.appCity,
+        appState : userInput.appState,
+        status : userInput.status
+      }
+    );
+    return res.redirect("back");
+  } catch(e) {
+    return res.status(500).render("errors", {
+      layout: "main",
+      nav: "publicNav",
+      message: `Internal Server Error`,
+    });
+  }
 });
 
 export default router;
