@@ -75,7 +75,7 @@ async updateJobapp(jobappId, updatedObj){
     updatedObj.jobPosition = checkIsProperString(updatedObj.jobPosition, "job-position");
     updatedObj.appCity = checkIsProperString(updatedObj.appCity, "job-city");
     updatedObj.appState = checkIsProperString(updatedObj.appState, "job-state");
-    if (updatedObj.followUpDate) { updatedObj.followUpDate = isFollowupDateValid(updatedObj.followUpDate, updatedObj.followUpDate); }
+    if (updatedObj.followUpDate) { updatedObj.followUpDate = isFollowupDateValid(updatedObj.followUpDate, "followUpDate"); }
     if (updatedObj.appResume) { updatedObj.appResume = checkIsProperString(updatedObj.appResume, 'filePath'); }
     updatedObj.status = checkIsProperString(updatedObj.status, 'status');
 

@@ -5,6 +5,7 @@ import user from '../data/users.js';
 import application from '../data/applications.js';
 import * as helper from "../helpers.js";
 import xss from "xss";
+import moment from "moment";
 
 const router = Router();
 
@@ -57,7 +58,9 @@ function validateApplicationData(userInput) {
   //Validate Follow-Up Date (if entered)
   if (userInput.followUpDate) {
     try {
-      userInput.followUpDate = helper.isFollowupDateValid(userInput.followUpDate, "Follow Up Date");
+      userInput.followUpDate = helper.isFollowupDateValid(
+        moment(userInput.followUpDate).format('MM/DD/YYYY'),
+        `Follow Up Date (${userInput.followUpDate})`);
     } catch (e) {
       errors.followUpDate = e.message;
     }
@@ -162,21 +165,25 @@ router.route("/applications/:id").get(async (req, res) => {
   let errors = validateApplicationData(userInput);
   
   //Check for Errors; if errors, respond with status 400
+  console.log(userInput);
   if (Object.keys(errors).length !== 0) {
     return res.status(400).json(errors);
   }
 
+  const updateObject = {
+    userId : req.session.user.userId,
+    companyName : userInput.companyName,
+    jobPosition : userInput.jobPosition,
+    appCity : userInput.appCity,
+    appState : userInput.appState,
+    status : userInput.status
+  };
+  if (userInput.followUpDate) { updateObject.followUpDate = userInput.followUpDate; }
+
   try {
     await application.updateJobapp(
       jobId,
-      {
-        userId : req.session.user.userId,
-        companyName : userInput.companyName,
-        jobPosition : userInput.jobPosition,
-        appCity : userInput.appCity,
-        appState : userInput.appState,
-        status : userInput.status
-      }
+      updateObject
     );
     return res.redirect("back");
   } catch(e) {
