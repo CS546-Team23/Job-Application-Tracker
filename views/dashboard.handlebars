@@ -5,7 +5,33 @@
     <button id="newAppButton" class="btn orange-btn dark">New Application</button>
 </div>
 
-<table id="applicationTable">
+<div class="status-container">
+    {{#each applications}}
+    <div class="status-section">
+        <p class="status-text"> {{status}} </p>
+        <div class="status-application">
+            {{#each applications}}
+                <a href="/applications/{{_id}}" class="status-item">
+                    <span>
+                        <img width="15" height="15" src="https://img.icons8.com/ios/50/permanent-job.png" alt="permanent-job" />
+                        {{jobPosition}}
+                    </span>
+                    <span>
+                        <img width="15" height="15" src="https://img.icons8.com/ios/50/company--v1.png" alt="company--v1" />
+                        {{companyName}}
+                    </span>
+                    <span>
+                        <img width="15" height="15" src="https://img.icons8.com/ios/50/marker--v1.png" alt="marker--v1" />
+                        {{appCity}}, {{appState}}
+                    </span>
+                </a>
+            {{/each}}
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+{{!-- <table id="applicationTable">
     <tr>
         <th>Position</th>
         <th>Company</th>
@@ -24,7 +50,7 @@
         <td><span>{{status}}</span></td>
     </tr>
     {{/each}}
-</table>
+</table> --}}
 
 <!-- Modal -->
 <div id="newAppModal" {{#unless errors}}style="display:none"{{/unless}}>

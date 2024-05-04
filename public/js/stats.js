@@ -4,6 +4,9 @@ let totalCompanies = document.getElementById("totalCompanies");
 // let table = document.getElementById("applicationTable");
 let ghostedApplicationText = document.getElementById("ghostedApplications");
 
+let noDataDiv = document.getElementById("no-applications");
+let statsDataDiv = document.getElementById("stats-data");
+
 let statisticsData = undefined;
 let myChart = undefined;
 let filteredData = {};
@@ -144,6 +147,15 @@ const loadContent = async () => {
       `http://localhost:3000/statistics/getStats`
     );
 
+    if (Object.keys(data.data).length === 0) {
+      noDataDiv.innerHTML =
+        "There are no applications yet, start your journey by adding applications";
+      noDataDiv.hidden = false;
+      return;
+    }
+
+    statsDataDiv.hidden = false;
+
     const statsData = data.data;
 
     statisticsData = data.data;
@@ -155,6 +167,8 @@ const loadContent = async () => {
     //#region pie chart data
 
     createPieChart(statsData.pieChartStatusData);
+
+    filteredData = data.data.barDateData;
 
     //#endregion
     console.log(data.data);
