@@ -6,6 +6,8 @@ let ghostedApplicationText = document.getElementById("ghostedApplications");
 
 let noDataDiv = document.getElementById("no-applications");
 let statsDataDiv = document.getElementById("stats-data");
+let infoMessage = document.getElementById("info-message");
+let chartContainerDiv = document.getElementById("myChart");
 
 let statisticsData = undefined;
 let myChart = undefined;
@@ -65,7 +67,8 @@ const createBarChart = (barData, graphType) => {
       height: 1000,
     },
   };
-
+  infoMessage.hidden = true;
+  chartContainerDiv.hidden = false;
   myChart = new Chart(document.getElementById("myChart"), config);
 };
 
@@ -229,6 +232,13 @@ const changeTimeRange = () => {
     }
   } else {
     filteredData = statisticsData.barDateData;
+  }
+
+  if (Object.keys(filteredData).length === 0) {
+    infoMessage.innerHTML = "No Data for specific time period";
+    infoMessage.hidden = false;
+    chartContainerDiv.hidden = true;
+    return;
   }
 
   createBarChart(filteredData, selectedBarType);
