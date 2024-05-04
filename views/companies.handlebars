@@ -1,17 +1,18 @@
 <div class="container">
     <div class="row">
         {{#each companies}}
-        <div class="col-lg-2 col-md-4 mb-4">
-            <div class="card h-100">
-                <a class="company-link" href="javascript:void(0)" data-id="{{_id}}">
-                    <img class="card-img-top" src="{{logoUrl}}" alt="Company Logo">
-                </a>
-                <div class="card-body">
-                    <h5 class="card-title">{{company}}</h5>
-                    <p class="card-text">{{sector}}</p>
-                </div>
+<div class="col-lg-2 col-md-4 mb-4">
+    <div class="card h-100">
+        <a class="company-link" href="javascript:void(0)" data-id="{{_id}}" style="text-decoration: none; color: inherit;">
+            <img class="card-img-top" src="{{logoUrl}}" alt="Company Logo">
+            <div class="card-body">
+                <h5 class="card-title">{{company}}</h5>
+                <p class="card-text">{{sector}}</p>
             </div>
-        </div>
+        </a>
+    </div>
+</div>
+
         {{/each}}
     </div>
 </div>

@@ -16,13 +16,30 @@ companyLinks.forEach(function(companyLink) {
 
         // Clear previous modal content
         modalContent.innerHTML = "";
+       
+        let websiteUrl = companyData.Website;
+        // Check if the website URL contains the protocol
+        if (!websiteUrl.startsWith('http://') && !websiteUrl.startsWith('https://')) {
+            // If not, prepend 'http://' (you might need to check if 'https://' is needed)
+            websiteUrl = 'http://' + websiteUrl;
+        }
 
         let modalHTML = `
-            <h2>${companyData.company}</h2>
-            <p>Sector: ${companyData.sector}</p>
-            <p>CEO: ${companyData.CEO}</p>
-            <p>Website: ${companyData.Website}</p>
-            `;
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <h2>${companyData.company}</h2>
+                    <p class="mb-1">Sector: ${companyData.sector}</p>
+                    <p class="mb-1">Location: ${companyData.city}, ${companyData.state}</p>
+                    <p class="mb-1">CEO: ${companyData.CEO}</p>
+                    <p class="mb-1">Website: <a href="${websiteUrl}" target="_blank">${companyData.Website}</a></p>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://logo.clearbit.com/${companyData.Website}" alt="Company Logo" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    `;
 
         modalContent.innerHTML = modalHTML;
 
