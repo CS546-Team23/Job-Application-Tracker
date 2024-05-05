@@ -306,7 +306,7 @@ router
     if (req.file) {
       try {
         uploadObject = {};
-        if (req.file.originalname.endsWith(".docx")) {
+        if (!req.file.originalname.endsWith(".pdf")) {
           uploadObject = {
             public_id: req.file.originalname,
             resource_type: "raw",
@@ -339,7 +339,6 @@ router
         errors: errors,
       });
     }
-
     try {
       const { app_id } = await application.createApplication(
         req.session.user.userId,
@@ -390,7 +389,7 @@ router
     return res.render("applicationPage", {
       nav: "privateNav",
       application: app,
-      stylesheets: "commonStylesheets",
+      stylesheets: "applicationStylesheet",
       scripts: "applicationScript",
     });
   })
@@ -417,7 +416,7 @@ router
     if (req.file) {
       try {
         uploadObject = {};
-        if (req.file.originalname.endsWith(".docx")) {
+        if (!req.file.originalname.endsWith(".pdf")) {
           uploadObject = {
             public_id: req.file.originalname,
             resource_type: "raw",

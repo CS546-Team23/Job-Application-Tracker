@@ -46,6 +46,9 @@ White (against dark backgrounds only): class="btn white-btn"
     padding:.5em .75em;
     font-weight:bold;
     text-decoration:none;
+    display:block;
+    width:100%;
+    max-width:150px;
 }
 /* Orange Button */
 .orange-btn{
@@ -65,7 +68,7 @@ White (against dark backgrounds only): class="btn white-btn"
 .orange-btn.dark:hover,
 .orange-btn.dark:focus,
 .orange-btn.dark.btn:active{
-    border-color:#171d27;
+    border-color:#f1ab0a;
     color:#171d27
 }
 /* Green Button */
@@ -147,12 +150,6 @@ White (against dark backgrounds only): class="btn white-btn"
 .green-btn:focus-visible,
 .blue-btn:focus-visible{
     outline:2px solid #000;
-}
-@media(min-width:425px){
-    .btn{
-        width:100%;
-        max-width:150px;
-    }
 }
 
 /* Links */
@@ -238,13 +235,16 @@ div#newAppContent,
 #editProfileContent,
 #changePasswordContent{
     margin: 3vh auto; /* 15% from the top and centered */
-    padding: 20px;
+    padding: 3em 5em;
     border: 1px solid #888;
     width: 60%;
     background-color: white;
     border-radius: 10px;
     background-color:#def5ec;
     position:relative;
+}
+div#newAppContent{
+    background-color:#f9edd2;
 }
 button#closeNewApp,
 button#closeProfileModal,
@@ -258,6 +258,19 @@ button#closePasswordModal{
     padding:0;
     position:absolute;
     right:1em;
+    top:.75em;
+}
+button#closeNewApp{
+    color:#000;
+}
+div#newAppContent input,
+div#newAppContent select{
+    border-color:#f1ab0a;
+}
+div#newAppContent input:focus,
+div#newAppContent select:focus{
+    border-color:#f1ab0a;
+    outline:#f1ab0a;
 }
 #newAppContent button[type="submit"],
 #editProfileContent button[type="submit"],
