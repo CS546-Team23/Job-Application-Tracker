@@ -126,8 +126,9 @@ router
 
     //Check for Errors; if errors, respond with status 400
     if (Object.keys(errors).length !== 0) {
-      const user_info = await user.getUserById(req.session.user.userId);
-      console.log(req.body);
+      const user_info = await application.getUserApplications(
+        req.session.user.userId
+      );
       return res.render("dashboard", {
         applications: user_info.applications,
         application: req.body,
@@ -205,7 +206,6 @@ router
     let errors = validateApplicationData(userInput);
 
     //Check for Errors; if errors, respond with status 400
-    console.log(userInput);
     if (Object.keys(errors).length !== 0) {
       return res.status(400).json(errors);
     }

@@ -5,6 +5,7 @@ import exphbs from "express-handlebars";
 import session from "express-session";
 
 import multer from "multer";
+import * as fsExtra from "fs-extra";
 
 const upload = multer({ dest: "uploads/" });
 
@@ -120,6 +121,7 @@ hbs.handlebars.registerHelper("select", function (value, options) {
 configRoutes(app);
 
 app.listen(3000, () => {
+  fsExtra.emptyDirSync("uploads");
   console.log("We've now got a server!");
   console.log("Your routes will be running on http://localhost:3000");
 });
