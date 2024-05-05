@@ -192,6 +192,8 @@ router
   .post(async (req, res) => {
     // validate id
     let jobId;
+    let fileInfo = {};
+    let uploadObject = {};
     try {
       jobId = helper.validateId(req.params.id);
     } catch (e) {
@@ -208,6 +210,26 @@ router
       return res.status(400).json(errors);
     }
 
+    if (req.file) {
+      try {
+        uploadObject = {};
+        if (req.file.originalname.endsWith(".docx")) {
+          uploadObject = {
+            public_id: req.file.originalname,
+            resource_type: "raw",
+          };
+        }
+        fileInfo = await fileUpload.uploadFileToCloudinary(
+          req.file.path,
+          req.file.originalname,
+          uploadObject
+        );
+        userInput.appResume = fileInfo;
+      } catch (error) {
+        errors.file = error.message;
+      }
+    }
+
     const updateObject = {
       companyName: userInput.companyName,
       jobPosition: userInput.jobPosition,
@@ -217,6 +239,10 @@ router
     };
     if (userInput.followUpDate) {
       updateObject.followUpDate = userInput.followUpDate;
+    }
+
+    if (userInput.appResume) {
+      updateObject.appResume = userInput.appResume;
     }
 
     try {

@@ -103,12 +103,12 @@ const exportedMethods = {
         "followUpDate"
       );
     }
-    if (updatedObj.appResume) {
-      updatedObj.appResume = checkIsProperString(
-        updatedObj.appResume,
-        "filePath"
-      );
-    }
+    // if (updatedObj.appResume) {
+    //   updatedObj.appResume = checkIsProperString(
+    //     updatedObj.appResume,
+    //     "filePath"
+    //   );
+    // }
     updatedObj.status = checkIsProperString(updatedObj.status, "status");
 
     const search = {
