@@ -11,12 +11,16 @@ router
       res.render("login", {
         layout: "main",
         nav: "publicNav",
+        stylesheets: 'commonStylesheets',
+        scripts: 'registerLoginScripts'
       });
     } catch (e) {
       return res.status(404).render("errors", {
         layout: "main",
         nav: "publicNav",
         message: e.message,
+        stylesheets: 'commonStylesheets',
+        scripts: 'commonScripts',
       });
     }
   })
@@ -47,6 +51,8 @@ router
         layout: "main",
         nav: "publicNav",
         errors: errors,
+        stylesheets: 'commonStylesheets',
+        scripts: 'registerLoginScripts',
       });
     }
 
@@ -75,6 +81,8 @@ router
           layout: "main",
           nav: "publicNav",
           message: "Incorrect username and/or password. Please try again.",
+          stylesheets: 'commonStylesheets',
+          scripts: 'registerLoginScripts',
         });
       }
     } catch (e) {
@@ -82,6 +90,8 @@ router
         layout: "main",
         nav: "publicNav",
         message: e.message,
+        stylesheets: 'commonStylesheets',
+        scripts: 'commonScripts',
       });
     }
   });
