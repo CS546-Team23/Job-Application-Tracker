@@ -17,8 +17,12 @@
             <dt>Status:</dt>
                 <dd>{{status}}</dd>
 
-            {{#if appResume}}<dt>Resume:</dt>
-            <dd><a href="{{appResume.url}}" target="_blank"> {{appResume.fileName}}</a></dd>{{/if}}
+            {{#if (isEmptyObject appResume)}}
+                <p>No Resume for this application</p>
+            {{else}}
+                <dt>Resume:</dt>
+                <dd><a href="{{appResume.url}}" target="_blank"> {{appResume.fileName}}</a></dd>
+            {{/if}}
         </dl>
     </section>
 </article>
