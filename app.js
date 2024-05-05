@@ -5,6 +5,10 @@ import exphbs from "express-handlebars";
 
 import session from "express-session";
 
+import multer from "multer";
+
+const upload = multer({ dest: "uploads/" });
+
 app.use(
   session({
     name: "AuthenticationSession",
@@ -35,33 +39,33 @@ app.use("/", (req, res, next) => {
   }
   next();
 });
-app.use('/register', (req, res, next) => {
-  if(req.session.user){
-    return res.redirect('/dashboard');
+app.use("/register", (req, res, next) => {
+  if (req.session.user) {
+    return res.redirect("/dashboard");
   }
   next();
 });
-app.use('/login', (req,res, next) => {
-  if(req.method === 'GET' && req.session.user){
-    return res.redirect('/dashboard');
+app.use("/login", (req, res, next) => {
+  if (req.method === "GET" && req.session.user) {
+    return res.redirect("/dashboard");
   }
   next();
 });
-app.use("/dashboard", (req, res, next) => {
+app.use("/dashboard", upload.single("appResume"), (req, res, next) => {
   if (!req.session.user) {
     return res.redirect("/login");
   }
   next();
 });
-app.use('/statistics', (req, res, next) => {
-  if(!req.session.user){
-    return res.redirect('/login');
+app.use("/statistics", (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
   }
   next();
 });
-app.use('/company', (req, res, next) => {
-  if(!req.session.user){
-    return res.redirect('/login');
+app.use("/company", (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
   }
   next();
 });

@@ -6,6 +6,8 @@ import application from "../data/applications.js";
 import * as helper from "../helpers.js";
 import xss from "xss";
 
+import { fileUpload } from "../data/index.js";
+
 const router = Router();
 
 router.route("/").get(async (_req, res) => {
@@ -19,11 +21,6 @@ router
     const user_info = await application.getUserApplications(
       req.session.user.userId
     );
-    // const appStatusList = {
-    //   applied: user_info.applications.filter(
-    //     (object) => object.status === "Saved"
-    //   ),
-    // };
     return res.render("dashboard", {
       applications: user_info,
       nav: "privateNav",
@@ -32,11 +29,36 @@ router
   })
   .post(async (req, res) => {
     // apply xss to user inputs
-    const userInput = req.body;
-    for (let key in userInput) {
-      userInput[key] = xss(userInput[key]);
+    for (let key in req.body) {
+      req.body[key] = xss(req.body[key]);
     }
+    const userInput = req.body;
+    let fileInfo = {};
+
     let errors = {};
+
+    if (req.file) {
+      // console.log(req.file);
+      try {
+        let uploadObject = {};
+        // const fileName =
+        if (req.file.originalname.endsWith(".docx")) {
+          uploadObject = {
+            public_id: req.originalname,
+            resource_type: "raw",
+          };
+        }
+        fileInfo = await fileUpload.uploadFileToCloudinary(
+          req.file.path,
+          req.file.originalname,
+          uploadObject
+        );
+      } catch (error) {
+        errors.file = error.message;
+      }
+    }
+
+    userInput.appResume = fileInfo;
 
     // Validate Company
     try {
@@ -47,7 +69,6 @@ router
     } catch (e) {
       errors.companyName = e.message;
     }
-
     // Validate Job Position
     try {
       userInput.jobPosition = helper.checkIsProperFirstOrLastName(
@@ -57,14 +78,12 @@ router
     } catch (e) {
       errors.jobPosition = e.message;
     }
-
     //Validate City
     try {
       userInput.appCity = helper.checkCity(userInput.appCity);
     } catch (e) {
       errors.appCity = e.message;
     }
-
     //Validate State
     try {
       if (!helper.checkIsValidState(userInput.appState)) {
@@ -73,7 +92,6 @@ router
     } catch (e) {
       errors.appState = e.message;
     }
-
     //Validate Follow-Up Date (if entered)
     if (userInput.followUpDate) {
       try {
@@ -85,14 +103,12 @@ router
         errors.followUpDate = e.message;
       }
     }
-
     // Validate Status
     try {
       userInput.status = helper.checkIsProperStatus(userInput.status);
     } catch (e) {
       errors.status = e.message;
     }
-
     //Check for Errors; if errors, respond with status 400
     if (Object.keys(errors).length !== 0) {
       const user_info = await user.getUserById(req.session.user.userId);
@@ -105,7 +121,6 @@ router
         errors: errors,
       });
     }
-
     try {
       const { app_id } = await application.createApplication(
         req.session.user.userId,
