@@ -15,9 +15,9 @@ const exportedMethods = {
     jobPosition,
     appCity,
     appState,
+    status,
     followUpDate,
-    appResume,
-    status
+    appResume
   ) {
     userId = validateId(userId);
     companyName = checkIsProperString(companyName, "company-name");

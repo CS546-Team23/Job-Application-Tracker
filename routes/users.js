@@ -145,9 +145,9 @@ router
         userInput.jobPosition,
         userInput.appCity,
         userInput.appState,
+        userInput.status,
         userInput.followUpDate,
-        userInput.appResume,
-        userInput.status
+        userInput.appResume
       );
       return res.redirect(`/applications/${app_id}`);
     } catch (e) {
