@@ -126,6 +126,8 @@ router.route("/profile").get(async (req, res) => {
 
 })
 
+
+
 function validateApplicationData(userInput) {
   for (let key in userInput) {
     userInput[key] = xss(userInput[key]);
