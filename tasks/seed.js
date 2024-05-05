@@ -26,7 +26,7 @@ const data = [
           date: "05/01/24",
           followUpDate: "05/22/24",
           appResume: "resume1.docx",
-          status: "Accepted",
+          status: "Hired",
           Notes: [
             {
                 date: "03/14/24",

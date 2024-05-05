@@ -16,6 +16,8 @@ const getStatsForUser = async (email) => {
 
   const res = {};
 
+  if (userData.applications.length === 0) return res;
+
   let allCompanies = [];
 
   res.totalApplications = userData.applications.length;

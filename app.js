@@ -2,8 +2,12 @@ import express from "express";
 const app = express();
 import configRoutes from "./routes/index.js";
 import exphbs from "express-handlebars";
-
 import session from "express-session";
+
+import multer from "multer";
+import * as fsExtra from "fs-extra";
+
+const upload = multer({ dest: "uploads/" });
 
 app.use(
   session({
@@ -35,33 +39,39 @@ app.use("/", (req, res, next) => {
   }
   next();
 });
-app.use('/register', (req, res, next) => {
-  if(req.session.user){
-    return res.redirect('/dashboard');
+app.use("/register", (req, res, next) => {
+  if (req.session.user) {
+    return res.redirect("/dashboard");
   }
   next();
 });
-app.use('/login', (req,res, next) => {
-  if(req.method === 'GET' && req.session.user){
-    return res.redirect('/dashboard');
+app.use("/login", (req, res, next) => {
+  if (req.method === "GET" && req.session.user) {
+    return res.redirect("/dashboard");
   }
   next();
 });
-app.use("/dashboard", (req, res, next) => {
+app.use("/dashboard", upload.single("appResume"), (req, res, next) => {
   if (!req.session.user) {
     return res.redirect("/login");
   }
   next();
 });
-app.use('/statistics', (req, res, next) => {
-  if(!req.session.user){
-    return res.redirect('/login');
+app.use("/applications", upload.single("appResume"), (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
   }
   next();
 });
-app.use('/company', (req, res, next) => {
-  if(!req.session.user){
-    return res.redirect('/login');
+app.use("/statistics", (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  next();
+});
+app.use("/companies", (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
   }
   next();
 });
@@ -83,10 +93,41 @@ app.engine(
 );
 app.set("view engine", "handlebars");
 
+// concat helper function
+let hbs = exphbs.create({});
+hbs.handlebars.registerHelper("concat", function () {
+  var outStr = "";
+  for (var arg in arguments) {
+    if (typeof arguments[arg] != "object") {
+      outStr += arguments[arg];
+    }
+  }
+  return outStr;
+});
+// select option with attribute
+hbs.handlebars.registerHelper("select", function (value, options) {
+  // content of page
+  let content = options.fn(this);
+  // find where value is equal to target
+  const search_term = `value="${value}"`;
+  let opt_index = content.search(search_term);
+  // if not found, return as is
+  if (opt_index === -1) {
+    return content;
+  }
+  // else find end of search term in string
+  opt_index += search_term.length;
+  // insert selected parameter
+  content =
+    content.slice(0, opt_index) + " selected" + content.slice(opt_index);
+  return content;
+});
+
 // TODO: Routes to be defined in index.js
 configRoutes(app);
 
 app.listen(3000, () => {
+  fsExtra.emptyDirSync("uploads");
   console.log("We've now got a server!");
   console.log("Your routes will be running on http://localhost:3000");
 });

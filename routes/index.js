@@ -5,6 +5,7 @@ import loginRoute from "./login.js";
 import apiRoute from "./api.js";
 import { static as staticDir } from "express";
 import statsRoutes from "./statistics.js";
+import companyRoutes from "./companies.js"
 
 const constructorMethod = (app) => {
   app.use("/register", registerRoute);
@@ -12,6 +13,7 @@ const constructorMethod = (app) => {
   app.use("/", userRoutes);
   app.use("/statistics", statsRoutes);
   app.use("/api", apiRoute);
+  app.use("/companies", companyRoutes)
   app.use("*", (_req, res) => {
     return res.status(404).json({ error: "404 error" });
   });

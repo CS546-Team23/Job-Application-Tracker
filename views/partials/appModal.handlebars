@@ -2,12 +2,13 @@
 <div id="newAppModal" {{#unless errors}}style="display:none"{{/unless}}>
     <!-- Modal Content -->
     <div id="newAppContent">
+
         <button id="closeNewApp">&times;</button>
-        <form id="newAppForm" name="newAppForm" action={{route}} method={{method}}>
+        <form id="newAppForm" name="newAppForm" action={{route}} method={{method}} enctype="multipart/form-data">
             <p><span class="star">*</span> Indicates Required Field</p>
             <!-- Company Name -->
             <label for="companyName">Company Name <span class="star">*</span></label>
-            <input type="text" name="companyName" id="companyName" value="{{application.jobPosition}}"/>
+            <input type="text" name="companyName" id="companyName" value="{{application.companyName}}"/>
             <span class="form-error">{{errors.companyName}}</span>
 
             <!-- Job Position -->
@@ -23,6 +24,7 @@
             <!-- Job State -->
             <label for="appState">State <span class="star">*</span></label>
             <select id="appState" name="appState">
+                {{#select application.appState}}
                 <option value="">Select State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -83,6 +85,7 @@
                 <option value="WV">West Virginia</option>
                 <option value="WI">Wisconsin</option>
                 <option value="WY">Wyoming</option>
+                {{/select}}
             </select>
             <span class="form-error">{{errors.appState}}</span>
 
@@ -98,13 +101,15 @@
 
             <!-- Application Status -->
             <label for="status">Status <span class="star">*</span></label>
-            <select name="status" id="status" value="{{application.status}}">
+            <select name="status" id="status">
+                {{#select application.status}}
                 <option value="">Select Status</option>
                 <option value="Saved">Saved</option>
                 <option value="Applied">Applied</option>
                 <option value="Screening">Screening</option>
                 <option value="Interviewing">Interviewing</option>
                 <option value="Hired">Hired</option>
+                {{/select}}
             </select>
             <span class="form-error">{{errors.status}}</span>
 
