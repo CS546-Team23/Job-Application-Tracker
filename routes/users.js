@@ -12,13 +12,25 @@ router.route("/").get(async (_req, res) => {
   return res.sendFile(path.resolve("static/landing.html"));
 });
 
-// TODO: Error Checking
+router.route("/profile")
+.get(async (req, res) => {
+  const userInfo = await user.getUserById(req.session.user.userId);
+  return res.render("profile", {
+    nav: 'privateNav',
+    user: req.session.user,
+    stylesheets: 'commonStylesheets',
+    scripts: 'profileScript',
+  });
+});
+
 router.route("/dashboard").get(async (req, res) => {
   const user_info = await user.getUserById(req.session.user.userId);
   return res.render("dashboard", {
     applications: user_info.applications,
     nav: "privateNav",
-    user: req.session.user
+    stylesheets: 'dashboardStylesheet',
+    scripts: 'dashboardScript',
+    user: req.session.user,
   });
 }).post(async (req, res) => {
   // apply xss to user inputs
@@ -88,6 +100,8 @@ router.route("/dashboard").get(async (req, res) => {
       applications: user_info.applications,
       application: req.body,
       nav: "privateNav",
+      stylesheets: 'dashboardStylesheet',
+      scripts: 'dashboardScript',
       user: req.session.user,
       errors: errors
     });
@@ -110,6 +124,8 @@ router.route("/dashboard").get(async (req, res) => {
       layout: "main",
       nav: "publicNav",
       message: "Internal Server Error",
+      stylesheets: 'commonStylesheets',
+      scripts: 'applicationScript',
     });
   }
 });
@@ -122,7 +138,12 @@ router.route("/applications/:id").get(async (req, res) => {
   catch(e) {
     return res.json({error:e.messsage});
   }
-  return res.render("applicationPage", { nav: "privateNav", application:app });
+  return res.render("applicationPage", { 
+    nav: "privateNav", 
+    application:app, 
+    stylesheets: 'commonStylesheets',
+    scripts: 'applicationScript',
+  });
 });
 
 export default router;

@@ -1,28 +1,31 @@
-<!-- Modal -->
-<div id="newAppModal" {{#unless errors}}style="display:none"{{/unless}}>
-    <!-- Modal Content -->
-    <div id="newAppContent">
-        <button id="closeNewApp">&times;</button>
-        <form id="newAppForm" name="newAppForm" action={{route}} method={{method}}>
-            <p><span class="star">*</span> Indicates Required Field</p>
-            <!-- Company Name -->
-            <label for="companyName">Company Name <span class="star">*</span></label>
-            <input type="text" name="companyName" id="companyName" value="{{application.jobPosition}}"/>
-            <span class="form-error">{{errors.companyName}}</span>
+<!-- Edit Profile Modal -->
+<div id="editProfileModal" {{#unless errors}}style="display:none"{{/unless}}>
+    <div id="editProfileContent">
+        <button id="closeProfileModal">&times;</button>
+        <form id="editProfileForm" name="editProfileForm" action="/profile" method="POST">
+            <!-- First Name -->
+            <label for="profileFirstName">First Name:</label>
+            <input type="text" name="profileFirstName" id="profileFirstName" value="{{user.firstName}}"/>
+            <span class="form-error">{{errors.firstName}}</span>
 
-            <!-- Job Position -->
-            <label for="jobPosition">Job Position <span class="star">*</span></label>
-            <input type="text" name="jobPosition" id="jobPosition" value="{{application.jobPosition}}"/>
-            <span class="form-error">{{errors.jobPosition}}</span>
+            <!-- Last Name -->
+            <label for="profileLastName">Last Name:</label>
+            <input type="text" name="profileLastName" id="profileLastName" value="{{user.lastName}}"/>
+            <span class="form--error">{{errors.lastName}}</span>
 
-            <!-- Job City -->
-            <label for="appCity">City <span class="star">*</span></label>
-            <input type="text" name="appCity" id="appCity" value="{{application.appCity}}"/>
-            <span class="form-error">{{errors.appCity}}</span>
+            <!-- Email -->
+            <label for="profileEmail">Email:</label>
+            <input type="email" name="profileEmail" id="profileEmail" value="{{user.email}}"/>
+            <span class="form-error">{{errors.email}}</span>
 
-            <!-- Job State -->
-            <label for="appState">State <span class="star">*</span></label>
-            <select id="appState" name="appState">
+            <!-- City -->
+            <label for="profileCity">City:</label>
+            <input type="text" name="profileCity" id="profileCity" value="{{user.city}}"/>
+            <span class="form-error">{{errors.city}}</span>
+
+            <!-- State -->
+            <label for="profileState">State:</label>
+            <select id="profileState" name="profileState">
                 <option value="">Select State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -84,32 +87,21 @@
                 <option value="WI">Wisconsin</option>
                 <option value="WY">Wyoming</option>
             </select>
-            <span class="form-error">{{errors.appState}}</span>
+            <span class="form-error">{{errors.state}}</span>
 
-            <!-- Follow-Up Date -->
-            <label for="followUpDate">Follow-Up Date </label>
-            <input type="date" name="followUpDate" id="followUpDate" value="{{application.followUpDate}}"/>
-            <span class="form-error">{{errors.followUpDate}}</span>
+            <!-- Desired Postion -->
+            <label for="profileDesiredPosition">Desired Position</label>
+            <input type="text" name="profileDesiredPosition" id="profileDesiredPosition" value="{{user.desiredPosition}}"/>
+            <span class="form-error">{{errors.desiredPosition}}</span>
 
-            <!-- Resume -->
-            <label for="appResume">Resume </label>
-            <input type="file" name="appResume" id="appResume" value="{{application.appResume}}"/>
-            <span class="form-error">{{errors.appResume}}</span>
-
-            <!-- Application Status -->
-            <label for="status">Status <span class="star">*</span></label>
-            <select name="status" id="status" value="{{application.status}}">
-                <option value="">Select Status</option>
-                <option value="Saved">Saved</option>
-                <option value="Applied">Applied</option>
-                <option value="Screening">Screening</option>
-                <option value="Interviewing">Interviewing</option>
-                <option value="Hired">Hired</option>
-            </select>
-            <span class="form-error">{{errors.status}}</span>
+            <!-- Dream Job -->
+            <label for="profileDreamJob">Dream Job</label>
+            <input type="text" name="profileDreamJob" id="profileDreamJob" value="{{user.dreamJob}}"/>
+            <span class="form-error">{{errors.dreamJob}}</span>
 
             <!-- Submit Button -->
             <button type="submit" class="btn green-btn dark">Submit</button>
+            <span id="error-message"></span>
         </form>
     </div>
 </div>

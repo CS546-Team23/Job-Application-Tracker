@@ -1,0 +1,19 @@
+<h1 class="profile-header">Profile Details</h1>
+<section class="profile-card">
+    <ul>
+        <li>Name: <strong>{{user.firstName}} {{user.lastName}}</strong></li>
+        <li>Email: <strong>{{user.email}}</strong></li>
+        <li>City: <strong>{{user.city}}</strong></li>
+        <li>State: <strong>{{user.state}}</strong></li>
+        <li>Desired Job Position: <strong>{{user.desiredPosition}}</strong></li>
+        <li>Dream Job: <strong>{{user.dreamJob}}</strong></li>
+        
+    </ul>
+    <div class="btn-container">
+        <button type="button" id="showEditProfile" class="btn green-btn dark">Edit Profile</button>
+        <button type="button" id="showChangePassword" class="btn green-btn dark">Change password</button>
+    </div>
+</section>
+
+{{> editProfileModal}}
+{{> changePasswordModal}}

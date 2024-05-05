@@ -65,6 +65,12 @@ app.use('/company', (req, res, next) => {
   }
   next();
 });
+app.use('/profile', (req, res, next) => {
+  if(!req.session.user){
+    return res.redirect('/login');
+  }
+  next();
+});
 
 app.use("/public", express.static("public"));
 app.use(express.json());
