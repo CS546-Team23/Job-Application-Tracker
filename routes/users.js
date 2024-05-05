@@ -199,7 +199,7 @@ router
     return res.render("applicationPage", {
       nav: "privateNav",
       application: app,
-      stylesheets: "commonStylesheets",
+      stylesheets: "applicationStylesheet",
       scripts: "applicationScript",
     });
   })
