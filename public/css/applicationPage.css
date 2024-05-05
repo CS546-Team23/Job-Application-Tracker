@@ -140,3 +140,44 @@ a {
     text-overflow: ellipsis;
 }
 
+/***********
+Notifications
+************/
+
+#notification-box{
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    border: 1px solid #E5E7EB;
+    padding: 1rem;
+    gap: 1rem;
+    background-color: #F3F4F6;
+}
+
+.notification-item{
+    min-width: 300px;
+    max-width: 300px;
+    text-decoration: none;
+    color: #232a35;
+    cursor: pointer;
+    background-color: white;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border-radius: 10px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.notification-item:hover{
+    background-color: #05a870;
+    color: white;
+}
+
+.notification-item span{
+    white-space: nowrap;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

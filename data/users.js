@@ -152,7 +152,7 @@ const getUserById = async function(userId) {
   // remove all object ids
   foundUser._id = foundUser._id.toString();
   foundUser.applications.map((app) => {
-    app.Notes = app.Notes.map((note) => { note._id = note._id.toString(); return note; });
+    if (app.Notes) app.Notes = app.Notes.map((note) => { note._id = note._id.toString(); return note; });
     app._id = app._id.toString();
     return app;
   });

@@ -6,6 +6,7 @@ import session from "express-session";
 
 import multer from "multer";
 import * as fsExtra from "fs-extra";
+import moment from 'moment';
 
 const upload = multer({ dest: "uploads/" });
 
@@ -121,6 +122,12 @@ hbs.handlebars.registerHelper("select", function (value, options) {
   content =
     content.slice(0, opt_index) + " selected" + content.slice(opt_index);
   return content;
+});
+
+// select option with attribute
+hbs.handlebars.registerHelper("date", function (value) {
+  if (!/^\d\d\/\d\d\/\d\d\d\d$/) { return ""; }
+  return moment(value, "MM/DD/YY").format("YYYY-MM-DD");
 });
 
 // TODO: Routes to be defined in index.js

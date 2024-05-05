@@ -1,4 +1,28 @@
 <h1>Welcome {{user.firstName}} {{user.lastName}}!</h1>
+
+{{#if notifications}}
+    <h2>Follow-Ups</h2>
+    <div id="notification-box">
+    {{#each notifications}}
+        <a href="/view/applications/{{_id}}" class="notification-item">
+            <button id="closeNewApp">&times;</button>
+            <span>
+                <img width="15" height="15" src="https://img.icons8.com/ios/50/permanent-job.png" alt="permanent-job" />
+                {{jobPosition}}
+            </span>
+            <span>
+                <img width="15" height="15" src="https://img.icons8.com/ios/50/company--v1.png" alt="company--v1" />
+                {{companyName}}
+            </span>
+            <span>
+                <img width="15" height="15" src="https://img.icons8.com/ios/50/marker--v1.png" alt="marker--v1" />
+                {{appCity}}, {{appState}}
+            </span>
+        </a>
+    {{/each}}
+    </div>
+{{/if}}
+
 <div id="applicationHeader">
     <h2>Applications</h2>
     <button id="newAppButton" class="btn orange-btn dark">New Application</button>

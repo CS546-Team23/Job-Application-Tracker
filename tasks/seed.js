@@ -686,9 +686,9 @@ for (const i_user of data) {
             i_app.jobPosition,
             i_app.appCity,
             i_app.appState,
+            i_app.status,
             i_app.followUpDate,
-            i_app.appResume,
-            i_app.status
+            i_app.appResume
         );
 
         for (const i_note of i_app.Notes) {

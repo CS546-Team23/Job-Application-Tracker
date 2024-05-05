@@ -105,7 +105,11 @@ function validateApplicationData(userInput) {
 router
   .route("/dashboard")
   .get(async (req, res) => {
+    // TODO: ERROR CHECK HERE
     const user_info = await application.getUserApplications(
+      req.session.user.userId
+    );
+    const new_applications = await application.getFollowUpApps(
       req.session.user.userId
     );
     return res.render("dashboard", {
@@ -114,6 +118,7 @@ router
       stylesheets: "dashboardStylesheet",
       scripts: "dashboardScript",
       user: req.session.user,
+      notifications: new_applications
     });
   })
   .post(async (req, res) => {
@@ -276,6 +281,25 @@ router
     } catch (e) {
       return renderError(req, res, 500, "Internal Server Error", e.message);
     }
+});
+
+router.route("/view/applications/:id").get(async (req, res) => {
+  // validate id
+  let jobId;
+  try {
+    jobId = helper.validateId(req.params.id);
+  } catch (e) {
+    return renderError(req, res, 400, "User Error", e.message);
+  }
+
+  // get application
+  try {
+    await application.viewApplication(jobId, req.session.user.userId);
+  } catch (e) {
+    return renderError(req, res, 404, "Not Found", e.message);
+  }
+
+  return res.redirect(`/applications/${jobId}`);
 });
 
 export default router;

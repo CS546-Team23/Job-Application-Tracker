@@ -157,7 +157,8 @@ $("#newAppForm").submit((event) => {
     let status = $("#status").val().trim();
     const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired"];
     if (!statuses.includes(status)) { errors.status = `Status must be one of the following: ${statuses.join(", ")}`; }
-  
+    
+    console.log(errors);
     if (Object.keys(errors).length !== 0) {
         event.preventDefault();
         if (errors.companyName) { companyNameError.html(errors.companyName); }
