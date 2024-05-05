@@ -10,8 +10,6 @@ import { fileUpload } from "../data/index.js";
 
 import * as fsExtra from "fs-extra";
 
-import { fileUpload } from "../data/index.js";
-
 const router = Router();
 
 router.route("/").get(async (_req, res) => {
@@ -117,7 +115,7 @@ router
     if (req.file) {
       try {
         uploadObject = {};
-        if (req.file.originalname.endsWith(".docx")) {
+        if (!req.file.originalname.endsWith(".pdf")) {
           uploadObject = {
             public_id: req.file.originalname,
             resource_type: "raw",
@@ -227,7 +225,7 @@ router
     if (req.file) {
       try {
         uploadObject = {};
-        if (req.file.originalname.endsWith(".docx")) {
+        if (!req.file.originalname.endsWith(".pdf")) {
           uploadObject = {
             public_id: req.file.originalname,
             resource_type: "raw",
