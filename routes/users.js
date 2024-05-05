@@ -105,13 +105,20 @@ function validateApplicationData(userInput) {
 router
   .route("/dashboard")
   .get(async (req, res) => {
-    // TODO: ERROR CHECK HERE
-    const user_info = await application.getUserApplications(
-      req.session.user.userId
-    );
-    const new_applications = await application.getFollowUpApps(
-      req.session.user.userId
-    );
+    let user_info;
+    try {
+      user_info = await application.getUserApplications(req.session.user.userId);
+    } catch (e) {
+      return renderError(req, res, 500, "Internal Server Error", e.message);
+    }
+    
+    let new_applications = [];
+    try {
+      new_applications = await application.getFollowUpApps(req.session.user.userId);
+    } catch (e) {
+      return renderError(req, res, 500, "Internal Server Error", e.message);
+    }
+
     return res.render("dashboard", {
       applications: user_info,
       nav: "privateNav",

@@ -4,7 +4,7 @@
     <div id="newAppContent">
 
         <button id="closeNewApp">&times;</button>
-        <form id="newAppForm" name="newAppForm" action={{route}} method={{method}} enctype="multipart/form-data">
+        <form id="newAppForm" name="newAppForm" action={{route}} method="POST" enctype="multipart/form-data">
             <p><span class="star">*</span> Indicates Required Field</p>
             <!-- Company Name -->
             <label for="companyName">Company Name <span class="star">*</span></label>
@@ -114,6 +114,7 @@
             <span class="form-error">{{errors.status}}</span>
 
             <!-- Submit Button -->
+            <input type="hidden" name="_method" value={{method}}/>
             <button type="submit" class="btn green-btn dark">Submit</button>
         </form>
     </div>
