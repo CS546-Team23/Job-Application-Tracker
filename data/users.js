@@ -4,15 +4,14 @@ const saltRounds = 16;
 import { users } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 
-
 import {
   checkIsProperString,
   checkIsProperFirstOrLastName,
   checkIsProperPassword,
   checkIsValidState,
-  checkIsProperNumber,
+  checkCity,
   validateEmail,
-  validateId
+  validateId,
 } from "../helpers.js";
 
 const registerUser = async (
@@ -27,11 +26,10 @@ const registerUser = async (
 ) => {
   firstName = checkIsProperFirstOrLastName(firstName, "First name");
   lastName = checkIsProperFirstOrLastName(lastName, "Last name");
-  city = checkIsProperString(city, "City");
+  city = checkCity(city, "City");
   email = validateEmail(email);
   password = checkIsProperPassword(password);
   if (!checkIsValidState(state)) throw new Error("Error: Invalid state passed");
-
 
   if (desiredPosition)
     desiredPosition = checkIsProperString(desiredPosition, "Desiered position");
@@ -79,7 +77,8 @@ const loginUser = async (email, password) => {
   if (!getUser) throw new Error("Error: Either email or password invalid");
 
   let passwordCheck = await bcrypt.compare(password, getUser.password);
-  if (!passwordCheck) throw new Error("Error: Either email or password invalid");
+  if (!passwordCheck)
+    throw new Error("Error: Either email or password invalid");
 
   const { password: hashedPassword, applications, ...restDetails } = getUser;
 
@@ -129,7 +128,8 @@ const updateUser = async (email, updateObject) => {
     { returnDocument: "after" }
   );
 
-  if (!updatedUser) throw new Error("Error: No user with email has been registered");
+  if (!updatedUser)
+    throw new Error("Error: No user with email has been registered");
 
   const {
     password: hashedPassword,
@@ -140,24 +140,25 @@ const updateUser = async (email, updateObject) => {
   return otherDetails;
 };
 
-const getUserById = async function(userId) {
+const getUserById = async function (userId) {
   userId = validateId(userId);
 
   const userCollection = await users();
-  const foundUser =  await userCollection.findOne(
-    { "_id": new ObjectId(userId) },
-  );
+  const foundUser = await userCollection.findOne({ _id: new ObjectId(userId) });
   if (!foundUser) throw new Error(`User Not found with id ${userId}`);
 
   // remove all object ids
   foundUser._id = foundUser._id.toString();
   foundUser.applications.map((app) => {
-    app.Notes = app.Notes.map((note) => { note._id = note._id.toString(); return note; });
+    app.Notes = app.Notes.map((note) => {
+      note._id = note._id.toString();
+      return note;
+    });
     app._id = app._id.toString();
     return app;
   });
 
   return foundUser;
-}
+};
 
 export default { registerUser, loginUser, updateUser, getUserById };
