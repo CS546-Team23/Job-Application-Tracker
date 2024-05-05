@@ -65,7 +65,7 @@ app.use('/statistics', (req, res, next) => {
   }
   next();
 });
-app.use('/company', (req, res, next) => {
+app.use('/companies', (req, res, next) => {
   if(!req.session.user){
     return res.redirect('/login');
   }

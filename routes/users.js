@@ -1,8 +1,8 @@
 //import express, express router as shown in lecture code
 import { Router } from "express";
 import path from "path";
-import user from '../data/users.js';
-import application from '../data/applications.js';
+import user from "../data/users.js";
+import application from "../data/applications.js";
 import * as helper from "../helpers.js";
 import xss from "xss";
 import moment from "moment";
@@ -114,7 +114,7 @@ router.route("/dashboard").get(async (req, res) => {
       userInput.status
     );
     return res.redirect(`/applications/${app_id}`);
-  } catch(e) {
+  } catch (e) {
     return res.status(500).render("errors", {
       layout: "main",
       nav: "publicNav",
@@ -202,8 +202,6 @@ router.route("/applications/:id").get(async (req, res) => {
   catch(e) {
     return res.json({error:e.messsage});
   }
-
-  
 });
 
 export default router;

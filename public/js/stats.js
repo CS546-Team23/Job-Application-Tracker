@@ -4,6 +4,11 @@ let totalCompanies = document.getElementById("totalCompanies");
 // let table = document.getElementById("applicationTable");
 let ghostedApplicationText = document.getElementById("ghostedApplications");
 
+let noDataDiv = document.getElementById("no-applications");
+let statsDataDiv = document.getElementById("stats-data");
+let infoMessage = document.getElementById("info-message");
+let chartContainerDiv = document.getElementById("myChart");
+
 let statisticsData = undefined;
 let myChart = undefined;
 let filteredData = {};
@@ -62,7 +67,8 @@ const createBarChart = (barData, graphType) => {
       height: 1000,
     },
   };
-
+  infoMessage.hidden = true;
+  chartContainerDiv.hidden = false;
   myChart = new Chart(document.getElementById("myChart"), config);
 };
 
@@ -144,6 +150,15 @@ const loadContent = async () => {
       `http://localhost:3000/statistics/getStats`
     );
 
+    if (Object.keys(data.data).length === 0) {
+      noDataDiv.innerHTML =
+        "There are no applications yet, start your journey by adding applications";
+      noDataDiv.hidden = false;
+      return;
+    }
+
+    statsDataDiv.hidden = false;
+
     const statsData = data.data;
 
     statisticsData = data.data;
@@ -155,6 +170,8 @@ const loadContent = async () => {
     //#region pie chart data
 
     createPieChart(statsData.pieChartStatusData);
+
+    filteredData = data.data.barDateData;
 
     //#endregion
     console.log(data.data);
@@ -215,6 +232,13 @@ const changeTimeRange = () => {
     }
   } else {
     filteredData = statisticsData.barDateData;
+  }
+
+  if (Object.keys(filteredData).length === 0) {
+    infoMessage.innerHTML = "No Data for specific time period";
+    infoMessage.hidden = false;
+    chartContainerDiv.hidden = true;
+    return;
   }
 
   createBarChart(filteredData, selectedBarType);
