@@ -38,7 +38,7 @@ const exportedMethods = {
     if (!user) {
       throw new Error("Error: user not found");
     }
-
+      
     let newJobApp = {
       _id: new ObjectId(),
       companyName: companyName,
@@ -62,11 +62,11 @@ const exportedMethods = {
     );
     return { updatedUser: updatedUser, app_id: newJobApp._id.toString() };
   },
-
-  async getJobappByid(jobappId, userId) {
+  
+  async getJobappByid(jobappId, userId){
     jobappId = validateId(jobappId, jobappId.toString());
     const search = {
-      "applications._id": new ObjectId(jobappId),
+      "applications._id": new ObjectId(jobappId)
     };
     if (userId !== undefined) {
       userId = validateId(userId, userId.toString());
@@ -74,15 +74,18 @@ const exportedMethods = {
     }
 
     const userCollection = await users();
-    const foundJobapp = await userCollection.findOne(search, {
-      projection: { _id: 0, "applications.$": 1 },
-    });
-    if (!foundJobapp) throw new Error(`User Not found with ${jobappId}`);
+    const foundJobapp =  await userCollection.findOne(
+      search,
+      { projection: { _id: 0, "applications.$": 1 } }
+    );
+    if (!foundJobapp) throw new Error(`No application found with id ${jobappId}`);
 
-    return foundJobapp.applications[0];
+    const foundApp = foundJobapp.applications[0];
+    foundApp._id = foundApp._id.toString();
+    return foundApp;
   },
 
-  async updateJobapp(jobappId, updatedObj) {
+  async updateJobapp(jobappId, updatedObj, userId){
     jobappId = validateId(jobappId, jobappId.toString());
     updatedObj.companyName = checkIsProperString(
       updatedObj.companyName,
@@ -94,25 +97,22 @@ const exportedMethods = {
     );
     updatedObj.appCity = checkIsProperString(updatedObj.appCity, "job-city");
     updatedObj.appState = checkIsProperString(updatedObj.appState, "job-state");
-    updatedObj.date = currDate();
-    updatedObj.followUpDate = isFollowupDateValid(
-      updatedObj.followUpDate,
-      updatedObj.followUpDate
-    );
-    updatedObj.appResume = checkIsProperString(
-      updatedObj.appResume,
-      "filePath"
-    );
-    updatedObj.status = checkIsProperString(updatedObj.status, "status");
+    if (updatedObj.followUpDate) { updatedObj.followUpDate = isFollowupDateValid(updatedObj.followUpDate, "followUpDate"); }
+    if (updatedObj.appResume) { updatedObj.appResume = checkIsProperString(updatedObj.appResume, 'filePath'); }
+    updatedObj.status = checkIsProperString(updatedObj.status, 'status');
+    
+    const search = {
+      "applications._id": new ObjectId(jobappId)
+    };
+    if (userId !== undefined) {
+      userId = validateId(userId, userId.toString());
+      search._id = new ObjectId(userId);
+    }
 
     const usersCollection = await users();
-    const user = await usersCollection.findOne({
-      "applications._id": ObjectId.createFromHexString(jobappId),
-    });
+    const user = await usersCollection.findOne(search);
     if (user == null) {
-      throw new Error(
-        `Error: User not found with job-application-id: ${jobappId}`
-      );
+      throw new Error(`Error: User not found with job-application-id: ${jobappId}`);
     }
 
     const oldApplication = await usersCollection.find({
@@ -146,13 +146,18 @@ const exportedMethods = {
     return updatedUser;
   },
 
-  async removeJobapp(jobappId) {
+async removeJobapp(jobappId, userId) {
     jobappId = validateId(jobappId);
+    const search = {
+      "applications._id": ObjectId.createFromHexString(jobappId)
+    };
+    if (userId !== undefined) {
+      userId = validateId(userId, userId.toString());
+      search._id = ObjectId.createFromHexString(userId);
+    }
 
     const userCollection = await users();
-    const userWithApplication = await userCollection.findOne({
-      "applications._id": ObjectId.createFromHexString(jobappId),
-    });
+    const userWithApplication = await userCollection.findOne(search);
 
     if (!userWithApplication) {
       throw new Error(`Error: User not found with application id: ${jobappId}`);

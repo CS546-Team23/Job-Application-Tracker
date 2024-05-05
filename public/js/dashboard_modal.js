@@ -100,6 +100,21 @@ $('#newAppButton').on("click", (event) => {
     $("#newAppModal").show();
 });
 
+$('#deleteAppButton').on("click", (event) => {
+    event.preventDefault();
+    if (!window.confirm("Are you sure you want to delte this application?")) { return; };
+    
+    let requestConfig = {
+        method: 'DELETE',
+        url: "/api" + window.location.pathname
+    };
+
+    $.ajax(requestConfig).then(function (responseMessage) {
+        if (responseMessage.success) { window.location.replace("/dashboard"); }
+        else { alert(responseMessage.error); }
+    });
+});
+
 $("#newAppForm").submit((event) => {
     //Get all error message placeholders
     let companyNameError = $("#companyName + span.form-error");
