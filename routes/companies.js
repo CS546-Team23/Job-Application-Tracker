@@ -12,7 +12,7 @@ router.route("/").get(async (req, res) => {
     layout: "main",
     nav: "privateNav",
     stylesheets: "commonStylesheets",
-    scripts: "profileScript",
+    scripts: "companiesScript",
   });
 });
 router.route("/:id").get(async (req, res) => {
