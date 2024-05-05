@@ -6,6 +6,8 @@ import applications from "./data/applications.js";
 
 import { dbConnection, closeConnection } from "./config/mongoConnection.js";
 
+
+
 async function main() {
   try {
     const data = await applications.getUserApplications(

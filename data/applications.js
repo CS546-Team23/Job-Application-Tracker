@@ -15,9 +15,9 @@ const exportedMethods = {
     jobPosition,
     appCity,
     appState,
+    status,
     followUpDate,
-    appResume,
-    status
+    appResume
   ) {
     userId = validateId(userId);
     companyName = checkIsProperString(companyName, "company-name");
@@ -27,7 +27,7 @@ const exportedMethods = {
     const date = currDate();
     if (followUpDate)
       followUpDate = isFollowupDateValid(followUpDate, followUpDate);
-    if (appResume) appResume = checkIsProperString(appResume, "filePath");
+    // if (appResume) appResume = checkIsProperString(appResume, "filePath");
     status = checkIsProperString(status, "status");
 
     const userCollection = await users();
@@ -77,12 +77,15 @@ const exportedMethods = {
     const foundJobapp = await userCollection.findOne(search, {
       projection: { _id: 0, "applications.$": 1 },
     });
-    if (!foundJobapp) throw new Error(`User Not found with ${jobappId}`);
+    if (!foundJobapp)
+      throw new Error(`No application found with id ${jobappId}`);
 
-    return foundJobapp.applications[0];
+    const foundApp = foundJobapp.applications[0];
+    foundApp._id = foundApp._id.toString();
+    return foundApp;
   },
 
-  async updateJobapp(jobappId, updatedObj) {
+  async updateJobapp(jobappId, updatedObj, userId) {
     jobappId = validateId(jobappId, jobappId.toString());
     updatedObj.companyName = checkIsProperString(
       updatedObj.companyName,
@@ -94,21 +97,30 @@ const exportedMethods = {
     );
     updatedObj.appCity = checkIsProperString(updatedObj.appCity, "job-city");
     updatedObj.appState = checkIsProperString(updatedObj.appState, "job-state");
-    updatedObj.date = currDate();
-    updatedObj.followUpDate = isFollowupDateValid(
-      updatedObj.followUpDate,
-      updatedObj.followUpDate
-    );
-    updatedObj.appResume = checkIsProperString(
-      updatedObj.appResume,
-      "filePath"
-    );
+    if (updatedObj.followUpDate) {
+      updatedObj.followUpDate = isFollowupDateValid(
+        updatedObj.followUpDate,
+        "followUpDate"
+      );
+    }
+    // if (updatedObj.appResume) {
+    //   updatedObj.appResume = checkIsProperString(
+    //     updatedObj.appResume,
+    //     "filePath"
+    //   );
+    // }
     updatedObj.status = checkIsProperString(updatedObj.status, "status");
 
+    const search = {
+      "applications._id": new ObjectId(jobappId),
+    };
+    if (userId !== undefined) {
+      userId = validateId(userId, userId.toString());
+      search._id = new ObjectId(userId);
+    }
+
     const usersCollection = await users();
-    const user = await usersCollection.findOne({
-      "applications._id": ObjectId.createFromHexString(jobappId),
-    });
+    const user = await usersCollection.findOne(search);
     if (user == null) {
       throw new Error(
         `Error: User not found with job-application-id: ${jobappId}`
@@ -146,13 +158,18 @@ const exportedMethods = {
     return updatedUser;
   },
 
-  async removeJobapp(jobappId) {
+  async removeJobapp(jobappId, userId) {
     jobappId = validateId(jobappId);
+    const search = {
+      "applications._id": ObjectId.createFromHexString(jobappId),
+    };
+    if (userId !== undefined) {
+      userId = validateId(userId, userId.toString());
+      search._id = ObjectId.createFromHexString(userId);
+    }
 
     const userCollection = await users();
-    const userWithApplication = await userCollection.findOne({
-      "applications._id": ObjectId.createFromHexString(jobappId),
-    });
+    const userWithApplication = await userCollection.findOne(search);
 
     if (!userWithApplication) {
       throw new Error(`Error: User not found with application id: ${jobappId}`);

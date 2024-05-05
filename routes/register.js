@@ -11,12 +11,16 @@ router
       res.render("register", {
         layout: "main",
         nav: "publicNav",
+        stylesheets: 'commonStylesheets',
+        scripts: 'registerLoginScripts',
       });
     } catch (e) {
       return res.status(404).render("errors", {
         layout: "main",
         nav: "publicNav",
         message: e,
+        stylesheets: 'commonStylesheets',
+        scripts: 'commonScripts',
       });
     }
   })
@@ -121,6 +125,8 @@ router
         user: userInput,
         layout: "main",
         nav: "publicNav",
+        stylesheets: 'commonStylesheets',
+        scripts: 'registerLoginScripts'
       });
       return;
     }
@@ -141,12 +147,16 @@ router
         res.render("login", {
           layout: "main",
           nav: "publicNav",
+          stylesheets: 'commonStylesheets',
+          scripts: 'registerLoginScripts'
         });
       } else {
         res.status(500).render("errors", {
           layout: "main",
           nav: "publicNav",
           message: "Internal Server Error",
+          stylesheets: 'commonStylesheets',
+          scripts: 'commonScripts',
         });
       }
     } catch (e) {
@@ -154,6 +164,8 @@ router
         layout: "main",
         nav: "publicNav",
         message: e.message,
+        stylesheets: 'commonStylesheets',
+        scripts: 'commonScripts',
       });
     }
   });
