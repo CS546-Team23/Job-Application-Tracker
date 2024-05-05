@@ -16,32 +16,17 @@ router.route("/").get(async (_req, res) => {
   return res.sendFile(path.resolve("static/landing.html"));
 });
 
-router.route("/profile")
-.get(async (req, res) => {
+router.route("/profile").get(async (req, res) => {
   const userInfo = await user.getUserById(req.session.user.userId);
   return res.render("profile", {
-    nav: 'privateNav',
+    nav: "privateNav",
     user: req.session.user,
-    stylesheets: 'commonStylesheets',
-    scripts: 'profileScript',
+    stylesheets: "commonStylesheets",
+    scripts: "profileScript",
   });
 });
 
-// router.route("/dashboard").get(async (req, res) => {
-//   const user_info = await user.getUserById(req.session.user.userId);
-//   return res.render("dashboard", {
-//     applications: user_info.applications,
-//     nav: "privateNav",
-//     stylesheets: 'dashboardStylesheet',
-//     scripts: 'dashboardScript',
-//     user: req.session.user,
-//   });
-// }).post(async (req, res) => {
-  // apply xss to user inputs
-  const userInput = req.body;
-
 function validateApplicationData(userInput) {
-
   for (let key in userInput) {
     userInput[key] = xss(userInput[key]);
   }
@@ -115,8 +100,8 @@ router
     return res.render("dashboard", {
       applications: user_info,
       nav: "privateNav",
-      stylesheets: 'dashboardStylesheet',
-      scripts: 'dashboardScript',
+      stylesheets: "dashboardStylesheet",
+      scripts: "dashboardScript",
       user: req.session.user,
     });
   })
@@ -126,26 +111,6 @@ router
     let fileInfo = {};
     let uploadObject = {};
     let errors = validateApplicationData(userInput);
-
-  try {
-    const { app_id } = await application.createApplication(
-      req.session.user.userId,
-      userInput.companyName,
-      userInput.jobPosition,
-      userInput.appCity,
-      userInput.appState,
-      userInput.followUpDate,
-      userInput.appResume,
-      userInput.status
-    );
-    return res.redirect(`/applications/${app_id}`);
-  } catch(e) {
-    return res.status(500).render("errors", {
-      layout: "main",
-      nav: "publicNav",
-      message: "Internal Server Error",
-      stylesheets: 'commonStylesheets',
-      scripts: 'applicationScript',
 
     if (req.file) {
       try {
@@ -234,7 +199,8 @@ router
     return res.render("applicationPage", {
       nav: "privateNav",
       application: app,
-
+      stylesheets: "commonStylesheets",
+      scripts: "applicationScript",
     });
   })
   .post(async (req, res) => {
@@ -248,22 +214,6 @@ router
       return res.json({ error: e.messsage });
     }
 
-
-// router.route("/applications/:id").get(async (req, res) => {
-//   let app;
-//   try {
-//     app = await application.getJobappByid(req.params.id, req.session.user.userId);
-//   }
-//   catch(e) {
-//     return res.json({error:e.messsage});
-//   }
-//   return res.render("applicationPage", { 
-//     nav: "privateNav", 
-//     application:app, 
-//     stylesheets: 'commonStylesheets',
-//     scripts: 'applicationScript',
-//   });
-// });
     // apply xss to user inputs
     const userInput = req.body;
     let errors = validateApplicationData(userInput);
