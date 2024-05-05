@@ -95,12 +95,16 @@ const updateUser = async (email, updateObject) => {
     );
   if (updateObject.lastName)
     updateObject.lastName = checkIsProperFirstOrLastName(
-      updateObject.firstName,
+      updateObject.lastName,
       "First name"
     );
   if (updateObject.city)
     updateObject.city = checkIsProperString(updateObject.city, "City");
-  if (updateObject.state) state = checkIsValidState(state);
+
+  if (updateObject.state) {
+    if (!checkIsValidState(updateObject.state)) throw new Error("Error: Invalid state passed");
+  }
+
   if (updateObject.desiredPosition)
     updateObject.desiredPosition = checkIsProperString(
       updateObject.desiredPosition,
@@ -113,13 +117,6 @@ const updateUser = async (email, updateObject) => {
       "Dream Job"
     );
 
-  if (updateObject.password) {
-    updateObject.password = checkIsProperPassword(updateObject.password);
-    updateObject.password = await bcrypt.hash(
-      updateObject.password,
-      saltRounds
-    );
-  }
 
   const usersCollection = await users();
 

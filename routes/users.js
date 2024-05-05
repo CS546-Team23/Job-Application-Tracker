@@ -24,7 +24,107 @@ router.route("/profile").get(async (req, res) => {
     stylesheets: "commonStylesheets",
     scripts: "profileScript",
   });
-});
+}).patch(async (req, res)=>{
+  // return res.json(req.body);
+  let editInfo = req.body ;
+  if (!editInfo || Object.keys(editInfo).length === 0) {
+    //todo 
+    return res
+      .status(400)
+      .json({ error: "There are no fields in the request body" });
+  }
+  let updateObject = {} ;
+  let errors = {} ;
+  for (let key in editInfo) {
+    editInfo[key] = xss(editInfo[key]);
+  }
+  try {
+    if (editInfo.profileFirstName) {
+      updateObject.firstName = helper.checkIsProperFirstOrLastName(editInfo.profileFirstName, 
+      "First Name");
+    }
+  } catch (e) {
+    errors.firstName = e.message;
+  }
+  try {
+    if (editInfo.profileLastName) {
+      updateObject.lastName = helper.checkIsProperFirstOrLastName(editInfo.profileLastName, 
+      "Last Name");
+    }
+  } catch (e) {
+    errors.lastName = e.message;
+  }
+  try {
+    if (editInfo.profileEmail) {
+      updateObject.email = helper.validateEmail(editInfo.profileEmail, 
+      "Email");
+    }
+  } catch (e) {
+    errors.email = e.message;
+  }
+  try {
+    if (editInfo.profileCity) {
+      updateObject.city = helper.checkCity(editInfo.profileCity, 
+      "City");
+    }
+  } catch (e) {
+    errors.city = e.message;
+  }
+  try {
+    if (editInfo.profileState) {
+      // updateObject.state = helper.checkIsValidState(editInfo.profileState, 
+      // "City");
+      if (!helper.checkIsValidState(editInfo.profileState)) {
+          throw new Error('State is not valid !');
+      }
+      updateObject.state = editInfo.profileState;
+    }
+  } catch (e) {
+    errors.state = e.message;
+  }
+  try {
+    if (editInfo.profileDesiredPosition) {
+      updateObject.desiredPosition = helper.checkIsProperFirstOrLastName(editInfo.profileDesiredPosition, 
+      "Desired Position");
+    }
+  } catch (e) {
+    errors.desiredPosition = e.message;
+  }
+  try {
+    if (editInfo.profileDreamJob) {
+      updateObject.dreamJob = helper.checkIsProperFirstOrLastName(editInfo.profileDreamJob, 
+      "Desired Position");
+    }
+  } catch (e) {
+    errors.dreamJob = e.message;
+  }
+  if (Object.keys(errors).length !== 0) {
+    return res.render("profile", {
+      nav: "privateNav",
+      user: req.session.user,
+      stylesheets: "commonStylesheets",
+      scripts: "profileScript",
+      errors : true,
+    });
+
+  }
+
+  try {
+    let userUpdateInfo = await user.updateUser(req.session.user.email, updateObject);
+    req.session.user = userUpdateInfo;
+    return res.render("profile", {
+      nav: "privateNav",
+      user: userUpdateInfo,
+      stylesheets: "commonStylesheets",
+      scripts: "profileScript",
+    
+    });
+  } catch (error) {
+    return res.json({error: error.message});
+  }
+
+
+})
 
 function validateApplicationData(userInput) {
   for (let key in userInput) {
