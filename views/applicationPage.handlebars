@@ -1,32 +1,45 @@
-<link rel="stylesheet" href="../public/css/applicationPage.css">
 {{#with application}}
-<button id="newAppButton" class="btn orange-btn dark">Edit Application</button>
-<button id="deleteAppButton" class="btn orange-btn dark">Delete Application</button>
-<article>
-    <h2>{{jobPosition}}</h2>
-    <section>
+<section class="app-btn-container">
+    <button id="newAppButton" class="btn orange-btn dark">Edit Application</button>
+    <button id="deleteAppButton" class="btn orange-btn dark">Delete Application</button>
+</section>
+<section class="app-info-container">
+    <article>
+        <h2>{{jobPosition}}</h2>
         <dl>
-            <dt>Company Name:</dt>
-                <dd>{{companyName}}</dd>
-            <dt>Location:</dt>
-                <dd>{{appCity}}, {{appState}}</dd>
-            <dt>Date Applied:</dt>
-                <dd>{{date}}</dd>
-            {{#if followUpDate}}<dt>Follow-Up Date:</dt>
-                <dd>{{followUpDate}}</dd>{{/if}}
-            <dt>Status:</dt>
-                <dd>{{status}}</dd>
-
-            {{#if appResume}}<dt>Resume:</dt>
-            <dd><a href="{{appResume.url}}" target="_blank"> {{appResume.fileName}}</a></dd>{{/if}}
+            <div>
+                <dt>Company Name:</dt>
+                    <dd>{{companyName}}</dd>
+            </div>
+            <div>
+                <dt>Location:</dt>
+                    <dd>{{appCity}}, {{appState}}</dd>
+            </div>
+            <div>
+                <dt>Date Applied:</dt>
+                    <dd>{{date}}</dd>
+            </div>
+            <div>
+                {{#if followUpDate}}<dt>Follow-Up Date:</dt>
+                    <dd>{{followUpDate}}</dd>{{/if}}
+            </div>
+            <div>
+                <dt>Status:</dt>
+                    <dd>{{status}}</dd>
+            </div>
+            <div>
+                {{#if appResume}}<dt>Resume:</dt>
+                <dd><a href="{{appResume.url}}" target="_blank"> {{appResume.fileName}}</a></dd>{{/if}}
+            </div>  
         </dl>
-    </section>
-</article>
-<h2>Notes</h2>
+    </article>
+</section>
+<section class="notes-container">
+    <h2>Notes</h2>
     <form id="note-form">
         <label id="form-label" for="note-input">New Note</label>
         <textarea id="note-input"></textarea>
-        <input type="submit" value="Submit" id="note-submit">
+        <input class="btn green-btn dark" type="submit" value="Submit" id="note-submit">
     </form>
     <p id="note-error"></p>
     <button id="form-reset">Reset Form</button>
@@ -35,10 +48,11 @@
             <li class="note" data-id={{_id}}>
                 <cite>{{date}} {{time}}</cite>
                 <p class="note-content">{{text}}</p>
-                <button onclick="javascript:void(0)" class="editButton">Edit</button>
-                <button onclick="javascript:void(0)" class="deleteButton">Delete</button>
+                <button onclick="javascript:void(0)" class="btn orange-btn dark">Edit</button>
+                <button onclick="javascript:void(0)" class="btn orange-btn dark">Delete</button>
             </li>
         {{/each}}
     </ul>
+</section>
 {{/with}}
 {{> appModal method="POST" route=(concat "/applications/" application._id)}}

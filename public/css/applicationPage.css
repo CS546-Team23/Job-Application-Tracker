@@ -1,4 +1,6 @@
-/* Table Styles */
+/***********************
+    Table Styles 
+************************/
 table {
     width: 100%;
     margin: 1vw;
@@ -33,7 +35,10 @@ a {
     display: inline;
 }
 
-/* Modal */
+/*****************************
+    Dashboard Page Styles 
+******************************/
+/* Modal Styles */
 #newAppModal {
     position: fixed; /* Stay in place */
     left: 50%;
@@ -58,11 +63,6 @@ a {
     background-color: white;
     border-radius: 10px;
 }
-
-#newAppContent button {
-    float: right;
-}
-
 #applicationHeader {
     display: flex;
     justify-content: space-between;
@@ -70,16 +70,32 @@ a {
 #applicationHeader #newAppButton{
     max-width:200px;
 }
+/* Form Input Buttons */
+#followUpDate{
+    padding-right:1em;
+}
+#appResume{
+    border:none;
+    border-radius:0;
+    padding:0;
+    margin-top:8px;
+}
+#appResume::file-selector-button{
+    border-radius:5px;
+    padding:8px 12px;
+    border-color:#0d5b41;
+    background-color: #fff;
+    color:#0d5b41;
+    font-weight:800;
+}
+#appResume::file-selector-button:hover,
+#appResume::file-selector-button:focus,
+#appResume::file-selector-button:active{
+    background-color:#0d5b41;
+    color:#fff;
+}
 
-/*****************************
-    Dark Table Styles
-*****************************/
-/*#applicationTable{
-    background-color:#232a35;
-    border-color:#ccc;
-}*/
-
-
+/* Status Styles */
 .status-container{
     margin-top: 2rem;
     display: flex;
@@ -87,33 +103,33 @@ a {
     gap: 0px;
     overflow-x: auto;
 }
-
 .status-section{
     display: flex;
     flex-direction: column;
-    min-width: 300px;
-    max-width: 300px;
+    min-width: 280px;
+    max-width: 280px;
     text-align: center;
     border: 1px solid #E5E7EB;
-    padding: 2rem 0 2rem 0;
+    padding: 0 0 2rem 0;
     gap: 1rem;
     background-color: #F3F4F6;
+    margin-right:.5em;
 }
-
 .status-text {
     font-weight: bold;
-    font-size: larger;
+    font-size: 1.3em;
+    margin:0;
+    margin-bottom:10px;
+    padding:.5em 0;
+    color:#fff;
 }
-
 .status-application{
     display: flex;
     flex-direction: column;
     overflow-y: auto;
     padding: 0 1rem 0 1rem;
-    gap: 1rem;
 
 }
-
 .status-item{
     width: 100%;
     text-decoration: none;
@@ -126,17 +142,252 @@ a {
     align-items: start;
     border-radius: 10px;
     box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    margin-bottom:1rem;
 }
-
-.status-item:hover{
-    background-color: #05a870;
-    color: white;
-}
-
 .status-item span{
     white-space: nowrap;
-    max-width: 200px;
+    max-width: 180px;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-bottom:4px;
 }
 
+/* Border-left color for each status */
+.status-container .status-section .status-item{
+    border-left:6px solid transparent;
+}
+/* Saved */
+.status-container .status-section:first-child .status-text{
+    background-color:#f1ab0a;
+}
+.status-container .status-section:first-child .status-item{
+    border-left-color:#f1ab0a;
+}
+.status-container .status-section:first-child .status-item:hover,
+.status-container .status-section:first-child .status-item:focus,
+.status-container .status-section:first-child .status-item:active{
+    background-color:#f9edd2;
+}
+/* Applied */
+.status-container .status-section:nth-child(2) .status-text{
+    background-color:#F46036;
+}
+.status-container .status-section:nth-child(2) .status-item{
+    border-left-color:#F46036;
+}
+.status-container .status-section:nth-child(2) .status-item:hover,
+.status-container .status-section:nth-child(2) .status-item:focus,
+.status-container .status-section:nth-child(2) .status-item:active{
+    background-color:#feece7;
+}
+/* Screening */
+.status-container .status-section:nth-child(3) .status-text{
+    background-color:#CC3363;
+}
+.status-container .status-section:nth-child(3) .status-item{
+    border-left-color:#CC3363;
+}
+.status-container .status-section:nth-child(3) .status-item:hover,
+.status-container .status-section:nth-child(3) .status-item:focus,
+.status-container .status-section:nth-child(3) .status-item:active{
+    background-color:#faebef;
+}
+/* Interviewing */
+.status-container .status-section:nth-child(4) .status-text{
+    background-color:#0497ae;
+}
+.status-container .status-section:nth-child(4) .status-item{
+    border-left-color:#0497ae;
+}
+.status-container .status-section:nth-child(4) .status-item:hover,
+.status-container .status-section:nth-child(4) .status-item:focus,
+.status-container .status-section:nth-child(4) .status-item:active{
+    background-color:#e6fbfe;
+}
+/* Rejected */
+.status-container .status-section:nth-child(5) .status-text{
+    background-color:#c1121f;
+}
+.status-container .status-section:nth-child(5) .status-item{
+    border-left-color:#c1121f;
+}
+.status-container .status-section:nth-child(5) .status-item:hover,
+.status-container .status-section:nth-child(5) .status-item:focus,
+.status-container .status-section:nth-child(5) .status-item:active{
+    background-color:#ffe6e6;
+}
+/* Hired */
+.status-container .status-section:last-child .status-text{
+    background-color:#05A870;
+}
+.status-container .status-section:last-child .status-item{
+    border-left-color:#05A870;
+}
+.status-container .status-section:last-child .status-item:hover,
+.status-container .status-section:last-child .status-item:focus,
+.status-container .status-section:last-child .status-item:active{
+    background-color:#e6fef6;
+}
+
+/*****************************
+    Application Page Styles 
+******************************/
+/* Application Buttons */
+.app-btn-container{
+    margin:1em 0;
+    width:100%;
+}
+.app-btn-container button{
+    margin:0 auto;
+    max-width:250px;
+}
+.app-btn-container button:first-child{
+    margin-bottom:1em;
+}
+
+/* Application Details (Notes) */
+.app-info-container,
+.notes-container{
+    width:100%;
+    max-width:600px;
+    padding:2em;
+    margin:2em auto;
+    border-radius:15px;
+    box-shadow:0 2px 15px -4px rgba(0,0,0,0.5);
+}
+.app-info-container h2,
+.notes-container h2{
+    text-align:center;
+    margin-bottom:1.5em;
+    color:#0d5b41;
+}
+.app-info-container dl{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+.app-info-container dl div{
+    margin-bottom:1em;
+    width:50%;
+}
+.app-info-container dl dt{
+    font-weight:800;
+    color:#0d5b41;
+    margin-bottom:4px;
+}
+
+/* Notes */
+.notes-container{
+    padding-left:1em;
+    padding-right:1em;
+}
+.notes-container h2{
+    margin-bottom:1.5em;
+}
+.notes-container form{
+    border:1px solid #0d5b41;
+    padding:.75em;
+    position:relative;
+}
+.notes-container form label{
+    position:absolute;
+    top:-12px;
+    margin-top:0;
+    background-color:#fff;
+    padding-right:.5em;
+    font-size:1.2em;
+    font-weight:800;
+    color:#0d5b41;
+}
+.notes-container form textarea{
+    width:100%;
+    min-height:100px;
+    padding:8px;
+    margin:1em 0;
+}
+.notes-container form textarea:focus{
+    border:2px solid #0d5b41;
+    border-left:4px solid #0d5b41;
+    outline-color:#0d5b41;
+}
+.notes-container form input.btn{
+    width:100%;
+    max-width:100%;
+}
+#form-reset{
+    border:none;
+    background-color:transparent;
+    color:#0d5b41;
+    text-decoration:underline;
+    font-weight:bold;
+}
+#form-reset:focus,
+#form-reset:hover,
+#form-reset:active{
+    text-decoration:none;
+    color:#0d4f59;
+}
+#note-list{
+    margin:2em 0;
+    padding:0;
+    list-style-type:none;
+    counter-reset: note-counter;
+}
+#note-list li{
+    padding:1em;
+    padding-left:2.5em;
+    counter-increment: note-counter;
+    position:relative;
+    border-left:6px solid #f1ab0a;
+    box-shadow:2px 0 10px rgba(0,0,0,0.2);
+}
+/*#note-list li::before{
+    content: counter(note-counter) ". ";
+    color:#0d5b41;
+    font-weight:800;
+    font-size:1.4em;
+    position:absolute;
+    left:8px;
+}*/
+#note-list li cite{
+    font-weight:800;
+    color:#0d5b41
+}
+#note-list li button{
+    display:inline-block;
+    width:auto;
+    border-radius:25px;
+    padding:0 8px;
+}
+#note-error{
+    color:#c1121f;
+    display:block;
+    margin-top:4px;
+    font-weight:800;
+}
+
+@media(min-width:768px){
+    /* Application Buttons */
+    .app-btn-container{
+        display:flex;
+        align-items:center;
+    }
+    .app-btn-container button:first-child{
+        margin-bottom:0;
+        margin-right:1em;
+    }
+
+    /* Application Details */
+    .app-info-container dl{
+        align-items:initial;
+        flex-direction:row;
+        flex-wrap:wrap;
+        padding-left:15%;
+    }
+
+    /* Notes */
+    .notes-container{
+        padding-left:3em;
+        padding-right:3em;
+    }
+}
