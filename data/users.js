@@ -157,4 +157,39 @@ const getUserById = async function(userId) {
   return foundUser;
 }
 
-export default { registerUser, loginUser, updateUser, getUserById };
+const checkOldPassword = async (email, enteredPassword)=>{
+  email = validateEmail(email);
+  enteredPassword = checkIsProperPassword(enteredPassword);
+  const usersCollection = await users();
+
+  const getUser = await usersCollection.findOne({
+    email: email.toLowerCase(),
+  });
+  if (!getUser) throw new Error("Error: Either email or password invalid");
+
+  let passwordCheck = await bcrypt.compare(enteredPassword, getUser.password);
+  if (!passwordCheck) throw new Error("Error: Enter Correct Password !");
+
+  return {email, enteredPassword};
+}
+
+const changeNewPassword = async(email, oldPassword, newPassword)=>{
+let userEmailPassword = checkOldPassword(email, oldPassword);
+newPassword = checkIsProperPassword(newPassword);
+let hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+const usersCollection = await users();
+
+let updatedUser = await usersCollection.findOneAndUpdate(
+  { email: email.toLowerCase() },
+  { $set: {password : hashedPassword} },
+  { returnDocument: "after" }
+);
+
+if (!updatedUser) throw new Error("Error: No user with email has been registered");
+
+return {passwordUpdated: true};
+
+}
+
+export default { registerUser, loginUser, updateUser, getUserById, checkOldPassword, changeNewPassword };
