@@ -10,25 +10,41 @@ document.addEventListener("DOMContentLoaded", function() {
     var map = L.map('map').setView([37.8, -96], 4);
 
     // Add tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
 
-    // Function to create colored icons
-    function coloredIcon(color) {
-        return new L.Icon({
-            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-' + color + '.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41]
-        });
-    }
+    // Object to store counts of applications by stage
+    var stageCounts = {};
 
-    // Add markers for each company location
+    // Add markers for each city location
     Object.keys(data).forEach(function(company) {
-        var marker = L.marker([data[company].lat, data[company].lng], { icon: coloredIcon(data[company].color) }).addTo(map);
-        marker.bindPopup(company + '<br>Stage: ' + data[company].stage);
+        var city = data[company].city;
+        var state = data[company].state;
+        var stage = data[company].stage;
+
+        // Count applications by stage for each city
+        if (!stageCounts[city]) {
+            stageCounts[city] = {};
+        }
+        if (!stageCounts[city][stage]) {
+            stageCounts[city][stage] = 1;
+        } else {
+            stageCounts[city][stage]++;
+        }
+
+        // Create marker for each city
+        var marker = L.marker([data[company].lat, data[company].lng]).addTo(map);
+        marker.bindPopup(getPopupContent(city, stageCounts[city]));
     });
+
+    // Function to get the content for marker popup
+    function getPopupContent(city, counts) {
+        var content = '<strong>' + city + '</strong><br>';
+        Object.keys(counts).forEach(function(stage) {
+            content += stage + ': ' + counts[stage] + '<br>';
+        });
+        return content;
+    }
 });
