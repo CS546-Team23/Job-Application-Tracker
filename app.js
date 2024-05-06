@@ -127,9 +127,15 @@ hbs.handlebars.registerHelper("select", function (value, options) {
 
 // reformat date
 hbs.handlebars.registerHelper("reformat_date", function (value) {
-  if (!/^\d\d\/\d\d\/\d\d\d\d$/) { return ""; }
-  return moment(value, "MM/DD/YY").format("YYYY-MM-DD");
+  if (!value || !/^\d\d\/\d\d\/\d\d\d\d$/.test(value)) { return ""; }
+  const new_value = moment(value, "MM/DD/YYYY").format("YYYY-MM-DD");
+  return /^\d\d\d\d\-\d\d\-\d\d$/.test(new_value) ? new_value : "";
 });
+
+hbs.handlebars.registerHelper("get_current_date", function () {
+  return moment().format("YYYY-MM-DD");
+});
+
 
 hbs.handlebars.registerHelper("isEmptyObject", function (obj) {
   if (typeof obj !== "object") return true;

@@ -273,7 +273,6 @@ router.route("/profile/changePassword").patch(async (req, res) => {
   return res.redirect("/logout");
 });
 
-
 function renderError(req, res, status, message, error) {
   const nav = req.session.user ? "privateNav" : "publicNav";
   return res.status(status).render("errors", {
@@ -355,14 +354,18 @@ router
   .get(async (req, res) => {
     let user_info;
     try {
-      user_info = await application.getUserApplications(req.session.user.userId);
+      user_info = await application.getUserApplications(
+        req.session.user.userId
+      );
     } catch (e) {
       return renderError(req, res, 500, "Internal Server Error", e.message);
     }
-    
+
     let new_applications = [];
     try {
-      new_applications = await application.getFollowUpApps(req.session.user.userId);
+      new_applications = await application.getFollowUpApps(
+        req.session.user.userId
+      );
     } catch (e) {
       return renderError(req, res, 500, "Internal Server Error", e.message);
     }
@@ -373,7 +376,7 @@ router
       stylesheets: "dashboardStylesheet",
       scripts: "dashboardScript",
       user: req.session.user,
-      notifications: new_applications
+      notifications: new_applications,
     });
   })
   .post(async (req, res) => {
@@ -410,14 +413,18 @@ router
     if (Object.keys(errors).length !== 0) {
       let user_info;
       try {
-        user_info = await application.getUserApplications(req.session.user.userId);
+        user_info = await application.getUserApplications(
+          req.session.user.userId
+        );
       } catch (e) {
         return renderError(req, res, 500, "Internal Server Error", e.message);
       }
-      
+
       let new_applications = [];
       try {
-        new_applications = await application.getFollowUpApps(req.session.user.userId);
+        new_applications = await application.getFollowUpApps(
+          req.session.user.userId
+        );
       } catch (e) {
         return renderError(req, res, 500, "Internal Server Error", e.message);
       }
@@ -430,7 +437,7 @@ router
         scripts: "dashboardScript",
         user: req.session.user,
         notifications: new_applications,
-        errors: errors
+        errors: errors,
       });
     }
     try {
@@ -460,7 +467,6 @@ router
     } catch (e) {
       return renderError(req, res, 400, "User Error", e.message);
     }
-
     // get application
     let app;
     try {
@@ -468,6 +474,7 @@ router
     } catch (e) {
       return renderError(req, res, 404, "Not Found", e.message);
     }
+    
     return res.render("applicationPage", {
       nav: "privateNav",
       application: app,
@@ -553,7 +560,7 @@ router
     } catch (e) {
       return renderError(req, res, 500, "Internal Server Error", e.message);
     }
-});
+  });
 
 router.route("/view/applications/:id").get(async (req, res) => {
   // validate id

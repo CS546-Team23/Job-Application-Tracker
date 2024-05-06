@@ -89,11 +89,13 @@ function inputCheck(input, item_name, name, min_length, max_length, error_obj, r
 }
 
 function dateCheck(input, item_name, name, error_obj) {
-    console.log(`check this out: ${input}`);
     if (input === "") { return; }
-    else if (!/^\d\d\d\d\-\d\d\-\d\d$/.test(input)) {
+    else if (typeof input !== "string") {
+        error_obj[item_name] = `Error: Invalid input for ${name}.`;
+    } else if (/<[^>]+>/i.test(input)) {
+        error_obj[item_name] = `Error: Invalid input for ${name}. No HTML elements are allowed.`;
+    } else if (!/^\d\d\d\d\-\d\d\-\d\d$/.test(input)) {
         error_obj[item_name] = `Error: ${name} must be in YYYY-MM-DD format.`;
-        return;
     }
 }
 
