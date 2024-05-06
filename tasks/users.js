@@ -213,7 +213,7 @@ export const user2 = {
   state: "TX",
   desiredPosition: "Data Engineer",
   dreamJob: "Microsoft",
-  email: "alice.johnson@example.com",
+  email: "alicejohnson@stevens.edu",
   password: "$2b$16$w5bp8z8MLbSxGNmigT9.W.Z4J8.NMVtuHu/wOmYbFVgpyJsc9z5y2",
   applications: [
     {
@@ -603,7 +603,7 @@ export const user4 = {
   state: "IL",
   desiredPosition: "Software Developer",
   dreamJob: "Microsoft",
-  email: "michaelbrown@example.com",
+  email: "michaelbrown@gmail.com",
   password: "$2b$16$QQSFo2IPFUdAx2p28DSEE.bFlKLn1rcjkVTz909EWHSH0LznUAknS",
   applications: [
     {
@@ -784,7 +784,7 @@ export const user5 = {
   state: "CA",
   desiredPosition: "Project Manager",
   dreamJob: "Apple",
-  email: "oliviamartinez@example.com",
+  email: "oliviamartinez@gmail.com",
   password: "$2b$16$khfZAAbcm6tMdXXsUYy4p.iQ0uR6g.dRV9qhUnnwxWKrF2YNvKaT2",
   applications: [
     {
@@ -1013,5 +1013,3 @@ export const user5 = {
     },
   ],
 };
-
-
