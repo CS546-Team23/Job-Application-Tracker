@@ -467,7 +467,6 @@ router
     } catch (e) {
       return renderError(req, res, 400, "User Error", e.message);
     }
-
     // get application
     let app;
     try {
@@ -475,6 +474,7 @@ router
     } catch (e) {
       return renderError(req, res, 404, "Not Found", e.message);
     }
+    
     return res.render("applicationPage", {
       nav: "privateNav",
       application: app,
