@@ -36,10 +36,11 @@ main{
 }
 .landing-sec img{
     width:100%;
-    max-width:200px;
+    max-width:500px;
     display:block;
     margin-left:auto;
     margin-right:auto;
+    border-radius:20px;
 }
 .landing-sec div h3{
     color:#0d5b41;
