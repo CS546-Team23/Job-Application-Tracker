@@ -111,6 +111,47 @@ function validatePassword(password, name, passwordStr, errors) {
   }
 }
 
+function checkHighestEductaion(value, varName, errors) {
+  if (typeof value !== "string") {
+    errors[varName] = `Error: Invalid input for ${varName}.`;
+  } else if (/<[^>]+>/i.test(value)) {
+    errors[
+      varName
+    ] = `Error: Invalid input for ${varName}. No HTML elements are allowed.`;
+  }
+  const allowedValues = [
+    "High School",
+    "Bachelor's",
+    "Master's",
+    "PhD",
+    "Doctoral",
+  ];
+  if (!allowedValues.includes(value))
+    errors[varName] = `Invalid value for ${varName}`;
+
+  return errors;
+}
+
+function checkSkills(value, varName, errors) {
+  if (typeof value !== "string") {
+    errors[varName] = `Error: Invalid input for ${varName}.`;
+  } else if (/<[^>]+>/i.test(value)) {
+    errors[
+      varName
+    ] = `Error: Invalid input for ${varName}. No HTML elements are allowed.`;
+  }
+  const values = value.split(",");
+
+  for (let skill of values) {
+    skill = skill.trim();
+    if (skill.includes(" ")) {
+      errors[varName] = `Error: Skills should be comma seperated`;
+    }
+  }
+
+  return errors;
+}
+
 //Close Edit Profile Modal
 $("#closeProfileModal").on("click", (event) => {
   event.preventDefault();
@@ -141,6 +182,11 @@ $("#editProfileModal").submit((event) => {
   let stateError = $("#profileState + span.form-error");
   let desiredPositionError = $("#profileDesiredPosition + span.form-error");
   let dreamJobError = $("#profileDreamJob + span.form-error");
+  let profileHighestEducationError = $(
+    "#profileHighestEducation + span.form-error"
+  );
+  let profileSpecializationError = $("profileSpecialization + span.form-error");
+  let profileSkillsError = $("profileSkills + span.form-error");
 
   //Reset error messages
   firstNameError.html("");
@@ -150,6 +196,9 @@ $("#editProfileModal").submit((event) => {
   stateError.html("");
   desiredPositionError.html("");
   dreamJobError.html("");
+  profileHighestEducationError.html("");
+  profileSkillsError.html("");
+  profileSpecializationError.html("");
 
   //Errors Object
   let errors = {};
@@ -196,6 +245,28 @@ $("#editProfileModal").submit((event) => {
     inputCheck(dreamJob, "dreamJob", "Dream Job", errors);
   }
 
+  let highestEducation = $("#profileHighestEducation").val().trim();
+  if (highestEducation) {
+    checkHighestEductaion(highestEducation, "Highest Education", errors);
+  }
+
+  let profileSpecialization = $("#profileSpecialization").val().trim();
+  if (profileSpecialization) {
+    inputCheck(
+      profileSpecialization,
+      "profileSpecialization",
+      "Profile Specialization",
+      2,
+      25,
+      errors
+    );
+  }
+
+  let profileSkills = $("#profileSkills").val().trim();
+  if (profileSkills) {
+    checkSkills(profileSkills, "Profile Skills", errors);
+  }
+
   if (Object.keys(errors).length != 0) {
     event.preventDefault();
     if (errors.firstName) {
@@ -218,6 +289,15 @@ $("#editProfileModal").submit((event) => {
     }
     if (errors.dreamJob) {
       dreamJobError.html(errors.dreamJob);
+    }
+    if (errors["Highest Education"]) {
+      profileHighestEducationError.html(errors["HighestEducation"]);
+    }
+    if (errors["profileSpecialization"]) {
+      profileSpecializationError.html(errors["profileSpecialization"]);
+    }
+    if (errors["Profile Skills"]) {
+      profileSkillsError.html(errors["Profile Skills"]);
     }
   }
 

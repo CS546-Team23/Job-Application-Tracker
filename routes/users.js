@@ -17,134 +17,192 @@ router.route("/").get(async (_req, res) => {
   return res.sendFile(path.resolve("static/landing.html"));
 });
 
-router.route("/profile").get(async (req, res) => {
-  const userInfo = await user.getUserById(req.session.user.userId);
-  return res.render("profile", {
-    nav: "privateNav",
-    user: req.session.user,
-    stylesheets: "commonStylesheets",
-    scripts: "profileScript",
-  });
-}).patch(async (req, res)=>{
-  // return res.json(req.body);
-  let editInfo = req.body ;
-  if (!editInfo || Object.keys(editInfo).length === 0) {
-    //todo 
-    return res
-      .status(400)
-      .json({ error: "There are no fields in the request body" });
-  }
-  let updateObject = {} ;
-  let errors = {} ;
-  for (let key in editInfo) {
-    editInfo[key] = xss(editInfo[key]);
-  }
-  try {
-    if (editInfo.profileFirstName) {
-      updateObject.firstName = helper.checkIsProperFirstOrLastName(editInfo.profileFirstName, 
-      "First Name");
+router
+  .route("/profile")
+  .get(async (req, res) => {
+    const userInfo = await user.getUserById(req.session.user.userId);
+    return res.render("profile", {
+      nav: "privateNav",
+      user: userInfo,
+      stylesheets: "commonStylesheets",
+      scripts: "profileScript",
+    });
+  })
+  .patch(async (req, res) => {
+    // return res.json(req.body);
+    let editInfo = req.body;
+    if (!editInfo || Object.keys(editInfo).length === 0) {
+      //todo
+      return res.status(400).render("errors", {
+        layout: "main",
+        nav: "privateNav",
+        message: "No data is passed",
+        stylesheets: "commonStylesheets",
+        scripts: "commonScripts",
+      });
     }
-  } catch (e) {
-    errors.firstName = e.message;
-  }
-  try {
-    if (editInfo.profileLastName) {
-      updateObject.lastName = helper.checkIsProperFirstOrLastName(editInfo.profileLastName, 
-      "Last Name");
+    let updateObject = {};
+    let errors = {};
+    for (let key in editInfo) {
+      editInfo[key] = xss(editInfo[key]);
     }
-  } catch (e) {
-    errors.lastName = e.message;
-  }
-  try {
-    if (editInfo.profileEmail) {
-      updateObject.email = helper.validateEmail(editInfo.profileEmail, 
-      "Email");
-    }
-  } catch (e) {
-    errors.email = e.message;
-  }
-  try {
-    if (editInfo.profileCity) {
-      updateObject.city = helper.checkCity(editInfo.profileCity, 
-      "City");
-    }
-  } catch (e) {
-    errors.city = e.message;
-  }
-  try {
-    if (editInfo.profileState) {
-      // updateObject.state = helper.checkIsValidState(editInfo.profileState, 
-      // "City");
-      if (!helper.checkIsValidState(editInfo.profileState)) {
-          throw new Error('State is not valid !');
+    try {
+      if (editInfo.profileFirstName) {
+        updateObject.firstName = helper.checkIsProperFirstOrLastName(
+          editInfo.profileFirstName,
+          "First Name"
+        );
       }
-      updateObject.state = editInfo.profileState;
+    } catch (e) {
+      errors.firstName = e.message;
     }
-  } catch (e) {
-    errors.state = e.message;
-  }
-  try {
-    if (editInfo.profileDesiredPosition) {
-      updateObject.desiredPosition = helper.checkIsProperFirstOrLastName(editInfo.profileDesiredPosition, 
-      "Desired Position");
+    try {
+      if (editInfo.profileLastName) {
+        updateObject.lastName = helper.checkIsProperFirstOrLastName(
+          editInfo.profileLastName,
+          "Last Name"
+        );
+      }
+    } catch (e) {
+      errors.lastName = e.message;
     }
-  } catch (e) {
-    errors.desiredPosition = e.message;
-  }
-  try {
-    if (editInfo.profileDreamJob) {
-      updateObject.dreamJob = helper.checkIsProperFirstOrLastName(editInfo.profileDreamJob, 
-      "Desired Position");
+    try {
+      if (editInfo.profileEmail) {
+        updateObject.email = helper.validateEmail(
+          editInfo.profileEmail,
+          "Email"
+        );
+      }
+    } catch (e) {
+      errors.email = e.message;
     }
-  } catch (e) {
-    errors.dreamJob = e.message;
-  }
-  if (Object.keys(errors).length !== 0) {
-    return res.render("profile", {
-      nav: "privateNav",
-      user: req.session.user,
-      stylesheets: "commonStylesheets",
-      scripts: "profileScript",
-      errors : true,
-    });
+    try {
+      if (editInfo.profileCity) {
+        updateObject.city = helper.checkCity(editInfo.profileCity, "City");
+      }
+    } catch (e) {
+      errors.city = e.message;
+    }
+    try {
+      if (editInfo.profileState) {
+        if (!helper.checkIsValidState(editInfo.profileState)) {
+          throw new Error("State is not valid !");
+        }
+        updateObject.state = editInfo.profileState;
+      }
+    } catch (e) {
+      errors.state = e.message;
+    }
+    try {
+      if (editInfo.profileDesiredPosition) {
+        updateObject.desiredPosition = helper.checkIsProperFirstOrLastName(
+          editInfo.profileDesiredPosition,
+          "Desired Position"
+        );
+      }
+    } catch (e) {
+      errors.desiredPosition = e.message;
+    }
+    try {
+      if (editInfo.profileDreamJob) {
+        updateObject.dreamJob = helper.checkIsProperFirstOrLastName(
+          editInfo.profileDreamJob,
+          "Desired Position"
+        );
+      }
+    } catch (e) {
+      errors.dreamJob = e.message;
+    }
 
-  }
+    try {
+      if (editInfo.profileHighestEducation) {
+        updateObject.highestEducation = helper.checkHighestEductaion(
+          editInfo.profileHighestEducation,
+          "Highest Education"
+        );
+      }
+    } catch (e) {
+      errors.highestEducation = e.message;
+    }
 
-  try {
-    let userUpdateInfo = await user.updateUser(req.session.user.email, updateObject);
-    req.session.user = userUpdateInfo;
-    return res.render("profile", {
-      nav: "privateNav",
-      user: userUpdateInfo,
-      stylesheets: "commonStylesheets",
-      scripts: "profileScript",
-    
-    });
-  } catch (error) {
-    return res.json({error: error.message});
-  }
+    try {
+      if (editInfo.profileSpecialization) {
+        updateObject.specialization = helper.checkIsProperString(
+          editInfo.profileSpecialization,
+          "Specialization"
+        );
+      }
+    } catch (e) {
+      errors.specialization = e.message;
+    }
 
+    try {
+      if (editInfo.profileSkills) {
+        updateObject.skills = helper.checkAndCreateSkills(
+          editInfo.profileSkills,
+          "Skills"
+        );
+      }
+    } catch (e) {
+      errors.skills = e.message;
+    }
 
-})
+    if (Object.keys(errors).length !== 0) {
+      return res.render("profile", {
+        nav: "privateNav",
+        user: req.session.user,
+        stylesheets: "commonStylesheets",
+        scripts: "profileScript",
+        errors: errors,
+      });
+    }
 
-router.route("/profile/changePassword")
-.patch(async (req,res)=>{
-  let editInfo = req.body ;
+    try {
+      let userUpdateInfo = await user.updateUser(
+        req.session.user.email,
+        updateObject
+      );
+      userUpdateInfo.userId = userUpdateInfo._id.toString();
+      req.session.user = userUpdateInfo;
+      return res.render("profile", {
+        nav: "privateNav",
+        user: userUpdateInfo,
+        stylesheets: "commonStylesheets",
+        scripts: "profileScript",
+      });
+    } catch (error) {
+      return res.status(500).render("errors", {
+        layout: "main",
+        nav: "privateNav",
+        message: error.message,
+        stylesheets: "commonStylesheets",
+        scripts: "commonScripts",
+      });
+    }
+  });
+
+router.route("/profile/changePassword").patch(async (req, res) => {
+  let editInfo = req.body;
   if (!editInfo || Object.keys(editInfo).length === 0) {
-    //todo 
-    return res
-      .status(400)
-      .json({ error: "There are no fields in the request body" });
+    return res.status(400).render("errors", {
+      layout: "main",
+      nav: "privateNav",
+      message: "No data is passed",
+      stylesheets: "commonStylesheets",
+      scripts: "commonScripts",
+    });
   }
-  let updateObject = {} ;
-  let errors = {} ;
+  let updateObject = {};
+  let errors = {};
   for (let key in editInfo) {
     editInfo[key] = xss(editInfo[key]);
   }
 
   try {
     if (editInfo.oldPassword) {
-      updateObject.oldPassword = helper.checkIsProperPassword(editInfo.oldPassword);
+      updateObject.oldPassword = helper.checkIsProperPassword(
+        editInfo.oldPassword
+      );
     }
   } catch (e) {
     errors.oldPassword = e.message;
@@ -152,7 +210,9 @@ router.route("/profile/changePassword")
 
   try {
     if (editInfo.newPassword) {
-      updateObject.newPassword = helper.checkIsProperPassword(editInfo.newPassword);
+      updateObject.newPassword = helper.checkIsProperPassword(
+        editInfo.newPassword
+      );
     }
   } catch (e) {
     errors.newPassword = e.message;
@@ -160,7 +220,7 @@ router.route("/profile/changePassword")
 
   try {
     if (editInfo.newPassword !== editInfo.confirmNewPassword) {
-      throw new Error('newPassword and confirmNewPassword and not same !');
+      throw new Error("newPassword and confirmNewPassword and not same !");
     }
   } catch (e) {
     errors.confirmNewPassword = e.message;
@@ -172,50 +232,42 @@ router.route("/profile/changePassword")
       user: req.session.user,
       stylesheets: "commonStylesheets",
       scripts: "profileScript",
-      errors : true,
-    }); 
+      errors: true,
+    });
   }
 
-  let email = req.session.user.email; 
+  let email = req.session.user.email;
   let oldPassword = updateObject.oldPassword;
   let newPassword = updateObject.newPassword;
   try {
     let userCred = await user.checkOldPassword(email, oldPassword);
   } catch (error) {
-    return  res.status(404).render("errors", {
+    return res.status(404).render("errors", {
       layout: "main",
       nav: "privateNav",
       message: error.message,
-      stylesheets: 'commonStylesheets',
-      scripts: 'commonScripts',
+      stylesheets: "commonStylesheets",
+      scripts: "commonScripts",
     });
   }
 
   try {
     newPassword = await user.changeNewPassword(email, oldPassword, newPassword);
     if (!newPassword.passwordUpdated) {
-      return  res.status(404).render("errors", {
+      return res.status(404).render("errors", {
         layout: "main",
-        nav: "publicNav",
+        nav: "privateNav",
         message: error.message,
-        stylesheets: 'commonStylesheets',
-        scripts: 'commonScripts',
+        stylesheets: "commonStylesheets",
+        scripts: "commonScripts",
       });
-  
-
     }
   } catch (error) {
-    return res.json({error: error.message});
+    return res.json({ error: error.message });
   }
 
-
-return res.redirect("/logout");
-
-
-
-
+  return res.redirect("/logout");
 });
-
 
 function validateApplicationData(userInput) {
   for (let key in userInput) {
