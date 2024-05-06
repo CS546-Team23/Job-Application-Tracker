@@ -5,6 +5,8 @@ import { dbConnection, closeConnection } from "../config/mongoConnection.js";
 
 import { companyData } from "./companies.js";
 
+import { ObjectId } from "mongodb";
+
 import { companies } from "../config/mongoCollections.js";
 import { users } from "../config/mongoCollections.js";
 import { user1, user2, user3, user4, user5 } from "./users.js";
@@ -27,6 +29,15 @@ async function main() {
     allUsers.push(user3);
     allUsers.push(user4);
     allUsers.push(user5);
+
+    for (let user of allUsers) {
+      for (let application of user.applications) {
+        for (let note of application.Notes) {
+          note._id = new ObjectId();
+        }
+        application._id = new ObjectId();
+      }
+    }
 
     const usersCollection = await users();
     const insertUsers = await usersCollection.insertMany(allUsers);
