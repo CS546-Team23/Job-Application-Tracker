@@ -33,14 +33,14 @@
     </dl>
 </article>
 <section class="notes-container">
-    <h2>Notes</h2>
     <form id="note-form">
-        <label id="form-label" for="note-input">New Note</label>
+        <label id="form-label" for="note-input">Add New Note</label>
         <textarea id="note-input"></textarea>
         <input class="btn green-btn dark" type="submit" value="Submit" id="note-submit">
     </form>
     <p id="note-error"></p>
     <button id="form-reset">Reset Form</button>
+    <h2>Notes</h2>
     <ol id="note-list">
         {{#each Notes}}
             <li class="note" data-id={{_id}}>
