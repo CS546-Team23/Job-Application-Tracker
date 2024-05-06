@@ -264,13 +264,18 @@ router.route("/profile/changePassword").patch(async (req, res) => {
         message: error.message,
         stylesheets: "commonStylesheets",
         scripts: "commonScripts",
-      });
+      }); 
     }
   } catch (error) {
-    return res.json({ error: error.message });
+    return res.render("errors", {
+      layout: "main",
+      nav: "privateNav",
+      message: error.message,
+      stylesheets: "commonStylesheets",
+      scripts: "commonScripts",
+    }); 
   }
-
-  return res.redirect("/logout");
+  return res.redirect('logout');
 });
 
 function renderError(req, res, status, message, error) {
