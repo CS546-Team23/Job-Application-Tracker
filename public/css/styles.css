@@ -235,9 +235,9 @@ div#newAppContent,
 #editProfileContent,
 #changePasswordContent{
     margin: 3vh auto; /* 15% from the top and centered */
-    padding: 3em 5em;
+    padding: 3em 1em;
     border: 1px solid #888;
-    width: 60%;
+    width: 98%;
     background-color: white;
     border-radius: 10px;
     background-color:#def5ec;
@@ -279,6 +279,14 @@ div#newAppContent select:focus{
     margin-left:auto;
     float:initial;
     margin-top:2em;
+}
+@media(min-width:768px){
+    div#newAppContent,
+    #editProfileContent,
+    #changePasswordContent{
+        width:60%;
+        padding: 3em 5em;
+    }
 }
 
 /*************************************
@@ -458,6 +466,7 @@ form#signin-form button + a{
     display:block;
     text-align:center;
 }
+
 
 /*************************************
     Error Page Styles 
@@ -660,6 +669,9 @@ h1.stats-header{
 .profile-card .btn-container button{
     max-width:200px;
 }
+.profile-card .btn-container button:first-child{
+    margin-bottom:1em;
+}
 @media(min-width:768px){
     .profile-card ul{
         display:flex;
@@ -670,8 +682,17 @@ h1.stats-header{
         justify-content:space-evenly;
     }
     .profile-card .btn-container button:first-child{
+        margin-bottom:0;
         margin-right:1em;
     }
+}
+
+.password-change-message{
+    color:#0d5b41;
+    font-weight:800;
+    font-size:1.2em;
+    text-align:center;
+    margin-bottom:1em;
 }
 
 /*************************************
