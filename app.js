@@ -64,6 +64,12 @@ app.use("/applications", upload.single("appResume"), (req, res, next) => {
   }
   next();
 });
+app.use("/view", (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  next();
+});
 app.use("/statistics", (req, res, next) => {
   if (!req.session.user) {
     return res.redirect("/login");
