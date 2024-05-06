@@ -107,26 +107,26 @@ const updateUser = async (email, updateObject) => {
       throw new Error("Error: Invalid state passed");
   }
 
-  if (updateObject.desiredPosition.trim())
+  if (updateObject.desiredPosition && updateObject.desiredPosition.trim())
     updateObject.desiredPosition = checkIsProperString(
       updateObject.desiredPosition,
       "Desired position"
     );
 
-  if (updateObject.dreamJob.trim())
+  if (updateObject.dreamJob && updateObject.dreamJob.trim())
     updateObject.dreamJob = checkIsProperString(
       updateObject.dreamJob,
       "Dream Job"
     );
 
-  if (updateObject.highestEducation) {
+  if (updateObject.highestEducation && updateObject.highestEducation) {
     updateObject.highestEducation = checkHighestEductaion(
       updateObject.highestEducation,
       "Highest Education"
     );
   }
 
-  if (updateObject.specialization.trim()) {
+  if (updateObject.specialization && updateObject.specialization.trim()) {
     updateObject.specialization = checkIsProperString(
       updateObject.specialization,
       "Specalization"

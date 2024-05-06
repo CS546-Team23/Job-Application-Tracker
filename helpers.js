@@ -312,6 +312,7 @@ export const checkAndCreateSkills = (skills, varName) => {
   let skillsArr = skills.split(",");
   let newSkills = [];
   for (let skill of skillsArr) {
+    console.log(`skill: ${skill}`);
     skill = skill.trim();
     if (skill) {
       if (skill.includes(" ")) {

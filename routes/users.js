@@ -94,7 +94,7 @@ router
       errors.state = e.message;
     }
     try {
-      if (editInfo.profileDesiredPosition.trim()) {
+      if (editInfo.profileDesiredPosition && editInfo.profileDesiredPosition.trim()) {
         updateObject.desiredPosition = helper.checkIsProperFirstOrLastName(
           editInfo.profileDesiredPosition,
           "Desired Position"
@@ -104,7 +104,7 @@ router
       errors.desiredPosition = e.message;
     }
     try {
-      if (editInfo.profileDreamJob.trim()) {
+      if (editInfo.profileDreamJob && editInfo.profileDreamJob.trim()) {
         updateObject.dreamJob = helper.checkIsProperFirstOrLastName(
           editInfo.profileDreamJob,
           "Desired Position"
@@ -126,7 +126,7 @@ router
     }
 
     try {
-      if (editInfo.profileSpecialization.trim()) {
+      if (editInfo.profileSpecialization && editInfo.profileSpecialization.trim()) {
         updateObject.specialization = helper.checkIsProperString(
           editInfo.profileSpecialization,
           "Specialization"
@@ -137,7 +137,7 @@ router
     }
 
     try {
-      if (editInfo.profileSkills.trim()) {
+      if (editInfo.profileSkills && editInfo.profileSkills.trim()) {
         updateObject.skills = helper.checkAndCreateSkills(
           editInfo.profileSkills,
           "Skills"
