@@ -160,15 +160,29 @@ router
 
     //Check for Errors; if errors, respond with status 400
     if (Object.keys(errors).length !== 0) {
-      const user_info = await application.getUserApplications(
-        req.session.user.userId
-      );
-      return res.status(400).render("dashboard", {
-        applications: user_info.applications,
+      let user_info;
+      try {
+        user_info = await application.getUserApplications(req.session.user.userId);
+      } catch (e) {
+        return renderError(req, res, 500, "Internal Server Error", e.message);
+      }
+      
+      let new_applications = [];
+      try {
+        new_applications = await application.getFollowUpApps(req.session.user.userId);
+      } catch (e) {
+        return renderError(req, res, 500, "Internal Server Error", e.message);
+      }
+
+      return res.render("dashboard", {
         application: req.body,
+        applications: user_info,
         nav: "privateNav",
+        stylesheets: "dashboardStylesheet",
+        scripts: "dashboardScript",
         user: req.session.user,
-        errors: errors,
+        notifications: new_applications,
+        errors: errors
       });
     }
 
@@ -207,7 +221,6 @@ router
     } catch (e) {
       return renderError(req, res, 404, "Not Found", e.message);
     }
-    console.log(app);
     return res.render("applicationPage", {
       nav: "privateNav",
       application: app,
@@ -232,13 +245,19 @@ router
 
     //Check for Errors; if errors, respond with status 400
     if (Object.keys(errors).length !== 0) {
+      // get application
+      let app;
+      try {
+        app = await application.getJobappByid(jobId, req.session.user.userId);
+      } catch (e) {
+        return renderError(req, res, 404, "Not Found", e.message);
+      }
       return res.render("applicationPage", {
-        application: req.body,
+        errors: errors,
         nav: "privateNav",
         application: app,
         stylesheets: "commonStylesheets",
         scripts: "applicationScript",
-        errors: errors
       });
     }
 
