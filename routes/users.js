@@ -207,6 +207,7 @@ router
     } catch (e) {
       return renderError(req, res, 404, "Not Found", e.message);
     }
+    console.log(app);
     return res.render("applicationPage", {
       nav: "privateNav",
       application: app,
@@ -231,15 +232,13 @@ router
 
     //Check for Errors; if errors, respond with status 400
     if (Object.keys(errors).length !== 0) {
-      const user_info = await application.getUserApplications(
-        req.session.user.userId
-      );
-      return res.status(400).render("dashboard", {
-        applications: user_info.applications,
+      return res.render("applicationPage", {
         application: req.body,
         nav: "privateNav",
-        user: req.session.user,
-        errors: errors,
+        application: app,
+        stylesheets: "commonStylesheets",
+        scripts: "applicationScript",
+        errors: errors
       });
     }
 
