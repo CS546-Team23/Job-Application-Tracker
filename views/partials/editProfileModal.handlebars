@@ -26,6 +26,7 @@
             <!-- State -->
             <label for="profileState">State:</label>
             <select id="profileState" name="profileState">
+                {{#select user.state}}
                 <option value="">Select State</option>
                 <option value="AL">Alabama</option>
                 <option value="AK">Alaska</option>
@@ -86,6 +87,7 @@
                 <option value="WV">West Virginia</option>
                 <option value="WI">Wisconsin</option>
                 <option value="WY">Wyoming</option>
+                {{/select}}
             </select>
             <span class="form-error">{{errors.state}}</span>
 
@@ -102,12 +104,14 @@
             <!-- Highest Education -->
             <label for="profileHighestEducation">Highest Education:</label>
             <select id="profileHighestEducation" name="profileHighestEducation">
+                {{#select user.highestEducation}}
                 <option value="">Select</option>
                 <option value="High School">High School</option>
                 <option value="Bachelor's">Bachelor's</option>
                 <option value="Master's">Master's</option>
                 <option value="PhD">PhD</option>
                 <option value="Doctoral">Doctoral</option>
+                {{/select}}
             </select>
             <span class="form-error">{{errors.highestEducation}}</span>
 
