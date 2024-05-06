@@ -7,6 +7,7 @@ import {
   currDate,
   isFollowupDateValid,
 } from "../helpers.js";
+import moment from "moment";
 
 const exportedMethods = {
   async createApplication(
@@ -232,6 +233,65 @@ const exportedMethods = {
 
     return orderedResult;
   },
+
+  async getFollowUpApps(userId) {
+    userId = validateId(userId, "User id");
+
+    const userCollection = await users();
+    const userWithApplication = await userCollection.findOne({
+      _id: ObjectId.createFromHexString(userId),
+    });
+    if (!userWithApplication) {
+      throw new Error(`Error: User not found with application id: ${jobappId}`);
+    }
+
+    let foundApplications = userWithApplication.applications;
+    const now_date = moment();
+    foundApplications = foundApplications.filter((app) => {
+      if (!app.followUpDate) { return false; }
+      const date_obj = moment(app.followUpDate, 'MM/DD/YYYY');
+      const proper_date = date_obj.isBefore(now_date, "day") || date_obj.isSame(now_date, "day");
+      const proper_status = !["Rejected", "Hired"].includes(app.status);
+      return proper_date && proper_status;
+    });
+    return foundApplications;
+  },
+
+  async viewApplication(jobappId, userId) {
+    jobappId = validateId(jobappId);
+    const search = {
+      "applications._id": ObjectId.createFromHexString(jobappId),
+    };
+    if (userId !== undefined) {
+      userId = validateId(userId, userId.toString());
+      search._id = ObjectId.createFromHexString(userId);
+    }
+
+    const userCollection = await users();
+    const userWithApplication = await userCollection.findOne(search);
+
+    if (!userWithApplication) {
+      throw new Error(`Error: User not found with application id: ${jobappId}`);
+    }
+
+    const updatedApplications = userWithApplication.applications.map(
+      (application) => {
+        if (application._id.toString() == jobappId) {
+          if (application.followUpDate) { delete application.followUpDate; }
+          else { throw new Error(`Application with id ${jobappId} has no follow-up date!`); }
+        }
+        return application;
+      }
+    );
+
+    const updatedUser = await userCollection.findOneAndUpdate(
+      { _id: userWithApplication._id },
+      { $set: { applications: updatedApplications } },
+      { returnDocument: "after" }
+    );
+
+    return updatedUser;
+  }
 };
 
 export default exportedMethods;
