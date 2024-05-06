@@ -73,9 +73,15 @@ function inputCheck(input, item_name, name, min_length, max_length, error_obj, r
   // Validate input
   if ( input === undefined || input === null || (input === "" && required) ) {
       error_obj[item_name] = `Error: ${name} must be provided.`;
+      return;
   } else if (typeof input !== "string") {
       error_obj[item_name] = `Error: Invalid input for ${name}.`;
-  } else if (item_name !== "email" && /[0-9]/.test(input)) {
+      return;
+  } else {
+    input = input.trim();
+  }
+  // rest of checks
+  if (item_name !== "email" && /[0-9]/.test(input)) {
       error_obj[item_name] = `Error: ${name} cannot contain any numbers.`;
   } else if (/<[^>]+>/i.test(input)) {
       error_obj[item_name] = `Error: Invalid input for ${name}. No HTML elements are allowed.`;
@@ -175,8 +181,8 @@ $("#editProfileModal").submit((event) => {
   let profileHighestEducationError = $(
     "#profileHighestEducation + span.form-error"
   );
-  let profileSpecializationError = $("profileSpecialization + span.form-error");
-  let profileSkillsError = $("profileSkills + span.form-error");
+  let profileSpecializationError = $("#profileSpecialization + span.form-error");
+  let profileSkillsError = $("#profileSkills + span.form-error");
 
   //Reset error messages
   firstNameError.html("");
@@ -194,39 +200,44 @@ $("#editProfileModal").submit((event) => {
   let errors = {};
 
   //Validate First Name
-  let firstName = $("#profileFirstName").val().trim();
+  let firstName = $("#profileFirstName").val();
   inputCheck(firstName, "firstName", "First name", 2, 25, errors);
 
   //Validate Last Name
-  let lastName = $("#profileLastName").val().trim();
+  let lastName = $("#profileLastName").val();
   inputCheck(lastName, "lastName", "Last name", 2, 25, errors);
 
   //Validate Email
-  let email = $("#profileEmail").val().trim();
+  let email = $("#profileEmail").val();
   inputCheck(email, "email", "Email", 2, 25, errors);
 
   //Validate City
-  let city = $("#profileCity").val().trim();
+  let city = $("#profileCity").val();
   inputCheck(city, "city", "City", 2, 25, errors);
 
   //Validate State{
-  let state = $("#profileState").val().trim();
+  let state = $("#profileState").val();
   stateCheck(state, "state", "State", errors);
 
   //Validate Desired Position
-  let desiredPosition = $("#profileDesiredPosition").val().trim();
-  inputCheck(desiredPosition, "desiredPosition", "Desired Position", 2, 25, errors);
+  let desiredPosition = $("#profileDesiredPosition").val();
+  if (desiredPosition) {
+    inputCheck(desiredPosition, "desiredPosition", "Desired Position", 2, 25, errors);
+  }
 
   //Validate Dream Job
-  let dreamJob = $("#profileDreamJob").val().trim();
-  inputCheck(dreamJob, "dreamJob", "Dream Job", 2, 25, errors);
+  let dreamJob = $("#profileDreamJob").val();
+  if (dreamJob) {
+    inputCheck(dreamJob, "dreamJob", "Dream Job", 2, 25, errors);
+    dreamJob = dreamJob.trim();
+  }
 
-  let highestEducation = $("#profileHighestEducation").val().trim();
+  let highestEducation = $("#profileHighestEducation").val();
   if (highestEducation) {
     checkHighestEductaion(highestEducation, "Highest Education", errors);
   }
 
-  let profileSpecialization = $("#profileSpecialization").val().trim();
+  let profileSpecialization = $("#profileSpecialization").val();
   if (profileSpecialization) {
     inputCheck(
       profileSpecialization,
@@ -238,7 +249,7 @@ $("#editProfileModal").submit((event) => {
     );
   }
 
-  let profileSkills = $("#profileSkills").val().trim();
+  let profileSkills = $("#profileSkills").val();
   if (profileSkills) {
     checkSkills(profileSkills, "Profile Skills", errors);
   }

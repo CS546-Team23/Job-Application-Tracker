@@ -5,8 +5,12 @@
         <li>Email: <strong>{{user.email}}</strong></li>
         <li>City: <strong>{{user.city}}</strong></li>
         <li>State: <strong>{{user.state}}</strong></li>
-        <li>Desired Job Position: <strong>{{user.desiredPosition}}</strong></li>
-        <li>Dream Job: <strong>{{user.dreamJob}}</strong></li>
+        {{#if (checkIsNotEmptyString user.desiredPosition)}}
+            <li>Desired Job Position: <strong>{{user.desiredPosition}}</strong></li>
+        {{/if}}
+        {{#if (checkIsNotEmptyString user.dreamJob)}}
+            <li>Dream Job: <strong>{{user.dreamJob}}</strong></li>
+        {{/if}}
         {{#if (checkIsNotEmptyString user.highestEducation)}}
             <li>Highest Education: <strong>{{user.highestEducation}}</strong></li>
         {{/if}}

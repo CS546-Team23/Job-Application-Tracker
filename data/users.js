@@ -89,6 +89,7 @@ const loginUser = async (email, password) => {
 
 const updateUser = async (email, updateObject) => {
   email = validateEmail(email);
+  const unsetObject = {};
   if (updateObject.firstName)
     updateObject.firstName = checkIsProperFirstOrLastName(
       updateObject.firstName,
@@ -107,23 +108,31 @@ const updateUser = async (email, updateObject) => {
       throw new Error("Error: Invalid state passed");
   }
 
-  if (updateObject.desiredPosition)
+  if (updateObject.desiredPosition) {
     updateObject.desiredPosition = checkIsProperString(
       updateObject.desiredPosition,
       "Desired position"
     );
+  } else {
+    unsetObject.desiredPosition = "";
+  }
 
-  if (updateObject.dreamJob)
+  if (updateObject.dreamJob) {
     updateObject.dreamJob = checkIsProperString(
       updateObject.dreamJob,
       "Dream Job"
     );
+  } else {
+    unsetObject.dreamJob = "";
+  }
 
   if (updateObject.highestEducation) {
     updateObject.highestEducation = checkHighestEductaion(
       updateObject.highestEducation,
       "Highest Education"
     );
+  } else {
+    unsetObject.highestEducation = "";
   }
 
   if (updateObject.specialization) {
@@ -131,6 +140,8 @@ const updateUser = async (email, updateObject) => {
       updateObject.specialization,
       "Specalization"
     );
+  } else {
+    unsetObject.specialization = "";
   }
 
   if (updateObject.skills) {
@@ -144,7 +155,7 @@ const updateUser = async (email, updateObject) => {
 
   let updatedUser = await usersCollection.findOneAndUpdate(
     { email: email.toLowerCase() },
-    { $set: updateObject },
+    { $set: updateObject, $unset:unsetObject },
     { returnDocument: "after" }
   );
 
