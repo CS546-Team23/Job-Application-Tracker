@@ -5,7 +5,9 @@ import loginRoute from "./login.js";
 import apiRoute from "./api.js";
 import { static as staticDir } from "express";
 import statsRoutes from "./statistics.js";
-import companyRoutes from "./companies.js"
+import companyRoutes from "./companies.js";
+
+import path from "path";
 
 const constructorMethod = (app) => {
   app.use("/register", registerRoute);
@@ -13,15 +15,9 @@ const constructorMethod = (app) => {
   app.use("/", userRoutes);
   app.use("/statistics", statsRoutes);
   app.use("/api", apiRoute);
-  app.use("/companies", companyRoutes)
+  app.use("/companies", companyRoutes);
   app.use("*", (req, res) => {
-    return res.status(404).render("errors", {
-      layout: "main",
-      nav: req.session.user ? "privateNav" : "publicNav",
-      message: "404 Error\nPage Not Found",
-      stylesheets: "commonStylesheets",
-      scripts: "applicationScript",
-    });
+    return res.status(404).sendFile(path.resolve("static/pageNotFound.html"));
   });
 };
 
