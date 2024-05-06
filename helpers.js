@@ -258,7 +258,14 @@ export const checkIsValidState = (state) => {
 };
 
 export const checkIsProperStatus = (status, statusName) => {
-  const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired", "Rejected"];
+  const statuses = [
+    "Saved",
+    "Applied",
+    "Screening",
+    "Interviewing",
+    "Hired",
+    "Rejected",
+  ];
   isInputProvided(status, "status");
   status = checkIsProperString(status, "status");
   status = status.charAt(0).toUpperCase() + status.substring(1).toLowerCase();
@@ -301,6 +308,7 @@ export const checkHighestEductaion = (val, varName) => {
 
 export const checkAndCreateSkills = (skills, varName) => {
   isInputProvided(skills, varName);
+  skills = checkIsProperString(skills, varName);
   let skillsArr = skills.split(",");
   let newSkills = [];
   for (let skill of skillsArr) {

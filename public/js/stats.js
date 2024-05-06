@@ -1,4 +1,4 @@
-let chart = document.getElementById("myChart");
+// let chart = document.getElementById("myChart");
 let totalApplications = document.getElementById("totalApplications");
 let totalCompanies = document.getElementById("totalCompanies");
 // let table = document.getElementById("applicationTable");
