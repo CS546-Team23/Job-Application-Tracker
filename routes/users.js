@@ -285,7 +285,7 @@ function renderError(req, res, status, message, error) {
     nav: nav,
     message: `${message}\n${error}`,
     stylesheets: "commonStylesheets",
-    scripts: "applicationScript",
+    scripts: "commonScripts",
   });
 }
 
