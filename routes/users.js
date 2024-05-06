@@ -142,6 +142,10 @@ router
           editInfo.profileSkills,
           "Skills"
         );
+        let prevskills = req.session.user.skills ? req.session.user.skills : "";
+        updateObject.skills = prevskills
+          ? prevskills + ", " + updateObject.skills
+          : updateObject.skills;
       }
     } catch (e) {
       errors.skills = e.message;

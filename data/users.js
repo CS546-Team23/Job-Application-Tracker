@@ -137,6 +137,8 @@ const updateUser = async (email, updateObject) => {
     updateObject.skills = checkAndCreateSkills(updateObject.skills, "Skills");
   }
 
+  updateObject.skills = [...new Set(updateObject.skills.split(","))].join(",");
+
   const usersCollection = await users();
 
   let updatedUser = await usersCollection.findOneAndUpdate(
