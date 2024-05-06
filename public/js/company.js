@@ -25,21 +25,19 @@ companyLinks.forEach(function(companyLink) {
         }
 
         let modalHTML = `
-        <div class="modal-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <h2>${companyData.company}</h2>
                     <p class="mb-1">Sector: ${companyData.sector}</p>
                     <p class="mb-1">Location: ${companyData.city}, ${companyData.state}</p>
                     <p class="mb-1">CEO: ${companyData.CEO}</p>
                     <p class="mb-1">Website: <a href="${websiteUrl}" target="_blank">${companyData.Website}</a></p>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <img src="https://logo.clearbit.com/${companyData.Website}" alt="Company Logo" class="img-fluid">
                 </div>
             </div>
-        </div>
-    `;
+        `;
 
         modalContent.innerHTML = modalHTML;
 

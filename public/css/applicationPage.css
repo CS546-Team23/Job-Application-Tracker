@@ -66,6 +66,7 @@ a {
 #applicationHeader {
     display: flex;
     justify-content: space-between;
+    margin-top:2rem;
 }
 #applicationHeader #newAppButton{
     max-width:200px;
@@ -97,7 +98,7 @@ a {
 
 /* Status Styles */
 .status-container{
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     height: 69vh;
     gap: 0px;
@@ -340,6 +341,7 @@ a {
     position:relative;
     border-left:6px solid #f1ab0a;
     box-shadow:2px 0 10px rgba(0,0,0,0.2);
+    margin-bottom:1em;
 }
 /*#note-list li::before{
     content: counter(note-counter) ". ";
