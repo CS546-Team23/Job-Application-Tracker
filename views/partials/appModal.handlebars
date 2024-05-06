@@ -94,9 +94,7 @@
             <span class="form-error">{{errors.appState}}</span>
 
             <!-- Follow-Up Date -->
-            <label for="followUpDate">Follow-Up Date </label>
-
-            <input type="date" name="followUpDate" id="followUpDate" min={{get_current_date}} value="{{reformat_date application.followUpDate}}"/>
+            <input type="date" name="followUpDate" id="followUpDate" min={{get_current_date}} value="{{reformat_date application.followUpDate}}">
             <span class="form-error">{{errors.followUpDate}}</span>
 
             <!-- Resume -->

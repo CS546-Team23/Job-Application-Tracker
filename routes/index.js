@@ -7,6 +7,7 @@ import { static as staticDir } from "express";
 import statsRoutes from "./statistics.js";
 import companyRoutes from "./companies.js"
 import mapRoutes from "./maps.js"
+import path from "path";
 
 const constructorMethod = (app) => {
   app.use("/register", registerRoute);
@@ -15,6 +16,7 @@ const constructorMethod = (app) => {
   app.use("/statistics", statsRoutes);
   app.use("/api", apiRoute);
   app.use("/companies", companyRoutes);
+<<<<<<< HEAD
   app.use("/map", mapRoutes);
 
   app.use("*", (req, res) => {
@@ -26,6 +28,10 @@ const constructorMethod = (app) => {
       scripts: "applicationScript",
     });
 
+=======
+  app.use("*", (req, res) => {
+    return res.status(404).sendFile(path.resolve("static/pageNotFound.html"));
+>>>>>>> origin/main
   });
 };
 
