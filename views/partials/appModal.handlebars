@@ -7,9 +7,13 @@
         <form id="newAppForm" name="newAppForm" action={{route}} method={{method}} enctype="multipart/form-data">
             <p><span class="star">*</span> Indicates Required Field</p>
             <!-- Company Name -->
+            <div>
             <label for="companyName">Company Name <span class="star">*</span></label>
             <input type="text" name="companyName" id="companyName" value="{{application.companyName}}"/>
             <span class="form-error">{{errors.companyName}}</span>
+                <ul id="result-box" class="result-box">
+                </ul>
+            </div>
 
             <!-- Job Position -->
             <label for="jobPosition">Job Position <span class="star">*</span></label>
