@@ -29,7 +29,9 @@ const getJobAppLocations = async(userId) =>{
                 if (cityCoord) {
                     companyCoordinates[application.companyName] = {
                         lat: cityCoord.lat,
-                        lng: cityCoord.lng
+                        lng: cityCoord.lng,
+                        stage: application.status,
+                        color: getColorForStage(application.status)
                     };
                 } else {
                     console.log(`No coordinates found for ${application.appCity}, ${application.appState}`);
@@ -42,5 +44,26 @@ const getJobAppLocations = async(userId) =>{
         console.error('Error retrieving job applications:', error);
     }
 }
+
+// Function to get color based on application stage
+const getColorForStage = (stage) => {
+    switch (stage) {
+        case 'Saved':
+            return 'yellow';
+        case 'Applied':
+            return 'orange';
+        case 'Screening':
+            return 'pink';
+        case 'Interviewing':
+            return 'blue';
+        case 'Rejected':
+            return 'red';
+        case 'Hired':
+            return 'green';
+        default:
+            return 'gray'; // Default color for unknown stages
+    }
+};
+
 
 export default {getJobAppLocations};
