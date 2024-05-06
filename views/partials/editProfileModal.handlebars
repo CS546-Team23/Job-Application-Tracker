@@ -5,22 +5,22 @@
         <form id="editProfileForm" name="editProfileForm" action="/profile" method="POST">
             <!-- First Name -->
             <label for="profileFirstName">First Name:</label>
-            <input type="text" name="profileFirstName" id="profileFirstName" value="{{user.firstName}}"/>
+            <input type="text" name="profileFirstName" id="profileFirstName" value="{{user.firstName}}">
             <span class="form-error">{{errors.firstName}}</span>
 
             <!-- Last Name -->
             <label for="profileLastName">Last Name:</label>
-            <input type="text" name="profileLastName" id="profileLastName" value="{{user.lastName}}"/>
+            <input type="text" name="profileLastName" id="profileLastName" value="{{user.lastName}}">
             <span class="form-error">{{errors.lastName}}</span>
 
             <!-- Email -->
             <label for="profileEmail">Email:</label>
-            <input type="email" name="profileEmail" id="profileEmail" value="{{user.email}}"/>
+            <input type="email" name="profileEmail" id="profileEmail" value="{{user.email}}">
             <span class="form-error">{{errors.email}}</span>
 
             <!-- City -->
             <label for="profileCity">City:</label>
-            <input type="text" name="profileCity" id="profileCity" value="{{user.city}}"/>
+            <input type="text" name="profileCity" id="profileCity" value="{{user.city}}">
             <span class="form-error">{{errors.city}}</span>
 
             <!-- State -->
@@ -93,12 +93,12 @@
 
             <!-- Desired Postion -->
             <label for="profileDesiredPosition">Desired Position</label>
-            <input type="text" name="profileDesiredPosition" id="profileDesiredPosition" value="{{user.desiredPosition}}"/>
+            <input type="text" name="profileDesiredPosition" id="profileDesiredPosition" value="{{user.desiredPosition}}">
             <span class="form-error">{{errors.desiredPosition}}</span>
 
             <!-- Dream Job -->
             <label for="profileDreamJob">Dream Job</label>
-            <input type="text" name="profileDreamJob" id="profileDreamJob" value="{{user.dreamJob}}"/>
+            <input type="text" name="profileDreamJob" id="profileDreamJob" value="{{user.dreamJob}}">
             <span class="form-error">{{errors.dreamJob}}</span>
 
             <!-- Highest Education -->
@@ -116,11 +116,11 @@
             <span class="form-error">{{errors.highestEducation}}</span>
 
             <label for="profileSpecialization">Specialization:</label>
-            <input type="text" name="profileSpecialization" id="profileSpecialization" value="{{user.specialization}}" />
+            <input type="text" name="profileSpecialization" id="profileSpecialization" value="{{user.specialization}}">
             <span class="form-error">{{errors.specialization}}</span>
 
             <label for="profileSkills">Skills:</label>
-            <input name="profileSkills" id="profileSkills" placeholder="Enter skills separated by commas" />
+            <input name="profileSkills" id="profileSkills" placeholder="Enter skills separated by commas" >
             <span class="form-error">{{errors.skills}}</span>
 
 
@@ -130,7 +130,7 @@
 
 
 
-            <input type="hidden" name='_method' value="PATCH" />
+            <input type="hidden" name='_method' value="PATCH" >
         </form>
     </div>
 </div>
