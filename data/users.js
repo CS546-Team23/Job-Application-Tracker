@@ -4,15 +4,14 @@ const saltRounds = 16;
 import { users } from "../config/mongoCollections.js";
 import { ObjectId } from "mongodb";
 
-
 import {
   checkIsProperString,
   checkIsProperFirstOrLastName,
   checkIsProperPassword,
   checkIsValidState,
-  checkIsProperNumber,
+  checkCity,
   validateEmail,
-  validateId
+  validateId,
 } from "../helpers.js";
 
 const registerUser = async (
@@ -27,11 +26,10 @@ const registerUser = async (
 ) => {
   firstName = checkIsProperFirstOrLastName(firstName, "First name");
   lastName = checkIsProperFirstOrLastName(lastName, "Last name");
-  city = checkIsProperString(city, "City");
+  city = checkCity(city, "City");
   email = validateEmail(email);
   password = checkIsProperPassword(password);
   if (!checkIsValidState(state)) throw new Error("Error: Invalid state passed");
-
 
   if (desiredPosition)
     desiredPosition = checkIsProperString(desiredPosition, "Desiered position");
@@ -79,7 +77,8 @@ const loginUser = async (email, password) => {
   if (!getUser) throw new Error("Error: Either email or password invalid");
 
   let passwordCheck = await bcrypt.compare(password, getUser.password);
-  if (!passwordCheck) throw new Error("Error: Either email or password invalid");
+  if (!passwordCheck)
+    throw new Error("Error: Either email or password invalid");
 
   const { password: hashedPassword, applications, ...restDetails } = getUser;
 
@@ -95,12 +94,16 @@ const updateUser = async (email, updateObject) => {
     );
   if (updateObject.lastName)
     updateObject.lastName = checkIsProperFirstOrLastName(
-      updateObject.firstName,
+      updateObject.lastName,
       "First name"
     );
   if (updateObject.city)
     updateObject.city = checkIsProperString(updateObject.city, "City");
-  if (updateObject.state) state = checkIsValidState(state);
+
+  if (updateObject.state) {
+    if (!checkIsValidState(updateObject.state)) throw new Error("Error: Invalid state passed");
+  }
+
   if (updateObject.desiredPosition)
     updateObject.desiredPosition = checkIsProperString(
       updateObject.desiredPosition,
@@ -113,13 +116,6 @@ const updateUser = async (email, updateObject) => {
       "Dream Job"
     );
 
-  if (updateObject.password) {
-    updateObject.password = checkIsProperPassword(updateObject.password);
-    updateObject.password = await bcrypt.hash(
-      updateObject.password,
-      saltRounds
-    );
-  }
 
   const usersCollection = await users();
 
@@ -129,7 +125,8 @@ const updateUser = async (email, updateObject) => {
     { returnDocument: "after" }
   );
 
-  if (!updatedUser) throw new Error("Error: No user with email has been registered");
+  if (!updatedUser)
+    throw new Error("Error: No user with email has been registered");
 
   const {
     password: hashedPassword,
@@ -140,24 +137,60 @@ const updateUser = async (email, updateObject) => {
   return otherDetails;
 };
 
-const getUserById = async function(userId) {
+const getUserById = async function (userId) {
   userId = validateId(userId);
 
   const userCollection = await users();
-  const foundUser =  await userCollection.findOne(
-    { "_id": new ObjectId(userId) },
-  );
+  const foundUser = await userCollection.findOne({ _id: new ObjectId(userId) });
   if (!foundUser) throw new Error(`User Not found with id ${userId}`);
 
   // remove all object ids
   foundUser._id = foundUser._id.toString();
   foundUser.applications.map((app) => {
-    if (app.Notes) app.Notes = app.Notes.map((note) => { note._id = note._id.toString(); return note; });
+    app.Notes = app.Notes.map((note) => {
+      note._id = note._id.toString();
+      return note;
+    });
     app._id = app._id.toString();
     return app;
   });
 
   return foundUser;
+};
+
+const checkOldPassword = async (email, enteredPassword)=>{
+  email = validateEmail(email);
+  enteredPassword = checkIsProperPassword(enteredPassword);
+  const usersCollection = await users();
+
+  const getUser = await usersCollection.findOne({
+    email: email.toLowerCase(),
+  });
+  if (!getUser) throw new Error("Error: Either email or password invalid");
+
+  let passwordCheck = await bcrypt.compare(enteredPassword, getUser.password);
+  if (!passwordCheck) throw new Error("Error: Enter Correct Password !");
+
+  return {email, enteredPassword};
 }
 
-export default { registerUser, loginUser, updateUser, getUserById };
+const changeNewPassword = async(email, oldPassword, newPassword)=>{
+let userEmailPassword = checkOldPassword(email, oldPassword);
+newPassword = checkIsProperPassword(newPassword);
+let hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+const usersCollection = await users();
+
+let updatedUser = await usersCollection.findOneAndUpdate(
+  { email: email.toLowerCase() },
+  { $set: {password : hashedPassword} },
+  { returnDocument: "after" }
+);
+
+if (!updatedUser) throw new Error("Error: No user with email has been registered");
+
+return {passwordUpdated: true};
+
+}
+
+export default { registerUser, loginUser, updateUser, getUserById, checkOldPassword, changeNewPassword };

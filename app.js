@@ -76,9 +76,9 @@ app.use("/companies", (req, res, next) => {
   }
   next();
 });
-app.use('/profile', (req, res, next) => {
-  if(!req.session.user){
-    return res.redirect('/login');
+app.use("/profile", (req, res, next) => {
+  if (!req.session.user) {
+    return res.redirect("/login");
   }
   next();
 });
@@ -105,6 +105,7 @@ hbs.handlebars.registerHelper("concat", function () {
   }
   return outStr;
 });
+
 // select option with attribute
 hbs.handlebars.registerHelper("select", function (value, options) {
   // content of page
@@ -124,10 +125,16 @@ hbs.handlebars.registerHelper("select", function (value, options) {
   return content;
 });
 
-// select option with attribute
+// reformat date
 hbs.handlebars.registerHelper("reformat_date", function (value) {
   if (!/^\d\d\/\d\d\/\d\d\d\d$/) { return ""; }
   return moment(value, "MM/DD/YY").format("YYYY-MM-DD");
+});
+
+hbs.handlebars.registerHelper("isEmptyObject", function (obj) {
+  if (typeof obj !== "object") return true;
+  if (Object.keys(obj).length != 0) return false;
+  return true;
 });
 
 // TODO: Routes to be defined in index.js
