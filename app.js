@@ -131,6 +131,11 @@ hbs.handlebars.registerHelper("reformat_date", function (value) {
   return moment(value, "MM/DD/YY").format("YYYY-MM-DD");
 });
 
+hbs.handlebars.registerHelper("get_current_date", function () {
+  return moment().format("YYYY-MM-DD");
+});
+
+
 hbs.handlebars.registerHelper("isEmptyObject", function (obj) {
   if (typeof obj !== "object") return true;
   if (Object.keys(obj).length != 0) return false;
