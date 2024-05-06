@@ -137,6 +137,13 @@ hbs.handlebars.registerHelper("isEmptyObject", function (obj) {
   return true;
 });
 
+hbs.handlebars.registerHelper("checkIsNotEmptyString", function (str) {
+  if (typeof str != "string") return false;
+  if (str === "" || str.length === 0) return false;
+
+  return true;
+});
+
 // TODO: Routes to be defined in index.js
 configRoutes(app);
 

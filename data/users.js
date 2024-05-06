@@ -12,6 +12,8 @@ import {
   checkCity,
   validateEmail,
   validateId,
+  checkAndCreateSkills,
+  checkHighestEductaion,
 } from "../helpers.js";
 
 const registerUser = async (
@@ -101,7 +103,8 @@ const updateUser = async (email, updateObject) => {
     updateObject.city = checkIsProperString(updateObject.city, "City");
 
   if (updateObject.state) {
-    if (!checkIsValidState(updateObject.state)) throw new Error("Error: Invalid state passed");
+    if (!checkIsValidState(updateObject.state))
+      throw new Error("Error: Invalid state passed");
   }
 
   if (updateObject.desiredPosition)
@@ -116,6 +119,25 @@ const updateUser = async (email, updateObject) => {
       "Dream Job"
     );
 
+  if (updateObject.highestEducation) {
+    updateObject.highestEducation = checkHighestEductaion(
+      updateObject.highestEducation,
+      "Highest Education"
+    );
+  }
+
+  if (updateObject.specialization) {
+    updateObject.specialization = checkIsProperString(
+      updateObject.specialization,
+      "Specalization"
+    );
+  }
+
+  if (updateObject.skills) {
+    updateObject.skills = checkAndCreateSkills(updateObject.skills, "Skills");
+  }
+
+  updateObject.skills = [...new Set(updateObject.skills.split(","))].join(",");
 
   const usersCollection = await users();
 
@@ -158,7 +180,7 @@ const getUserById = async function (userId) {
   return foundUser;
 };
 
-const checkOldPassword = async (email, enteredPassword)=>{
+const checkOldPassword = async (email, enteredPassword) => {
   email = validateEmail(email);
   enteredPassword = checkIsProperPassword(enteredPassword);
   const usersCollection = await users();
@@ -171,26 +193,33 @@ const checkOldPassword = async (email, enteredPassword)=>{
   let passwordCheck = await bcrypt.compare(enteredPassword, getUser.password);
   if (!passwordCheck) throw new Error("Error: Enter Correct Password !");
 
-  return {email, enteredPassword};
-}
+  return { email, enteredPassword };
+};
 
-const changeNewPassword = async(email, oldPassword, newPassword)=>{
-let userEmailPassword = checkOldPassword(email, oldPassword);
-newPassword = checkIsProperPassword(newPassword);
-let hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+const changeNewPassword = async (email, oldPassword, newPassword) => {
+  let userEmailPassword = checkOldPassword(email, oldPassword);
+  newPassword = checkIsProperPassword(newPassword);
+  let hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
-const usersCollection = await users();
+  const usersCollection = await users();
 
-let updatedUser = await usersCollection.findOneAndUpdate(
-  { email: email.toLowerCase() },
-  { $set: {password : hashedPassword} },
-  { returnDocument: "after" }
-);
+  let updatedUser = await usersCollection.findOneAndUpdate(
+    { email: email.toLowerCase() },
+    { $set: { password: hashedPassword } },
+    { returnDocument: "after" }
+  );
 
-if (!updatedUser) throw new Error("Error: No user with email has been registered");
+  if (!updatedUser)
+    throw new Error("Error: No user with email has been registered");
 
-return {passwordUpdated: true};
+  return { passwordUpdated: true };
+};
 
-}
-
-export default { registerUser, loginUser, updateUser, getUserById, checkOldPassword, changeNewPassword };
+export default {
+  registerUser,
+  loginUser,
+  updateUser,
+  getUserById,
+  checkOldPassword,
+  changeNewPassword,
+};

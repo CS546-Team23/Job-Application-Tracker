@@ -257,15 +257,18 @@ export const checkIsValidState = (state) => {
   return false;
 };
 
-
 export const checkIsProperStatus = (status, statusName) => {
   const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired", "Rejected"];
   isInputProvided(status, "status");
   status = checkIsProperString(status, "status");
   status = status.charAt(0).toUpperCase() + status.substring(1).toLowerCase();
-  if (!statuses.includes(status)) { throw new Error(`Error: ${statusName} must be one of the following: [${statuses}]`); }
+  if (!statuses.includes(status)) {
+    throw new Error(
+      `Error: ${statusName} must be one of the following: [${statuses}]`
+    );
+  }
   return status;
-}
+};
 
 export const getDateDifference = (date2) => {
   // Convert the dates to JavaScript Date objects
@@ -281,3 +284,37 @@ export const getDateDifference = (date2) => {
   return differenceDays;
 };
 
+export const checkHighestEductaion = (val, varName) => {
+  val = checkIsProperString(val, varName);
+  const allowedValues = [
+    "High School",
+    "Bachelor's",
+    "Master's",
+    "PhD",
+    "Doctoral",
+  ];
+  if (!allowedValues.includes(val))
+    throw new Error(`Invalid value for ${varName}`);
+
+  return val;
+};
+
+export const checkAndCreateSkills = (skills, varName) => {
+  isInputProvided(skills, varName);
+  let skillsArr = skills.split(",");
+  let newSkills = [];
+  for (let skill of skillsArr) {
+    skill = skill.trim();
+    if (skill) {
+      if (skill.includes(" ")) {
+        throw new Error(`Error: invalid value for ${varName}`);
+      }
+      newSkills.push(skill);
+    }
+  }
+
+  if (newSkills.length === 0)
+    throw new Error("Error: Skills are either empty or just ',' were pased");
+
+  return newSkills.join(", ");
+};

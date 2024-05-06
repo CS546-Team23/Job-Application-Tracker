@@ -99,9 +99,33 @@
             <input type="text" name="profileDreamJob" id="profileDreamJob" value="{{user.dreamJob}}"/>
             <span class="form-error">{{errors.dreamJob}}</span>
 
+            <!-- Highest Education -->
+            <label for="profileHighestEducation">Highest Education:</label>
+            <select id="profileHighestEducation" name="profileHighestEducation">
+                <option value="">Select</option>
+                <option value="High School">High School</option>
+                <option value="Bachelor's">Bachelor's</option>
+                <option value="Master's">Master's</option>
+                <option value="PhD">PhD</option>
+                <option value="Doctoral">Doctoral</option>
+            </select>
+            <span class="form-error">{{errors.highestEducation}}</span>
+
+            <label for="profileSpecialization">Specialization:</label>
+            <input type="text" name="profileSpecialization" id="profileSpecialization" value="{{user.specialization}}" />
+            <span class="form-error">{{errors.specialization}}</span>
+
+            <label for="profileSkills">Skills:</label>
+            <input name="profileSkills" id="profileSkills" placeholder="Enter skills separated by commas" />
+            <span class="form-error">{{errors.skills}}</span>
+
+
             <!-- Submit Button -->
             <button type="submit" class="btn green-btn dark">Submit</button>
             <span id="error-message"></span>
+
+
+
             <input type="hidden" name='_method' value="PATCH" />
         </form>
     </div>
