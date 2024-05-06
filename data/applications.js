@@ -98,11 +98,15 @@ const exportedMethods = {
     );
     updatedObj.appCity = checkIsProperString(updatedObj.appCity, "job-city");
     updatedObj.appState = checkIsProperString(updatedObj.appState, "job-state");
+    const unsetObject = {};
     if (updatedObj.followUpDate) {
       updatedObj.followUpDate = isFollowupDateValid(
         updatedObj.followUpDate,
         "followUpDate"
       );
+    }
+    else {
+      unsetObject.followUpDate = "";
     }
     // if (updatedObj.appResume) {
     //   updatedObj.appResume = checkIsProperString(
@@ -141,17 +145,19 @@ const exportedMethods = {
         for (let key in updatedObj) {
           i[key] = updatedObj[key];
         }
+        for (let key in unsetObject) {
+          delete i[key];
+        }
         break;
       }
     }
     const { _id, ...updateUser } = user;
-
     let updatedUser = await usersCollection.findOneAndUpdate(
       {
         _id: _id,
       },
       {
-        $set: updateUser,
+        $set: updateUser
       },
       { returnDocument: "after" }
     );

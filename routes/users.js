@@ -94,7 +94,7 @@ router
       errors.state = e.message;
     }
     try {
-      if (editInfo.profileDesiredPosition.trim()) {
+      if (editInfo.profileDesiredPosition) {
         updateObject.desiredPosition = helper.checkIsProperFirstOrLastName(
           editInfo.profileDesiredPosition,
           "Desired Position"
@@ -104,7 +104,7 @@ router
       errors.desiredPosition = e.message;
     }
     try {
-      if (editInfo.profileDreamJob.trim()) {
+      if (editInfo.profileDreamJob) {
         updateObject.dreamJob = helper.checkIsProperFirstOrLastName(
           editInfo.profileDreamJob,
           "Desired Position"
@@ -126,7 +126,7 @@ router
     }
 
     try {
-      if (editInfo.profileSpecialization.trim()) {
+      if (editInfo.profileSpecialization) {
         updateObject.specialization = helper.checkIsProperString(
           editInfo.profileSpecialization,
           "Specialization"
@@ -137,7 +137,7 @@ router
     }
 
     try {
-      if (editInfo.profileSkills.trim()) {
+      if (editInfo.profileSkills) {
         updateObject.skills = helper.checkAndCreateSkills(
           editInfo.profileSkills,
           "Skills"
@@ -467,7 +467,6 @@ router
     } catch (e) {
       return renderError(req, res, 400, "User Error", e.message);
     }
-
     // get application
     let app;
     try {
@@ -475,6 +474,7 @@ router
     } catch (e) {
       return renderError(req, res, 404, "Not Found", e.message);
     }
+    
     return res.render("applicationPage", {
       nav: "privateNav",
       application: app,

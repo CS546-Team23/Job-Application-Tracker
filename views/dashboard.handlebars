@@ -1,3 +1,4 @@
+{{> appModal route="/dashboard"}}
 <h1>Welcome {{user.firstName}} {{user.lastName}}!</h1>
 
 {{#if notifications}}
@@ -53,26 +54,3 @@
     </div>
     {{/each}}
 </div>
-
-{{!-- <table id="applicationTable">
-    <tr>
-        <th>Position</th>
-        <th>Company</th>
-        <th>City</th>
-        <th>State</th>
-        <th>Date</th>
-        <th>Status</th>
-    </tr>
-    {{#each applications}}
-    <tr>
-        <td><a href="/applications/{{_id}}">{{jobPosition}}</a></td>
-        <td>{{companyName}}</td>
-        <td>{{appCity}}</td>
-        <td>{{appState}}</td>
-        <td>{{date}}</td>
-        <td><span>{{status}}</span></td>
-    </tr>
-    {{/each}}
-</table> --}}
-
-{{> appModal route="/dashboard"}}
