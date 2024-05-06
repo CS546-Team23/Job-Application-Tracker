@@ -186721,6 +186721,16 @@ const cityCoordinates = [
         "lng": -78.3029
     }
 ];
+
+const capitalizeFirstLetter = (str) => {
+    const words = str.split(' ');
+    const capitalizedWords = words.map(word => {
+    return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    });
+    
+
+    return capitalizedWords.join(' ');
+}
 const getJobAppLocations = async(userId) =>{
     let num = 0;
     try {
@@ -186733,15 +186743,16 @@ const getJobAppLocations = async(userId) =>{
             // Iterate over applications within this status
             status.applications.forEach(application => {
                 // Find city coordinates for this application
-                const cityCoord = cityCoordinates.find(coord => coord.state === application.appState && coord.city === application.appCity);
+                const cityCoord = cityCoordinates.find(coord => 
+                    coord.state.trim().toLowerCase() === application.appState.trim().toLowerCase() && coord.city.trim().toLowerCase() === application.appCity.trim().toLowerCase());
                 if (cityCoord) {
                     companyCoordinates[num] = {
                         companyName : application.companyName,
                         lat: cityCoord.lat,
                         lng: cityCoord.lng,
                         stage: application.status,
-                        state: application.appState,
-                        city: application.appCity,
+                        state: capitalizeFirstLetter(application.appState),
+                        city: capitalizeFirstLetter(application.appCity),
                         color: getColorForStage(application.status),
                         
                     };
