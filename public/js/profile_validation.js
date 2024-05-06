@@ -69,30 +69,20 @@ function stateCheck(input, item_name, name, errors) {
   }
 }
 
-function inputCheck(input, item_name, name, min_length, max_length, errors) {
+function inputCheck(input, item_name, name, min_length, max_length, error_obj, required=true) {
   // Validate input
-  if (typeof input !== "string") {
-    errors[item_name] = `Error: Invalid input for ${name}.`;
-  } else if (item_name !== "email") {
-    if (/[0-9]/.test(input)) {
-      errors[item_name] = `Error: ${name} cannot contain any numbers.`;
-    }
+  if ( input === undefined || input === null || (input === "" && required) ) {
+      error_obj[item_name] = `Error: ${name} must be provided.`;
+  } else if (typeof input !== "string") {
+      error_obj[item_name] = `Error: Invalid input for ${name}.`;
+  } else if (item_name !== "email" && /[0-9]/.test(input)) {
+      error_obj[item_name] = `Error: ${name} cannot contain any numbers.`;
   } else if (/<[^>]+>/i.test(input)) {
-    errors[
-      item_name
-    ] = `Error: Invalid input for ${name}. No HTML elements are allowed.`;
-  } else if (min_length) {
-    if (input.length < min_length) {
-      errors[
-        item_name
-      ] = `Error: ${name} must be at least ${min_length} characters long.`;
-    }
-  } else if (max_length) {
-    if (input.length > max_length) {
-      errors[
-        item_name
-      ] = `Error: ${name} must be at most ${max_length} characters long.`;
-    }
+      error_obj[item_name] = `Error: Invalid input for ${name}. No HTML elements are allowed.`;
+  } else if (min_length && input.length < min_length) {
+      error_obj[item_name] = `Error: ${name} must be at least ${min_length} characters long.`;
+  } else if (max_length && input.length > max_length) {
+      error_obj[item_name] = `Error: ${name} must be at most ${max_length} characters long.`;
   }
 }
 
@@ -205,45 +195,31 @@ $("#editProfileModal").submit((event) => {
 
   //Validate First Name
   let firstName = $("#profileFirstName").val().trim();
-  if (firstName !== undefined || firstName !== null) {
-    inputCheck(firstName, "firstName", "First name", 2, 25, errors);
-  }
+  inputCheck(firstName, "firstName", "First name", 2, 25, errors);
 
   //Validate Last Name
   let lastName = $("#profileLastName").val().trim();
-  if (lastName !== undefined || lastName !== null) {
-    inputCheck(lastName, "lastName", "Last name", 2, 25, errors);
-  }
+  inputCheck(lastName, "lastName", "Last name", 2, 25, errors);
 
   //Validate Email
   let email = $("#profileEmail").val().trim();
-  if (email !== undefined || email !== null) {
-    inputCheck(email, "email", "Email", errors);
-  }
+  inputCheck(email, "email", "Email", 2, 25, errors);
 
   //Validate City
   let city = $("#profileCity").val().trim();
-  if (city !== undefined || city !== null) {
-    inputCheck(city, "city", "City", errors);
-  }
+  inputCheck(city, "city", "City", 2, 25, errors);
 
   //Validate State{
   let state = $("#profileState").val().trim();
-  if (state !== "") {
-    stateCheck(state, "state", "State", errors);
-  }
+  stateCheck(state, "state", "State", errors);
 
   //Validate Desired Position
   let desiredPosition = $("#profileDesiredPosition").val().trim();
-  if (desiredPosition !== undefined || desiredPosition !== null) {
-    inputCheck(desiredPosition, "desiredPosition", "Desired Position", errors);
-  }
+  inputCheck(desiredPosition, "desiredPosition", "Desired Position", 2, 25, errors);
 
   //Validate Dream Job
   let dreamJob = $("#profileDreamJob").val().trim();
-  if (dreamJob !== undefined || dreamJob !== null) {
-    inputCheck(dreamJob, "dreamJob", "Dream Job", errors);
-  }
+  inputCheck(dreamJob, "dreamJob", "Dream Job", 2, 25, errors);
 
   let highestEducation = $("#profileHighestEducation").val().trim();
   if (highestEducation) {
