@@ -127,7 +127,7 @@ hbs.handlebars.registerHelper("select", function (value, options) {
 
 // reformat date
 hbs.handlebars.registerHelper("reformat_date", function (value) {
-  if (!/^\d\d\/\d\d\/\d\d\d\d$/) { return ""; }
+  if (!value || !/^\d\d\/\d\d\/\d\d\d\d$/.test(value)) { return ""; }
   return moment(value, "MM/DD/YY").format("YYYY-MM-DD");
 });
 
