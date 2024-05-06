@@ -46,11 +46,11 @@
             <li class="note" data-id={{_id}}>
                 <cite>{{date}} {{time}}</cite>
                 <p class="note-content">{{text}}</p>
-                <button onclick="javascript:void(0)" class="btn orange-btn dark">Edit</button>
-                <button onclick="javascript:void(0)" class="btn orange-btn dark">Delete</button>
+                <button onclick="javascript:void(0)" class="editButton btn orange-btn dark">Edit</button>
+                <button onclick="javascript:void(0)" class="deleteButton btn orange-btn dark">Delete</button>
             </li>
         {{/each}}
     </ol>
 </section>
 {{/with}}
-{{> appModal method="POST" route=(concat "/applications/" application._id)}}
+{{> appModal route=(concat "/applications/" application._id)}}

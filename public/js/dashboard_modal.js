@@ -88,6 +88,15 @@ function inputCheck(input, item_name, name, min_length, max_length, error_obj, r
     }
 }
 
+function dateCheck(input, item_name, name, error_obj) {
+    console.log(`check this out: ${input}`);
+    if (input === "") { return; }
+    else if (!/^\d\d\d\d\-\d\d\-\d\d$/.test(input)) {
+        error_obj[item_name] = `Error: ${name} must be in YYYY-MM-DD format.`;
+        return;
+    }
+}
+
 $('#closeNewApp').on("click", (event) => {
     event.preventDefault();
 
@@ -153,18 +162,24 @@ $("#newAppForm").submit((event) => {
     let appState = $("#appState").val().trim();
     stateCheck(appState, "appState", "Application State", errors);
 
+    // Validate State
+    let followUpDate = $("#followUpDate").val().trim();
+    dateCheck(followUpDate, "followUpDate", "Follow-Up Date", errors);
+
     // Validate Status
     let status = $("#status").val().trim();
-    const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired"];
+    const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired", "Rejected"];
     if (!statuses.includes(status)) { errors.status = `Status must be one of the following: ${statuses.join(", ")}`; }
-  
+    
+    console.log(errors);
     if (Object.keys(errors).length !== 0) {
         event.preventDefault();
         if (errors.companyName) { companyNameError.html(errors.companyName); }
         if (errors.jobPosition) { jobPositionError.html(errors.jobPosition); }
         if (errors.appCity) { appCityError.html(errors.appCity); }
-        if (errors.appState) { appStateError.html(errors.appState); 
-        if (errors.status) { statusError.html(errors.status); }}
+        if (errors.appState) { appStateError.html(errors.appState); }
+        if (errors.followUpDate) { followUpDateError.html(errors.followUpDate); }
+        if (errors.status) { statusError.html(errors.status); }
     }
 });
   

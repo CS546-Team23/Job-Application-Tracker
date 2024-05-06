@@ -4,7 +4,7 @@
     <div id="newAppContent">
 
         <button id="closeNewApp">&times;</button>
-        <form id="newAppForm" name="newAppForm" action={{route}} method={{method}} enctype="multipart/form-data">
+        <form id="newAppForm" name="newAppForm" action={{route}} method="POST" enctype="multipart/form-data">
             <p><span class="star">*</span> Indicates Required Field</p>
             <!-- Company Name -->
             <div>
@@ -95,7 +95,8 @@
 
             <!-- Follow-Up Date -->
             <label for="followUpDate">Follow-Up Date </label>
-            <input type="date" name="followUpDate" id="followUpDate" value="{{application.followUpDate}}">
+
+            <input type="date" name="followUpDate" id="followUpDate" value="{{reformat_date application.followUpDate}}"/>
             <span class="form-error">{{errors.followUpDate}}</span>
 
             <!-- Resume -->
@@ -113,6 +114,7 @@
                 <option value="Screening">Screening</option>
                 <option value="Interviewing">Interviewing</option>
                 <option value="Hired">Hired</option>
+                <option value="Rejected">Rejected</option>
                 {{/select}}
             </select>
             <span class="form-error">{{errors.status}}</span>

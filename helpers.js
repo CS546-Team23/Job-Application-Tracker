@@ -258,7 +258,7 @@ export const checkIsValidState = (state) => {
 };
 
 export const checkIsProperStatus = (status, statusName) => {
-  const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired"];
+  const statuses = ["Saved", "Applied", "Screening", "Interviewing", "Hired", "Rejected"];
   isInputProvided(status, "status");
   status = checkIsProperString(status, "status");
   status = status.charAt(0).toUpperCase() + status.substring(1).toLowerCase();

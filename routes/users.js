@@ -273,6 +273,18 @@ router.route("/profile/changePassword").patch(async (req, res) => {
   return res.redirect("/logout");
 });
 
+
+function renderError(req, res, status, message, error) {
+  const nav = req.session.user ? "privateNav" : "publicNav";
+  return res.status(status).render("errors", {
+    layout: "main",
+    nav: nav,
+    message: `${message}\n${error}`,
+    stylesheets: "commonStylesheets",
+    scripts: "applicationScript",
+  });
+}
+
 function validateApplicationData(userInput) {
   for (let key in userInput) {
     userInput[key] = xss(userInput[key]);
@@ -341,15 +353,27 @@ function validateApplicationData(userInput) {
 router
   .route("/dashboard")
   .get(async (req, res) => {
-    const user_info = await application.getUserApplications(
-      req.session.user.userId
-    );
+    let user_info;
+    try {
+      user_info = await application.getUserApplications(req.session.user.userId);
+    } catch (e) {
+      return renderError(req, res, 500, "Internal Server Error", e.message);
+    }
+    
+    let new_applications = [];
+    try {
+      new_applications = await application.getFollowUpApps(req.session.user.userId);
+    } catch (e) {
+      return renderError(req, res, 500, "Internal Server Error", e.message);
+    }
+
     return res.render("dashboard", {
       applications: user_info,
       nav: "privateNav",
       stylesheets: "dashboardStylesheet",
       scripts: "dashboardScript",
       user: req.session.user,
+      notifications: new_applications
     });
   })
   .post(async (req, res) => {
@@ -384,15 +408,29 @@ router
 
     //Check for Errors; if errors, respond with status 400
     if (Object.keys(errors).length !== 0) {
-      const user_info = await application.getUserApplications(
-        req.session.user.userId
-      );
+      let user_info;
+      try {
+        user_info = await application.getUserApplications(req.session.user.userId);
+      } catch (e) {
+        return renderError(req, res, 500, "Internal Server Error", e.message);
+      }
+      
+      let new_applications = [];
+      try {
+        new_applications = await application.getFollowUpApps(req.session.user.userId);
+      } catch (e) {
+        return renderError(req, res, 500, "Internal Server Error", e.message);
+      }
+
       return res.render("dashboard", {
-        applications: user_info.applications,
         application: req.body,
+        applications: user_info,
         nav: "privateNav",
+        stylesheets: "dashboardStylesheet",
+        scripts: "dashboardScript",
         user: req.session.user,
-        errors: errors,
+        notifications: new_applications,
+        errors: errors
       });
     }
     try {
@@ -408,11 +446,7 @@ router
       );
       return res.redirect(`/applications/${app_id}`);
     } catch (e) {
-      return res.status(500).render("errors", {
-        layout: "main",
-        nav: "publicNav",
-        message: "Internal Server Error",
-      });
+      return renderError(req, res, 500, "Internal Server Error", e.message);
     }
   });
 
@@ -424,11 +458,7 @@ router
     try {
       jobId = helper.validateId(req.params.id);
     } catch (e) {
-      return res.status(400).render("errors", {
-        layout: "main",
-        nav: "publicNav",
-        message: e.message,
-      });
+      return renderError(req, res, 400, "User Error", e.message);
     }
 
     // get application
@@ -436,11 +466,7 @@ router
     try {
       app = await application.getJobappByid(jobId, req.session.user.userId);
     } catch (e) {
-      return res.status(404).render("errors", {
-        layout: "main",
-        nav: "publicNav",
-        message: `${e.message}`,
-      });
+      return renderError(req, res, 404, "Not Found", e.message);
     }
     return res.render("applicationPage", {
       nav: "privateNav",
@@ -457,7 +483,7 @@ router
     try {
       jobId = helper.validateId(req.params.id);
     } catch (e) {
-      return res.json({ error: e.messsage });
+      return renderError(req, res, 400, "User Error", e.message);
     }
 
     // apply xss to user inputs
@@ -466,7 +492,20 @@ router
 
     //Check for Errors; if errors, respond with status 400
     if (Object.keys(errors).length !== 0) {
-      return res.status(400).json(errors);
+      // get application
+      let app;
+      try {
+        app = await application.getJobappByid(jobId, req.session.user.userId);
+      } catch (e) {
+        return renderError(req, res, 404, "Not Found", e.message);
+      }
+      return res.render("applicationPage", {
+        errors: errors,
+        nav: "privateNav",
+        application: app,
+        stylesheets: "commonStylesheets",
+        scripts: "applicationScript",
+      });
     }
 
     if (req.file) {
@@ -512,21 +551,27 @@ router
       );
       return res.redirect("back");
     } catch (e) {
-      return res.status(500).render("errors", {
-        layout: "main",
-        nav: "publicNav",
-        message: `Internal Server Error`,
-      });
+      return renderError(req, res, 500, "Internal Server Error", e.message);
     }
-  })
-  .delete(async (req, res) => {
-    // validate id
-    let jobId;
-    try {
-      jobId = helper.validateId(req.params.id);
-    } catch (e) {
-      return res.json({ error: e.messsage });
-    }
-  });
+});
+
+router.route("/view/applications/:id").get(async (req, res) => {
+  // validate id
+  let jobId;
+  try {
+    jobId = helper.validateId(req.params.id);
+  } catch (e) {
+    return renderError(req, res, 400, "User Error", e.message);
+  }
+
+  // get application
+  try {
+    await application.viewApplication(jobId, req.session.user.userId);
+  } catch (e) {
+    return renderError(req, res, 404, "Not Found", e.message);
+  }
+
+  return res.redirect(`/applications/${jobId}`);
+});
 
 export default router;
