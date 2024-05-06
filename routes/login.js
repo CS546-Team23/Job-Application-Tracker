@@ -11,16 +11,16 @@ router
       res.render("login", {
         layout: "main",
         nav: "publicNav",
-        stylesheets: 'commonStylesheets',
-        scripts: 'registerLoginScripts'
+        stylesheets: "commonStylesheets",
+        scripts: "registerLoginScripts",
       });
     } catch (e) {
       return res.status(404).render("errors", {
         layout: "main",
         nav: "publicNav",
         message: e.message,
-        stylesheets: 'commonStylesheets',
-        scripts: 'commonScripts',
+        stylesheets: "commonStylesheets",
+        scripts: "commonScripts",
       });
     }
   })
@@ -51,8 +51,8 @@ router
         layout: "main",
         nav: "publicNav",
         errors: errors,
-        stylesheets: 'commonStylesheets',
-        scripts: 'registerLoginScripts',
+        stylesheets: "commonStylesheets",
+        scripts: "registerLoginScripts",
       });
     }
 
@@ -72,6 +72,13 @@ router
           desiredPosition: loginUser.desiredPosition,
           dreamJob: loginUser.dreamJob,
           email: loginUser.email,
+          highestEducation: loginUser.highestEducation
+            ? loginUser.highestEducation
+            : "",
+          specialization: loginUser.specialization
+            ? loginUser.specialization
+            : "",
+          skills: loginUser.skills ? loginUser.skills : "",
         };
         res
           .cookie("AuthenticationState", "Authenticated")
@@ -81,8 +88,8 @@ router
           layout: "main",
           nav: "publicNav",
           message: "Incorrect username and/or password. Please try again.",
-          stylesheets: 'commonStylesheets',
-          scripts: 'registerLoginScripts',
+          stylesheets: "commonStylesheets",
+          scripts: "registerLoginScripts",
         });
       }
     } catch (e) {
@@ -90,8 +97,8 @@ router
         layout: "main",
         nav: "publicNav",
         message: e.message,
-        stylesheets: 'commonStylesheets',
-        scripts: 'commonScripts',
+        stylesheets: "commonStylesheets",
+        scripts: "commonScripts",
       });
     }
   });

@@ -11,8 +11,8 @@
             <li class="note" data-id=${note._id}>
                 <cite>${note.date} ${note.time}</cite>
                 <p class="note-content">${note.text}</p>
-                <button onclick="javascript:void(0)" class="editButton">Edit</button>
-                <button onclick="javascript:void(0)" class="deleteButton">Delete</button>
+                <button onclick="javascript:void(0)" class="editButton btn orange-btn dark">Edit</button>
+                <button onclick="javascript:void(0)" class="deleteButton btn orange-btn dark">Delete</button>
             </li>`
         );
     }

@@ -6,6 +6,7 @@ import session from "express-session";
 
 import multer from "multer";
 import * as fsExtra from "fs-extra";
+import moment from 'moment';
 
 const upload = multer({ dest: "uploads/" });
 
@@ -124,9 +125,22 @@ hbs.handlebars.registerHelper("select", function (value, options) {
   return content;
 });
 
+// reformat date
+hbs.handlebars.registerHelper("reformat_date", function (value) {
+  if (!/^\d\d\/\d\d\/\d\d\d\d$/) { return ""; }
+  return moment(value, "MM/DD/YY").format("YYYY-MM-DD");
+});
+
 hbs.handlebars.registerHelper("isEmptyObject", function (obj) {
   if (typeof obj !== "object") return true;
   if (Object.keys(obj).length != 0) return false;
+  return true;
+});
+
+hbs.handlebars.registerHelper("checkIsNotEmptyString", function (str) {
+  if (typeof str != "string") return false;
+  if (str === "" || str.length === 0) return false;
+
   return true;
 });
 

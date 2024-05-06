@@ -16,8 +16,16 @@ const constructorMethod = (app) => {
   app.use("/api", apiRoute);
   app.use("/companies", companyRoutes);
   app.use("/map", mapRoutes);
-  app.use("*", (_req, res) => {
-    return res.status(404).json({ error: "404 error" });
+
+  app.use("*", (req, res) => {
+    return res.status(404).render("errors", {
+      layout: "main",
+      nav: req.session.user ? "privateNav" : "publicNav",
+      message: "404 Error\nPage Not Found",
+      stylesheets: "commonStylesheets",
+      scripts: "applicationScript",
+    });
+
   });
 };
 

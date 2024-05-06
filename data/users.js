@@ -12,6 +12,8 @@ import {
   checkCity,
   validateEmail,
   validateId,
+  checkAndCreateSkills,
+  checkHighestEductaion,
 } from "../helpers.js";
 
 const registerUser = async (
@@ -94,12 +96,17 @@ const updateUser = async (email, updateObject) => {
     );
   if (updateObject.lastName)
     updateObject.lastName = checkIsProperFirstOrLastName(
-      updateObject.firstName,
+      updateObject.lastName,
       "First name"
     );
   if (updateObject.city)
     updateObject.city = checkIsProperString(updateObject.city, "City");
-  if (updateObject.state) state = checkIsValidState(state);
+
+  if (updateObject.state) {
+    if (!checkIsValidState(updateObject.state))
+      throw new Error("Error: Invalid state passed");
+  }
+
   if (updateObject.desiredPosition)
     updateObject.desiredPosition = checkIsProperString(
       updateObject.desiredPosition,
@@ -112,13 +119,25 @@ const updateUser = async (email, updateObject) => {
       "Dream Job"
     );
 
-  if (updateObject.password) {
-    updateObject.password = checkIsProperPassword(updateObject.password);
-    updateObject.password = await bcrypt.hash(
-      updateObject.password,
-      saltRounds
+  if (updateObject.highestEducation) {
+    updateObject.highestEducation = checkHighestEductaion(
+      updateObject.highestEducation,
+      "Highest Education"
     );
   }
+
+  if (updateObject.specialization) {
+    updateObject.specialization = checkIsProperString(
+      updateObject.specialization,
+      "Specalization"
+    );
+  }
+
+  if (updateObject.skills) {
+    updateObject.skills = checkAndCreateSkills(updateObject.skills, "Skills");
+  }
+
+  updateObject.skills = [...new Set(updateObject.skills.split(","))].join(",");
 
   const usersCollection = await users();
 
@@ -161,4 +180,46 @@ const getUserById = async function (userId) {
   return foundUser;
 };
 
-export default { registerUser, loginUser, updateUser, getUserById };
+const checkOldPassword = async (email, enteredPassword) => {
+  email = validateEmail(email);
+  enteredPassword = checkIsProperPassword(enteredPassword);
+  const usersCollection = await users();
+
+  const getUser = await usersCollection.findOne({
+    email: email.toLowerCase(),
+  });
+  if (!getUser) throw new Error("Error: Either email or password invalid");
+
+  let passwordCheck = await bcrypt.compare(enteredPassword, getUser.password);
+  if (!passwordCheck) throw new Error("Error: Enter Correct Password !");
+
+  return { email, enteredPassword };
+};
+
+const changeNewPassword = async (email, oldPassword, newPassword) => {
+  let userEmailPassword = checkOldPassword(email, oldPassword);
+  newPassword = checkIsProperPassword(newPassword);
+  let hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+
+  const usersCollection = await users();
+
+  let updatedUser = await usersCollection.findOneAndUpdate(
+    { email: email.toLowerCase() },
+    { $set: { password: hashedPassword } },
+    { returnDocument: "after" }
+  );
+
+  if (!updatedUser)
+    throw new Error("Error: No user with email has been registered");
+
+  return { passwordUpdated: true };
+};
+
+export default {
+  registerUser,
+  loginUser,
+  updateUser,
+  getUserById,
+  checkOldPassword,
+  changeNewPassword,
+};

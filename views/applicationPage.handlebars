@@ -1,43 +1,37 @@
 {{#with application}}
-<section class="app-btn-container">
+<div class="app-btn-container">
     <button id="newAppButton" class="btn orange-btn dark">Edit Application</button>
     <button id="deleteAppButton" class="btn orange-btn dark">Delete Application</button>
-</section>
-<section class="app-info-container">
-    <article>
-        <h2>{{jobPosition}}</h2>
-        <dl>
-            <div>
-                <dt>Company Name:</dt>
-                    <dd>{{companyName}}</dd>
-            </div>
-            <div>
-                <dt>Location:</dt>
-                    <dd>{{appCity}}, {{appState}}</dd>
-            </div>
-            <div>
-                <dt>Date Applied:</dt>
-                    <dd>{{date}}</dd>
-            </div>
-            <div>
-                {{#if followUpDate}}<dt>Follow-Up Date:</dt>
-                    <dd>{{followUpDate}}</dd>{{/if}}
-            </div>
-            <div>
-                <dt>Status:</dt>
-                    <dd>{{status}}</dd>
-            </div>
-            <div>
-              {{#if (isEmptyObject appResume)}}
-                  <p>No Resume for this application</p>
-              {{else}}
-                  <dt>Resume:</dt>
-                  <dd><a href="{{appResume.url}}" target="_blank"> {{appResume.fileName}}</a></dd>
-              {{/if}}
-            </div>  
-        </dl>
-    </article>
-</section>
+</div>
+<article class="app-info-container">
+    <h2>{{jobPosition}}</h2>
+    <dl>
+        <div>
+            <dt>Company Name:</dt>
+                <dd>{{companyName}}</dd>
+        </div>
+        <div>
+            <dt>Location:</dt>
+                <dd>{{appCity}}, {{appState}}</dd>
+        </div>
+        <div>
+            <dt>Date Applied:</dt>
+                <dd>{{date}}</dd>
+        </div>
+        <div>
+            {{#if followUpDate}}<dt>Follow-Up Date:</dt>
+                <dd>{{followUpDate}}</dd>{{/if}}
+        </div>
+        <div>
+            <dt>Status:</dt>
+                <dd>{{status}}</dd>
+        </div>
+        <div>
+            {{#if appResume}}<dt>Resume:</dt>
+            <dd><a href="{{appResume.url}}" target="_blank"> {{appResume.fileName}}</a></dd>{{/if}}
+        </div>  
+    </dl>
+</article>
 <section class="notes-container">
     <h2>Notes</h2>
     <form id="note-form">
@@ -52,11 +46,11 @@
             <li class="note" data-id={{_id}}>
                 <cite>{{date}} {{time}}</cite>
                 <p class="note-content">{{text}}</p>
-                <button onclick="javascript:void(0)" class="btn orange-btn dark">Edit</button>
-                <button onclick="javascript:void(0)" class="btn orange-btn dark">Delete</button>
+                <button onclick="javascript:void(0)" class="editButton btn orange-btn dark">Edit</button>
+                <button onclick="javascript:void(0)" class="deleteButton btn orange-btn dark">Delete</button>
             </li>
         {{/each}}
-    </ul>
+    </ol>
 </section>
 {{/with}}
-{{> appModal method="POST" route=(concat "/applications/" application._id)}}
+{{> appModal route=(concat "/applications/" application._id)}}

@@ -7,6 +7,15 @@
         <li>State: <strong>{{user.state}}</strong></li>
         <li>Desired Job Position: <strong>{{user.desiredPosition}}</strong></li>
         <li>Dream Job: <strong>{{user.dreamJob}}</strong></li>
+        {{#if (checkIsNotEmptyString user.highestEducation)}}
+            <li>Highest Education: <strong>{{user.highestEducation}}</strong></li>
+        {{/if}}
+        {{#if (checkIsNotEmptyString user.specialization)}}
+            <li>Specalization: <strong>{{user.specialization}}</strong></li>
+        {{/if}}
+        {{#if (checkIsNotEmptyString user.skills)}}
+            <li>Skills: <strong>{{user.skills}}</strong></li>
+        {{/if}}
         
     </ul>
     <div class="btn-container">

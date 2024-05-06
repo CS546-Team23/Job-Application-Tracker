@@ -66,6 +66,7 @@ a {
 #applicationHeader {
     display: flex;
     justify-content: space-between;
+    margin-top:2rem;
 }
 #applicationHeader #newAppButton{
     max-width:200px;
@@ -97,7 +98,7 @@ a {
 
 /* Status Styles */
 .status-container{
-    margin-top: 2rem;
+    margin-top: 1rem;
     display: flex;
     height: 69vh;
     gap: 0px;
@@ -245,6 +246,48 @@ a {
     margin-bottom:1em;
 }
 
+/***********
+Notifications
+************/
+
+#notification-box{
+    overflow-x: scroll;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    border: 1px solid #E5E7EB;
+    padding: 1rem;
+    gap: 1rem;
+    background-color: #F3F4F6;
+}
+
+.notification-item{
+    min-width: 300px;
+    max-width: 300px;
+    text-decoration: none;
+    color: #232a35;
+    cursor: pointer;
+    background-color: white;
+    padding: 0.5rem 2rem 0.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    border-radius: 10px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.notification-item:hover{
+    background-color: #05a870;
+    color: white;
+}
+
+.notification-item span{
+    white-space: nowrap;
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* Application Details (Notes) */
 .app-info-container,
 .notes-container{
@@ -340,6 +383,7 @@ a {
     position:relative;
     border-left:6px solid #f1ab0a;
     box-shadow:2px 0 10px rgba(0,0,0,0.2);
+    margin-bottom:1em;
 }
 /*#note-list li::before{
     content: counter(note-counter) ". ";
@@ -390,4 +434,28 @@ a {
         padding-left:3em;
         padding-right:3em;
     }
+}
+
+.result-box{
+    z-index: 1000;
+    position: absolute;
+    background-color: white;
+    overflow-y: auto;
+    max-height: 200px;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+    list-style-type: none;
+    /* border-top: 1px solid #999; */
+}
+
+.result-box li{
+    width: 100%;
+    border-radius: 5px;
+    padding: 0.5rem 0 0.5rem 0;
+    cursor: pointer;
+}
+.result-box li:hover {
+    background-color: lightblue;
 }
