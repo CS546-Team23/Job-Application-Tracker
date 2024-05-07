@@ -275,7 +275,7 @@ router.route("/profile/changePassword").patch(async (req, res) => {
       scripts: "commonScripts",
     }); 
   }
-  return res.redirect('logout');
+  return res.redirect('/logout');
 });
 
 function renderError(req, res, status, message, error) {
