@@ -32,6 +32,7 @@ The following emails and passwords can be used to explore our application:
 ## Features
 
 ### Dashboard Page
+![Dashboard Page](https://i.imgur.com/GaVRWXF.png)
 After registering and/or logging in, users are immediately redirected to their dashboard. Features include:
 - New applications can be added by clicking on the “New Application” button. That will fire up a modal where users can fill out the following information:
   - Company Name (An auto-fill feature will display all jobs beginning with the first set of letters users type)
@@ -47,6 +48,7 @@ After registering and/or logging in, users are immediately redirected to their d
 - Applications: The applications section is divided into six status categories: saved, applied, screening, interviewing, rejected, and hired. The application modules will be displayed under their respective statuses.
 
 ### Applications Page
+![Applications Page](https://i.imgur.com/2l0TLEE.png)
 When a user clicks on an application module, they will be redirected to the applications page which displays the details of clicked application.
 - Users can edit the application details by clicking “Edit Application”
 - Users can also delete the application by clicking “Delete Application”
@@ -55,6 +57,7 @@ When a user clicks on an application module, they will be redirected to the appl
   - If users begin to create a note but want to retype it, they have the convenient option of reseting the texture to its initial state (blank).
 
 ### Stats Page
+![Stats Page](https://i.imgur.com/oTa58JI.png)
 - Here, users can see in a snapshot various statistics of their application. They can view the following:
 - Total number of applications they have added
 - Total number of companies they’ve applied to
@@ -63,6 +66,7 @@ When a user clicks on an application module, they will be redirected to the appl
 - Total number of applications by date.
 
 ### Companies Page
+![Companies Page](https://i.imgur.com/xE78tEV.png)
 Here users can view a comprehensive list of companies, displayed as a card using company’s logo and name. Each card is clickable, which displays a modal with a company’s following information:
 - Company name
 - Company logo
@@ -72,4 +76,5 @@ Here users can view a comprehensive list of companies, displayed as a card using
 - Company website
 
 ### Location Page 
+![Location Page](https://i.imgur.com/vHrfjmi.png)
 Here, users can see where in the country the jobs they've saved are. Each city applied in has an associated marker than can be clicked to reveal the number of applications in the city with each status.
